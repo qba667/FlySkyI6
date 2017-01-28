@@ -1,0 +1,28 @@
+Skrogh,
+
+Sorry to hear of your brick. I don't assemble the bootloader when I do my make and only load from 0x1800 upwards with JTAG so I don't have a full hex file. Probably the best way to recover is to use Thom's full image of the original firmware including the bootloader and flash that with JTAG. That will get you back to a good starting point. https://mega.nz/#!RYF3wLqL!B-8smTYbO...SndiK0kwjl1fjg
+
+Note: there is a small block in the bootloader starting at 0x1400. That appears to be different from transmitter to transmitter. This is probably giving each one a random ID so they don't interfere with each other and maybe also sets up some region settings. So it is generally not good to over-write the bootloader.
+
+I am working out the best way to publish my work and will hopefully do so in the next week or so. In the meantime, the linker scripts and makefile are here, but they do rely on specific sections being defined in the assembler listing to force things to the right place. So at this stage, they are more for interest to those who have looked at the code and are familliar with assembler than something that anyone could pick up and use.
+
+The sections that need to be defined in the assembler are:
+
+.bootloader
+0x00000000 to 0x000017FF in original
+
+.startup
+0x00001800 to 0x0000277F in orginal
+
+.signature
+0x00002780 to 0x000027FF in original
+
+.text
+0x00002800 to end of code
+
+Then you need to add the following right at the end of your assembler.
+
+.section .crc
+
+.globl __CRC
+__CRC: .short 0x0000 

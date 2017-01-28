@@ -1,0 +1,73 @@
+Thom, Skrogh and anyone else interested
+This is what I have worked out so far with pointers from Thom. All the addresses refer to the start of the block in the original firmware. Some will have shifted in my revised firmware.
+
+.section .bootloader
+0x0000
+Boot loader vector table
+
+0x00C0
+Boot loader code and data
+
+0x0DA0
+Empty space
+
+0x1400
+4 byte unique tx identity
+32 bytes of random? numbers that vary from TX to TX
+2 bytes unknown
+
+0x1426
+Empty space
+
+.section .startup
+0x1800 (Must be at this location referenced from bootloader)
+Main program vector table
+
+0x18C0
+Startup and library code. e.g. memcpy, sprintf, etc. Also the ROM to RAM copy functions refered to later.
+
+.section .signature
+0x2780 (Must be at this location referenced from bootloader)
+8 bytes of signature 0xC87251CC 0x92017EA0
+4 byte offset of CRC value from 0x1800. CRC_Code: .long (__CRC-0x1800)
+
+.section .text
+0x2800
+Main program code and data. This is all in neat functions and I am pretty sure it was written in C. 
+I have been editing it in assembler. main() is located at 0xC324.
+
+0xCC68
+Data such as bitmaps, fonts, menus, strings, radio messages, default model data, etc.
+
+0xF0AC
+RAM initialisation data. I have had to modify this considerably. It consists of a list of structures. Each one is four 32 bit elements:
+* Start address in RAM to copy to
+* Length in Bytes
+* Pointer to function that does the initialisation
+* Source of data in ROM to copy from
+There are 3 different functions called. 
+One is simple and just zeros all the bytes. 
+One is a simple byte for byte copy. 
+The third though is compressed in ROM and uncompresses into RAM. 
+Unfortunately the data being copied included memory addresses that need to be changed as the code grows. 
+Therefore I had to replace the instance that did compressed copy with a straight copies. 
+It grew the data size a bit, but I got this back as I was able to remove the decompression function as it isn't needed anymore.
+
+0xF0EC
+The ROM data copied as described above from ROM to RAM.
+
+0xF1B8
+Empty space
+
+.section .crc
+0xF2D3 (Can be relocated by my linker scripts)
+A two byte CCITT16 CRC value calculated of all bytes from 0x1800 to this point.
+Needs a two stage link process. Stage one links the file to a phoney elf and hex file with this missing. 
+The CRC is calculated using a perl script. Then the linker is rerun so this can be 
+filled in with the calculated value and a proper elf and hex file produced.
+.globl __CRC
+__CRC: .short 0x0000
+
+.section .garbage
+0xF2D5 to 0xFFFF
+None of this used and is either blank or garbage 

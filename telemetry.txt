@@ -1,0 +1,27 @@
+
+Interesting and needs a bit of investigation. I have found nothing in the standard i6 firmware code that appears to use the serial port. The code for the serial port all appears in the bootloader and only appears to be used for updating the firmware. Perhaps the RClogger has a different bootloader, or their main firmware calls into the bootloader code to use the serial port.
+
+What I have found so far about standard i6 telemetry is as follows.
+
+The receiver generates measurements internally or collects them from the iBus port sensors. Measurement has a one byte type, a one byte instance and a two byte value. There is also a two byte checksum on the iBus but that doesn't make it to the transmitter.
+
+Measurements are sent on the radio interface. Don't know quite how yet but the 2.4GHz module is bi-directional and I see code to swap to receive mode from time to time. I suspect the transmitter sends a "measurement request" message every second or so then goes to receive mode and listens for reply.
+
+The transmitter adds its own measurements (battery level, error rate) and any calculations based on the received measurements (speed, odometers, etc) are they are all stored (along with a 4 byte timestamp of when they arrived) in an array in RAM starting at 0x200001A4. 0x20000024 is a 4 byte int that conatins the number of elements in this array.
+
+Types are:
+00 - Receiver Internal Voltage
+01 - Temperature
+02 - Motor RPM
+03 - External Voltage
+7C - Odometer 1
+7D - Odometer 2
+7E - Speed
+7F - Transmitter Battery
+FE - Error Rate
+
+The screens then pick from this array and display the items they want. Only known types get displayed and only if they arrived within the last 2 seconds (based on the timestamp).
+
+From the code, I think that unknown types get sent and added to the array. So if a flight controller generated two byte measurements and gave them tags starting from 04 then they would get into the array. It would need code in the display functions to interpret them and display them. I am going to do some experiments at some point to prove this.
+
+Longer measurements (more than two bytes of data) don't fit in to the i6 scheme very well and would be much harder to do. However I think this is what RCLogger are doing as they appear to filter out their telemetry much earlier in the code. Needs more investigation. 
