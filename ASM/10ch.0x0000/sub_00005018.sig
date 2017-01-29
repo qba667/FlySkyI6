@@ -1,0 +1,2 @@
+S'drawLine5038 @sub_4E8C\n5054 @sub_4E8C\nmain_screen+952\nmain_screen+1156\nmain_screen+1390\nmain_screen+1404\nmain_screen+1418\nmain_screen+1888\nmain_screen+2164\nDisplayChannels+52\nmain_screen+916\nmain_screen+1236\nmain_screen+1316\nmain_screen+1376\nmain_screen+1432\nmain_screen+1446\nfailsafeOnOff+142\nmain_screen+1924\nmain_screen+2004\nmain_screen+2084\nshowSingleValuePage+122\nLCDBrightM+32\nsensorsListMainScreen+444\nsensorsListMainScreen+610\nsub_68A8+168\nsub_68A8+192\nsub_68A8+216\nsub_68A8+240\nfactoryModeMenu+482\n'
+.

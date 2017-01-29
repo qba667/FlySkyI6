@@ -1,0 +1,2 @@
+S'sprintf1a08 @someSprintfMethod\n1a10 @sub_212C\nSpeedSensor+162\nSpeedSensor+118\nROMBASE+0xf27c\nChooseSensors+144\nChooseSensors+188\nSensorsList+158\nprintTimer+118\nformatSensorData+88\nformatSensorData+124\nformatSensorData+160\nformatSensorData+190\nformatSensorData+210\nformatSensorData+270\nformatSensorData+322\nformatSensorData+334\nsensorsListMainScreen+396\nsensorsListMainScreen+564\nformatSensorValue+196\nROMBASE+0xf18c\nROMBASE+0xf1c2\nROMBASE+0xf1f8\nROMBASE+0xf23e\nROMBASE+0xf2ba\ntimerConfiguration+74\nsub_7CAC+66\n'
+.

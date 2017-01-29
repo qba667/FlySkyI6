@@ -1,0 +1,96 @@
+<html> 
+<head><title>controlBackLight
+</title>
+<link rel="stylesheet" href="disasm.css" type="text/css" />
+</head> 
+<body> 
+<div id='toolbar'>
+<ul>
+<li><a href="functions-by-addr.htm">Functions</a></li>
+<li><a href="names-by-addr.htm">Names</a></li>
+<li><a href="strings.htm">Strings</a></li>
+<li><a href="tasks.htm">Tasks</a></li>
+<li><a href="semaphores.htm">Semaphores</a></li>
+<li><a href="msgqueues.htm">MsgQueues</a></li>
+<li><a href="properties.htm">Properties</a></li>
+<li><a href="eventprocs.htm">Eventprocs</a></li>
+<li><a href="statemachines.htm">FSMs</a></li>
+</ul>
+</div>
+<div id='main'>
+<h1>controlBackLight
+</h1>
+<h2>Function controlBackLight at 5C94 in 10ch.0x0000.bin</h2>
+
+
+<p>Command shortcuts (edit, copy & paste into ARM console):</p>
+<textarea rows="7" cols="80" spellcheck="false">
+dump = D[0] # adjust it if you've loaded more dumps
+n 5C94 controlBackLight
+html.func_full(dump.Fun(0x5C94))
+html.update(dump)
+f = dump.Fun(0x5C94)
+dec 0x5C94
+</textarea>
+<br>
+<div class="funcmenu">
+<ul>
+<li><a href="#disasm">Disassembly</a></li>
+<li><a href="#diagram">Code flow diagram</a></li>
+<li><a href="#deco">Decompiled</a></li>
+<li><a href="#refs">References</a></li>
+<li><a href="#calls">Calls</a></li>
+<li><a href="#callers">Called by</a></li>
+</ul>
+</div>
+
+<h2 id=disasm>Disassembly:</h2> 
+<table> 
+<!--
+<tr><th>Address</th><th>Data</th><th>Code</th><th></th></tr> 
+-->
+        <tr><td class=funcstart colspan=6>Function start: <a href="sub_00005c94.htm">controlBackLight</a></td></tr>
+        <tr><td class=nstub colspan=6>NSTUB(0x<a href="00004000.htm#_5C94">5C94</a>, controlBackLight)</td></tr>
+            <tr><td class=addr id=_5C94><a href="00004000.htm#_5C94">5C94</a>:</td><td class=data>b570      </td><td class=inst><span class="mnem">push</span><span class="flags"></span></td><td class=parm>{r4, r5, r6, lr}</td><td class=comm></td><td class=refs><a href="00002000.htm#_24EC">24EC</a> <a href="00002000.htm#_2CAC">2CAC</a> <a href="00002000.htm#_286E">286E</a> <a href="00004000.htm#_5C90">&#x2B01;</a> <a href="00002000.htm#_2916">2916</a>... (total 6 refs)</td></tr>
+            <tr><td class=addr id=_5C98><a href="00004000.htm#_5C98">5C98</a>:</td><td class=data>480c      </td><td class=inst><span class="mnem">ldr</span><span class="flags"></span></td><td class=parm>r0, [pc, #48]</td><td class=comm>; (5ccc )</td><td class=refs><a href="00004000.htm#_5C94">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5C9C><a href="00004000.htm#_5C9C">5C9C</a>:</td><td class=data>79c1      </td><td class=inst><span class="mnem">ldr</span><span class="flags">b</span></td><td class=parm>r1, [r0, #7]</td><td class=comm></td><td class=refs><a href="00004000.htm#_5C98">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5CA0><a href="00004000.htm#_5CA0">5CA0</a>:</td><td class=data>0209      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r1, r1, #8</td><td class=comm></td><td class=refs><a href="00004000.htm#_5C9C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5CA4><a href="00004000.htm#_5CA4">5CA4</a>:</td><td class=data>480a      </td><td class=inst><span class="mnem">ldr</span><span class="flags"></span></td><td class=parm>r0, [pc, #40]</td><td class=comm>; (5cd0 )</td><td class=refs><a href="00004000.htm#_5CA0">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5CA8><a href="00004000.htm#_5CA8">5CA8</a>:</td><td class=data>4350      </td><td class=inst><span class="mnem">mul</span><span class="flags">s</span></td><td class=parm>r0, r2</td><td class=comm></td><td class=refs><a href="00004000.htm#_5CA4">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5CB0><a href="00004000.htm#_5CB0">5CB0</a>:</td><td class=data>2101      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #1</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5CB4><a href="00004000.htm#_5CB4">5CB4</a>:</td><td class=data>4b0a      </td><td class=inst><span class="mnem">ldr</span><span class="flags"></span></td><td class=parm>r3, [pc, #40]</td><td class=comm>; (5ce0 )</td><td class=refs><a href="00004000.htm#_5CB0">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5CB8><a href="00004000.htm#_5CB8">5CB8</a>:</td><td class=data>d304      </td><td class=inst><span class="mnem">b</span><span class="flags">cc.n</span></td><td class=parm><a href="00004000.htm#_5CC4">5CC4</a></td><td class=comm></td><td class=refs><a href="00004000.htm#_5CB4">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5CBC><a href="00004000.htm#_5CBC">5CBC</a>:</td><td class=data>d002      </td><td class=inst><span class="mnem">b</span><span class="flags">eq.n</span></td><td class=parm><a href="00004000.htm#_5CC4">5CC4</a></td><td class=comm></td><td class=refs><a href="00004000.htm#_5CB8">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5CC0><a href="00004000.htm#_5CC0">5CC0</a>:</td><td class=data>7019      </td><td class=inst><span class="mnem">str</span><span class="flags">b</span></td><td class=parm>r1, [r3, #0]</td><td class=comm></td><td class=refs><a href="00004000.htm#_5CBC">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5CC4><a href="00004000.htm#_5CC4">5CC4</a>:</td><td class=data>6091      </td><td class=inst><span class="mnem">str</span><span class="flags"></span></td><td class=parm>r1, [r2, #8]</td><td class=comm></td><td class=refs><a href="00004000.htm#_5CC0">&#x2B01;</a> <a href="00004000.htm#_5CB8">5CB8</a> <a href="00004000.htm#_5CBC">5CBC</a></td></tr>
+            <tr><td class=addr id=_5CC8><a href="00004000.htm#_5CC8">5CC8</a>:</td><td class=data>7018      </td><td class=inst><span class="mnem">str</span><span class="flags">b</span></td><td class=parm>r0, [r3, #0]</td><td class=comm></td><td class=refs><a href="00004000.htm#_5CC4">&#x2B01;</a></td></tr>
+        <tr></td><td class=funcend colspan=6>Function end: controlBackLight</td></tr>
+</table> 
+<h2 id=diagram>Code flow diagram:</h2>
+    <object data='sub_00005c94.svg' width='8pt'> </object>
+<h2 id=deco>Decompiled:</h2> 
+<pre>
+whoops...
+</pre> 
+<h2 id=refs>References:</h2> 
+<table>
+<tr><th>Address</th><th>Value</th></tr> 
+    <tr><td class=addr><a href="sub_00005c94.htm#_5CB8">controlBackLight+36</a>:</td><td class=instr>0x5cc4: pointer to 0x6091</td>
+    </tr>
+    <tr><td class=addr><a href="sub_00005c94.htm#_5CBC">controlBackLight+40</a>:</td><td class=instr>0x5cc4: pointer to 0x6091</td>
+    </tr>
+</table>
+<h2 id=calls>Calls:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+        <tr><td class=addr><a href="sub_00005c94.htm#_5CB8">controlBackLight+36</a>:</td><td colspan=4 class=instr>sub_5CC4()</td></tr>
+</table>
+<h2 id=callers>Called by:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+</table>
+
+</div>
+</body> 
+</html> 
+

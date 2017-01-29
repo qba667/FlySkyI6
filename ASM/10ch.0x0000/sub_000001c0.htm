@@ -1,0 +1,81 @@
+<html> 
+<head><title>get0x2000146020001060
+</title>
+<link rel="stylesheet" href="disasm.css" type="text/css" />
+</head> 
+<body> 
+<div id='toolbar'>
+<ul>
+<li><a href="functions-by-addr.htm">Functions</a></li>
+<li><a href="names-by-addr.htm">Names</a></li>
+<li><a href="strings.htm">Strings</a></li>
+<li><a href="tasks.htm">Tasks</a></li>
+<li><a href="semaphores.htm">Semaphores</a></li>
+<li><a href="msgqueues.htm">MsgQueues</a></li>
+<li><a href="properties.htm">Properties</a></li>
+<li><a href="eventprocs.htm">Eventprocs</a></li>
+<li><a href="statemachines.htm">FSMs</a></li>
+</ul>
+</div>
+<div id='main'>
+<h1>get0x2000146020001060
+</h1>
+<h2>Function get0x2000146020001060 at 1C0 in 10ch.0x0000.bin</h2>
+
+
+<p>Command shortcuts (edit, copy & paste into ARM console):</p>
+<textarea rows="7" cols="80" spellcheck="false">
+dump = D[0] # adjust it if you've loaded more dumps
+n 1C0 get0x2000146020001060
+html.func_full(dump.Fun(0x1C0))
+html.update(dump)
+f = dump.Fun(0x1C0)
+dec 0x1C0
+</textarea>
+<br>
+<div class="funcmenu">
+<ul>
+<li><a href="#disasm">Disassembly</a></li>
+<li><a href="#diagram">Code flow diagram</a></li>
+<li><a href="#deco">Decompiled</a></li>
+<li><a href="#refs">References</a></li>
+<li><a href="#calls">Calls</a></li>
+<li><a href="#callers">Called by</a></li>
+</ul>
+</div>
+
+<h2 id=disasm>Disassembly:</h2> 
+<table> 
+<!--
+<tr><th>Address</th><th>Data</th><th>Code</th><th></th></tr> 
+-->
+        <tr><td class=funcstart colspan=6>Function start: <a href="sub_000001c0.htm">get0x2000146020001060</a></td></tr>
+        <tr><td class=nstub colspan=6>NSTUB(0x<a href="00000000.htm#_1C0">1C0</a>, get0x2000146020001060)</td></tr>
+            <tr><td class=addr id=_1C0><a href="00000000.htm#_1C0">1C0</a>:</td><td class=data>4806      </td><td class=inst><span class="mnem">ldr</span><span class="flags"></span></td><td class=parm>r0, [pc, #24]</td><td class=comm>; (1dc )</td><td class=refs><a href="00000000.htm#_31A">31A</a> <a href="00000000.htm#_1BC">&#x2B01;</a></td></tr>
+        <tr><td class=addr><a href="00000000.htm#_1C4">1C4</a>:</td><td class=string colspan=4>STRING: 'J\x07KpG'</td><td class=refs><a href="00000000.htm#_1C0">&#x2B01;</a> <a href="0000a000.htm#_ADAC">ADAC</a> <a href="0000a000.htm#_AC5C">AC5C</a> <a href="0000c000.htm#_D2FC">D2FC</a> <a href="0000a000.htm#_AE08">AE08</a></td></tr>
+            <tr><td class=addr id=_1C4><a href="00000000.htm#_1C4">1C4</a>:</td><td class=data>4a05      </td><td class=inst><span class="mnem">ldr</span><span class="flags"></span></td><td class=parm>r2, [pc, #20]</td><td class=comm>; (1dc )</td><td class=refs><a href="00000000.htm#_1C0">&#x2B01;</a> <a href="0000a000.htm#_ADAC">ADAC</a> <a href="0000a000.htm#_AC5C">AC5C</a> <a href="0000c000.htm#_D2FC">D2FC</a> <a href="0000a000.htm#_AE08">AE08</a></td></tr>
+</table> 
+<h2 id=diagram>Code flow diagram:</h2>
+    <object data='sub_000001c0.svg' width='170pt'> </object>
+<h2 id=deco>Decompiled:</h2> 
+<pre>
+return 5216
+!end
+</pre> 
+<h2 id=refs>References:</h2> 
+<table>
+<tr><th>Address</th><th>Value</th></tr> 
+</table>
+<h2 id=calls>Calls:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+</table>
+<h2 id=callers>Called by:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+</table>
+
+</div>
+</body> 
+</html> 
+

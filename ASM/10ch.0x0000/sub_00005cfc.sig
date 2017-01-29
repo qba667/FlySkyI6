@@ -1,0 +1,2 @@
+S'LCD_clear5ddc 0x5de8: pointer to 0x4a4b\n5dfc @timerSendPacket\n5e04 @timerSendPacket\n5e0c @send_to_lcd\n5e14 @send_to_lcd\n5e1c @send_to_lcd\n5e24 @send_to_lcd\n5e2c @send_to_lcd\n5e34 @send_to_lcd\n5e3c @send_to_lcd\n5e44 @send_to_lcd\n5e4c @send_to_lcd\n5ea0 @send_to_lcd\n5ea8 0x5eae: pointer to 0x3401\n5eb8 0x5e7a: pointer to 0x20b0\nmain_screen+92\n'
+.

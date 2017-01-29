@@ -1,0 +1,2 @@
+S'sub_21362142 0x2148: pointer to 0x2001\nROMBASE+0x215a\nROMBASE+0x2162\n'
+.

@@ -1,0 +1,2 @@
+S'getSensorNameObsolet5300 0x5314: pointer to 0x287d\n5304 0x5330: pointer to 0x4809\n5308 0x532c: pointer to 0x4809\n530c 0x5328: pointer to 0x4809\n5310 0x5324: pointer to 0x4809\n'
+.

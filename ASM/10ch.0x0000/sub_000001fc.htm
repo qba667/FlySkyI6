@@ -1,0 +1,80 @@
+<html> 
+<head><title>nullsub_1
+</title>
+<link rel="stylesheet" href="disasm.css" type="text/css" />
+</head> 
+<body> 
+<div id='toolbar'>
+<ul>
+<li><a href="functions-by-addr.htm">Functions</a></li>
+<li><a href="names-by-addr.htm">Names</a></li>
+<li><a href="strings.htm">Strings</a></li>
+<li><a href="tasks.htm">Tasks</a></li>
+<li><a href="semaphores.htm">Semaphores</a></li>
+<li><a href="msgqueues.htm">MsgQueues</a></li>
+<li><a href="properties.htm">Properties</a></li>
+<li><a href="eventprocs.htm">Eventprocs</a></li>
+<li><a href="statemachines.htm">FSMs</a></li>
+</ul>
+</div>
+<div id='main'>
+<h1>nullsub_1
+</h1>
+<h2>Function nullsub_1 at 1FC in 10ch.0x0000.bin</h2>
+
+
+<p>Command shortcuts (edit, copy & paste into ARM console):</p>
+<textarea rows="7" cols="80" spellcheck="false">
+dump = D[0] # adjust it if you've loaded more dumps
+n 1FC nullsub_1
+html.func_full(dump.Fun(0x1FC))
+html.update(dump)
+f = dump.Fun(0x1FC)
+dec 0x1FC
+</textarea>
+<br>
+<div class="funcmenu">
+<ul>
+<li><a href="#disasm">Disassembly</a></li>
+<li><a href="#diagram">Code flow diagram</a></li>
+<li><a href="#deco">Decompiled</a></li>
+<li><a href="#refs">References</a></li>
+<li><a href="#calls">Calls</a></li>
+<li><a href="#callers">Called by</a></li>
+</ul>
+</div>
+
+<h2 id=disasm>Disassembly:</h2> 
+<table> 
+<!--
+<tr><th>Address</th><th>Data</th><th>Code</th><th></th></tr> 
+-->
+        <tr><td class=funcstart colspan=6>Function start: <a href="sub_000001fc.htm">nullsub_1</a></td></tr>
+        <tr><td class=nstub colspan=6>NSTUB(0x<a href="00000000.htm#_1FC">1FC</a>, nullsub_1)</td></tr>
+</table> 
+<h2 id=diagram>Code flow diagram:</h2>
+    <object data='sub_000001fc.svg' width='8pt'> </object>
+<h2 id=deco>Decompiled:</h2> 
+<pre>
+return arg0
+!end
+</pre> 
+<h2 id=refs>References:</h2> 
+<table>
+<tr><th>Address</th><th>Value</th></tr> 
+</table>
+<h2 id=calls>Calls:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+</table>
+<h2 id=callers>Called by:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+            <tr><td class=addr id=_36E2><a href="sub_000036e0.htm#_36E2">SensorsList+2</a>:</td><td class=inst><span class="mnem">sub</span><span class="flags"></span></td><td class=parm>sp, #508</td><td class=comm>; <a href="sub_000001fc.htm">nullsub_1</a></td><td> </td></tr>
+            <tr><td class=addr id=_3866><a href="sub_000036e0.htm#_3866">SensorsList+390</a>:</td><td class=inst><span class="mnem">add</span><span class="flags"></span></td><td class=parm>sp, #508</td><td class=comm>; <a href="sub_000001fc.htm">nullsub_1</a></td><td> </td></tr>
+</table>
+
+</div>
+</body> 
+</html> 
+

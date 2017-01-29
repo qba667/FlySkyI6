@@ -1,0 +1,121 @@
+<html> 
+<head><title>RemapSensorIndex
+</title>
+<link rel="stylesheet" href="disasm.css" type="text/css" />
+</head> 
+<body> 
+<div id='toolbar'>
+<ul>
+<li><a href="functions-by-addr.htm">Functions</a></li>
+<li><a href="names-by-addr.htm">Names</a></li>
+<li><a href="strings.htm">Strings</a></li>
+<li><a href="tasks.htm">Tasks</a></li>
+<li><a href="semaphores.htm">Semaphores</a></li>
+<li><a href="msgqueues.htm">MsgQueues</a></li>
+<li><a href="properties.htm">Properties</a></li>
+<li><a href="eventprocs.htm">Eventprocs</a></li>
+<li><a href="statemachines.htm">FSMs</a></li>
+</ul>
+</div>
+<div id='main'>
+<h1>RemapSensorIndex
+</h1>
+<h2>Function RemapSensorIndex at F020 in 10ch.0x0000.bin</h2>
+
+
+<p>Command shortcuts (edit, copy & paste into ARM console):</p>
+<textarea rows="7" cols="80" spellcheck="false">
+dump = D[0] # adjust it if you've loaded more dumps
+n F020 RemapSensorIndex
+html.func_full(dump.Fun(0xF020))
+html.update(dump)
+f = dump.Fun(0xF020)
+dec 0xF020
+</textarea>
+<br>
+<div class="funcmenu">
+<ul>
+<li><a href="#disasm">Disassembly</a></li>
+<li><a href="#diagram">Code flow diagram</a></li>
+<li><a href="#deco">Decompiled</a></li>
+<li><a href="#refs">References</a></li>
+<li><a href="#calls">Calls</a></li>
+<li><a href="#callers">Called by</a></li>
+</ul>
+</div>
+
+<h2 id=disasm>Disassembly:</h2> 
+<table> 
+<!--
+<tr><th>Address</th><th>Data</th><th>Code</th><th></th></tr> 
+-->
+        <tr><td class=funcstart colspan=6>Function start: <a href="sub_0000f020.htm">RemapSensorIndex</a></td></tr>
+        <tr><td class=nstub colspan=6>NSTUB(0x<a href="0000e000.htm#_F020">F020</a>, RemapSensorIndex)</td></tr>
+            <tr><td class=addr id=_F020><a href="0000e000.htm#_F020">F020</a>:</td><td class=data>b500      </td><td class=inst><span class="mnem">push</span><span class="flags"></span></td><td class=parm>{lr}</td><td class=comm></td><td class=refs><a href="00002000.htm#_2FA0">2FA0</a> <a href="00006000.htm#_67AC">67AC</a> <a href="0000e000.htm#_F01C">&#x2B01;</a> <a href="0000e000.htm#_FB60">FB60</a></td></tr>
+            <tr><td class=addr id=_F024><a href="0000e000.htm#_F024">F024</a>:</td><td class=data>db1f      </td><td class=inst><span class="mnem">b</span><span class="flags">lt.n</span></td><td class=parm><a href="0000e000.htm#_F066">F066</a></td><td class=comm></td><td class=refs><a href="0000e000.htm#_F020">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F028><a href="0000e000.htm#_F028">F028</a>:</td><td class=data>dc1d      </td><td class=inst><span class="mnem">b</span><span class="flags">gt.n</span></td><td class=parm><a href="0000e000.htm#_F066">F066</a></td><td class=comm></td><td class=refs><a href="0000e000.htm#_F024">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F02C><a href="0000e000.htm#_F02C">F02C</a>:</td><td class=data>d100      </td><td class=inst><span class="mnem">b</span><span class="flags">ne.n</span></td><td class=parm><a href="0000e000.htm#_F030">F030</a></td><td class=comm></td><td class=refs><a href="0000e000.htm#_F028">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F030><a href="0000e000.htm#_F030">F030</a>:</td><td class=data>280f      </td><td class=inst><span class="mnem">cmp</span><span class="flags"></span></td><td class=parm>r0, #15</td><td class=comm></td><td class=refs><a href="0000e000.htm#_F02C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F034><a href="0000e000.htm#_F034">F034</a>:</td><td class=data>287c      </td><td class=inst><span class="mnem">cmp</span><span class="flags"></span></td><td class=parm>r0, #124</td><td class=comm>; 0x7c: pointer to 0x1b3</td><td class=refs><a href="0000e000.htm#_F030">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F038><a href="0000e000.htm#_F038">F038</a>:</td><td class=data>287f      </td><td class=inst><span class="mnem">cmp</span><span class="flags"></span></td><td class=parm>r0, #127</td><td class=comm>; 0x7f</td><td class=refs><a href="0000e000.htm#_F034">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F03C><a href="0000e000.htm#_F03C">F03C</a>:</td><td class=data>e004      </td><td class=inst><span class="mnem">b</span><span class="flags">.n</span></td><td class=parm>**'list'</td><td class=comm></td><td class=refs><a href="0000e000.htm#_F038">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F040><a href="0000e000.htm#_F040">F040</a>:</td><td class=data>dd05      </td><td class=inst><span class="mnem">b</span><span class="flags">le.n</span></td><td class=parm><a href="0000e000.htm#_F04E">F04E</a></td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_F044><a href="0000e000.htm#_F044">F044</a>:</td><td class=data>da06      </td><td class=inst><span class="mnem">b</span><span class="flags">ge.n</span></td><td class=parm><a href="0000e000.htm#_F054">F054</a></td><td class=comm></td><td class=refs><a href="0000e000.htm#_F040">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F048><a href="0000e000.htm#_F048">F048</a>:</td><td class=data>387c      </td><td class=inst><span class="mnem">sub</span><span class="flags">s</span></td><td class=parm>r0, #124</td><td class=comm>; 0x7c: pointer to 0x1b3</td><td class=refs><a href="0000e000.htm#_F03C">F03C</a> <a href="0000e000.htm#_F044">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F04C><a href="0000e000.htm#_F04C">F04C</a>:</td><td class=data>e008      </td><td class=inst><span class="mnem">b</span><span class="flags">.n</span></td><td class=parm><a href="0000e000.htm#_F060">F060</a></td><td class=comm></td><td class=refs><a href="0000e000.htm#_F048">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F050><a href="0000e000.htm#_F050">F050</a>:</td><td class=data>31a0      </td><td class=inst><span class="mnem">add</span><span class="flags">s</span></td><td class=parm>r1, #160</td><td class=comm>; 0xa0: pointer to 0x1b3</td><td class=refs></td></tr>
+            <tr><td class=addr id=_F054><a href="0000e000.htm#_F054">F054</a>:</td><td class=data>38f9      </td><td class=inst><span class="mnem">sub</span><span class="flags">s</span></td><td class=parm>r0, #249</td><td class=comm>; 0xf9</td><td class=refs><a href="0000e000.htm#_F050">&#x2B01;</a> <a href="0000e000.htm#_F044">F044</a></td></tr>
+            <tr><td class=addr id=_F058><a href="0000e000.htm#_F058">F058</a>:</td><td class=data>e002      </td><td class=inst><span class="mnem">b</span><span class="flags">.n</span></td><td class=parm><a href="0000e000.htm#_F060">F060</a></td><td class=comm></td><td class=refs><a href="0000e000.htm#_F054">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F05C><a href="0000e000.htm#_F05C">F05C</a>:</td><td class=data>1808      </td><td class=inst><span class="mnem">add</span><span class="flags">s</span></td><td class=parm>r0, r1, r0</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_F060><a href="0000e000.htm#_F060">F060</a>:</td><td class=data>00c0      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r0, #3</td><td class=comm></td><td class=refs><a href="0000e000.htm#_F058">F058</a> <a href="0000e000.htm#_EFB4">EFB4</a> <a href="0000e000.htm#_F032">F032</a> <a href="0000e000.htm#_F05C">&#x2B01;</a> <a href="0000e000.htm#_F04C">F04C</a></td></tr>
+            <tr><td class=addr id=_F064><a href="0000e000.htm#_F064">F064</a>:</td><td class=data>e001      </td><td class=inst><span class="mnem">b</span><span class="flags">.n</span></td><td class=parm><a href="0000e000.htm#_F06A">F06A</a></td><td class=comm></td><td class=refs><a href="0000e000.htm#_F060">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_F068><a href="0000e000.htm#_F068">F068</a>:</td><td class=data>1808      </td><td class=inst><span class="mnem">add</span><span class="flags">s</span></td><td class=parm>r0, r1, r0</td><td class=comm></td><td class=refs></td></tr>
+        <tr></td><td class=funcend colspan=6>Function end: RemapSensorIndex</td></tr>
+</table> 
+<h2 id=diagram>Code flow diagram:</h2>
+    <object data='sub_0000f020.svg' width='437pt'> </object>
+<h2 id=deco>Decompiled:</h2> 
+<pre>
+whoops...
+</pre> 
+<h2 id=refs>References:</h2> 
+<table>
+<tr><th>Address</th><th>Value</th></tr> 
+    <tr><td class=addr><a href="sub_0000f020.htm#_F024">RemapSensorIndex+4</a>:</td><td class=instr>0xf066: pointer to 0x20e0</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000f020.htm#_F028">RemapSensorIndex+8</a>:</td><td class=instr>0xf066: pointer to 0x20e0</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000f020.htm#_F02C">RemapSensorIndex+12</a>:</td><td class=instr>0xf030: pointer to 0x280f</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000f020.htm#_F03C">RemapSensorIndex+28</a>:</td><td class=instr>0xf048: pointer to 'list'</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000f020.htm#_F040">RemapSensorIndex+32</a>:</td><td class=instr>0xf04e: pointer to 0x3880</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000f020.htm#_F044">RemapSensorIndex+36</a>:</td><td class=instr>0xf054: pointer to 0x38f9</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000f020.htm#_F04C">RemapSensorIndex+44</a>:</td><td class=instr>0xf060: pointer to 0xc0</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000f020.htm#_F058">RemapSensorIndex+56</a>:</td><td class=instr>0xf060: pointer to 0xc0</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000f020.htm#_F064">RemapSensorIndex+68</a>:</td><td class=instr>0xf06a: pointer to 0xbd00</td>
+    </tr>
+</table>
+<h2 id=calls>Calls:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+        <tr><td class=addr><a href="sub_0000f020.htm#_F024">RemapSensorIndex+4</a>:</td><td colspan=4 class=instr>sub_F066(arg0)</td></tr>
+        <tr><td class=addr><a href="sub_0000f020.htm#_F028">RemapSensorIndex+8</a>:</td><td colspan=4 class=instr>sub_F066(arg0)</td></tr>
+        <tr><td class=addr><a href="sub_0000f020.htm#_F02C">RemapSensorIndex+12</a>:</td><td colspan=4 class=instr>sub_F030(arg0)</td></tr>
+        <tr><td class=addr><a href="sub_0000f020.htm#_F03C">RemapSensorIndex+28</a>:</td><td colspan=4 class=instr>sub_F048(arg0)</td></tr>
+        <tr><td class=addr><a href="sub_0000f020.htm#_F04C">RemapSensorIndex+44</a>:</td><td colspan=4 class=instr>sub_F060(unk_R0)</td></tr>
+        <tr><td class=addr><a href="sub_0000f020.htm#_F064">RemapSensorIndex+68</a>:</td><td colspan=4 class=instr>sub_F06A()</td></tr>
+</table>
+<h2 id=callers>Called by:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+</table>
+
+</div>
+</body> 
+</html> 
+

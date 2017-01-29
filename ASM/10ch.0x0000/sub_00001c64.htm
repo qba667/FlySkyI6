@@ -1,0 +1,100 @@
+<html> 
+<head><title>sub_1C64
+</title>
+<link rel="stylesheet" href="disasm.css" type="text/css" />
+</head> 
+<body> 
+<div id='toolbar'>
+<ul>
+<li><a href="functions-by-addr.htm">Functions</a></li>
+<li><a href="names-by-addr.htm">Names</a></li>
+<li><a href="strings.htm">Strings</a></li>
+<li><a href="tasks.htm">Tasks</a></li>
+<li><a href="semaphores.htm">Semaphores</a></li>
+<li><a href="msgqueues.htm">MsgQueues</a></li>
+<li><a href="properties.htm">Properties</a></li>
+<li><a href="eventprocs.htm">Eventprocs</a></li>
+<li><a href="statemachines.htm">FSMs</a></li>
+</ul>
+</div>
+<div id='main'>
+<h1>sub_1C64
+</h1>
+<h2>Function sub_1C64 at 1C64 in 10ch.0x0000.bin</h2>
+
+
+<p>Command shortcuts (edit, copy & paste into ARM console):</p>
+<textarea rows="7" cols="80" spellcheck="false">
+dump = D[0] # adjust it if you've loaded more dumps
+n 1C64 sub_1C64
+html.func_full(dump.Fun(0x1C64))
+html.update(dump)
+f = dump.Fun(0x1C64)
+dec 0x1C64
+</textarea>
+<br>
+<div class="funcmenu">
+<ul>
+<li><a href="#disasm">Disassembly</a></li>
+<li><a href="#diagram">Code flow diagram</a></li>
+<li><a href="#deco">Decompiled</a></li>
+<li><a href="#refs">References</a></li>
+<li><a href="#calls">Calls</a></li>
+<li><a href="#callers">Called by</a></li>
+</ul>
+</div>
+
+<h2 id=disasm>Disassembly:</h2> 
+<table> 
+<!--
+<tr><th>Address</th><th>Data</th><th>Code</th><th></th></tr> 
+-->
+        <tr><td class=funcstart colspan=6>Function start: <a href="sub_00001c64.htm">sub_1C64</a></td></tr>
+            <tr><td class=addr id=_1C64><a href="00000000.htm#_1C64">1C64</a>:</td><td class=data>4603      </td><td class=inst><span class="mnem">mov</span><span class="flags"></span></td><td class=parm>r3, r0</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C60">&#x2B01;</a> <a href="00002000.htm#_3772">3772</a> <a href="00006000.htm#_6724">6724</a></td></tr>
+            <tr><td class=addr id=_1C68><a href="00000000.htm#_1C68">1C68</a>:</td><td class=data>4602      </td><td class=inst><span class="mnem">mov</span><span class="flags"></span></td><td class=parm>r2, r0</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C64">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1C6C><a href="00000000.htm#_1C6C">1C6C</a>:</td><td class=data>079b      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r3, r3, #30</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C68">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1C70><a href="00000000.htm#_1C70">1C70</a>:</td><td class=data>4c0e      </td><td class=inst><span class="mnem">ldr</span><span class="flags"></span></td><td class=parm>r4, [pc, #56]</td><td class=comm>; (1cac )</td><td class=refs><a href="00000000.htm#_1C6C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1C74><a href="00000000.htm#_1C74">1C74</a>:</td><td class=data>e000      </td><td class=inst><span class="mnem">b</span><span class="flags">.n</span></td><td class=parm><a href="00000000.htm#_1C78">1C78</a></td><td class=comm></td><td class=refs><a href="00000000.htm#_1C70">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1C78><a href="00000000.htm#_1C78">1C78</a>:</td><td class=data>c908      </td><td class=inst><span class="mnem">ldm</span><span class="flags">ia</span></td><td class=parm>r1!, {r3}</td><td class=comm></td><td class=refs><a href="00002000.htm#_3072">3072</a> <a href="00000000.htm#_1C74">&#x2B01;</a> <a href="00002000.htm#_2A26">2A26</a></td></tr>
+            <tr><td class=addr id=_1C7C><a href="00000000.htm#_1C7C">1C7C</a>:</td><td class=data>439d      </td><td class=inst><span class="mnem">bic</span><span class="flags">s</span></td><td class=parm>r5, r3</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C78">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1C80><a href="00000000.htm#_1C80">1C80</a>:</td><td class=data>d0f9      </td><td class=inst><span class="mnem">b</span><span class="flags">eq.n</span></td><td class=parm><a href="00000000.htm#_1C76">1C76</a></td><td class=comm></td><td class=refs><a href="00000000.htm#_1C7C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1C84><a href="00000000.htm#_1C84">1C84</a>:</td><td class=data>7011      </td><td class=inst><span class="mnem">str</span><span class="flags">b</span></td><td class=parm>r1, [r2, #0]</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C80">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1C88><a href="00000000.htm#_1C88">1C88</a>:</td><td class=data>2900      </td><td class=inst><span class="mnem">cmp</span><span class="flags"></span></td><td class=parm>r1, #0</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C84">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1C8C><a href="00000000.htm#_1C8C">1C8C</a>:</td><td class=data>0a1b      </td><td class=inst><span class="mnem">lsr</span><span class="flags">s</span></td><td class=parm>r3, r3, #8</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C88">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1C90><a href="00000000.htm#_1C90">1C90</a>:</td><td class=data>780b      </td><td class=inst><span class="mnem">ldr</span><span class="flags">b</span></td><td class=parm>r3, [r1, #0]</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C8C">&#x2B01;</a> <a href="00000000.htm#_1CA6">1CA6</a> <a href="00000000.htm#_1C6E">1C6E</a></td></tr>
+            <tr><td class=addr id=_1C94><a href="00000000.htm#_1C94">1C94</a>:</td><td class=data>7013      </td><td class=inst><span class="mnem">str</span><span class="flags">b</span></td><td class=parm>r3, [r2, #0]</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C90">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1C98><a href="00000000.htm#_1C98">1C98</a>:</td><td class=data>2b00      </td><td class=inst><span class="mnem">cmp</span><span class="flags"></span></td><td class=parm>r3, #0</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C94">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1C9C><a href="00000000.htm#_1C9C">1C9C</a>:</td><td class=data>780b      </td><td class=inst><span class="mnem">ldr</span><span class="flags">b</span></td><td class=parm>r3, [r1, #0]</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C98">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1CA0><a href="00000000.htm#_1CA0">1CA0</a>:</td><td class=data>7013      </td><td class=inst><span class="mnem">str</span><span class="flags">b</span></td><td class=parm>r3, [r2, #0]</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C9C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1CA4><a href="00000000.htm#_1CA4">1CA4</a>:</td><td class=data>2b00      </td><td class=inst><span class="mnem">cmp</span><span class="flags"></span></td><td class=parm>r3, #0</td><td class=comm></td><td class=refs><a href="00000000.htm#_1CA0">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1CA8><a href="00000000.htm#_1CA8">1CA8</a>:</td><td class=data>bd70      </td><td class=inst><span class="mnem">pop</span><span class="flags"></span></td><td class=parm>{r4, r5, r6, pc}</td><td class=comm></td><td class=refs><a href="00000000.htm#_1C8A">1C8A</a> <a href="00000000.htm#_1CA4">&#x2B01;</a> <a href="00000000.htm#_1C9A">1C9A</a></td></tr>
+</table> 
+<h2 id=diagram>Code flow diagram:</h2>
+    <object data='sub_00001c64.svg' width='175pt'> </object>
+<h2 id=deco>Decompiled:</h2> 
+<pre>
+whoops...
+</pre> 
+<h2 id=refs>References:</h2> 
+<table>
+<tr><th>Address</th><th>Value</th></tr> 
+    <tr><td class=addr><a href="sub_00001c64.htm#_1C74">sub_1C64+16</a>:</td><td class=instr>0x1c78: pointer to 0xc908</td>
+    </tr>
+    <tr><td class=addr><a href="sub_00001c64.htm#_1C80">sub_1C64+28</a>:</td><td class=instr>0x1c76: pointer to 0xc208</td>
+    </tr>
+</table>
+<h2 id=calls>Calls:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+        <tr><td class=addr><a href="sub_00001c64.htm#_1C74">sub_1C64+16</a>:</td><td colspan=4 class=instr>sub_1C78(arg0)</td></tr>
+        <tr><td class=addr><a href="sub_00001c64.htm#_1C80">sub_1C64+28</a>:</td><td colspan=4 class=instr>sub_1C76(arg0)</td></tr>
+</table>
+<h2 id=callers>Called by:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+</table>
+
+</div>
+</body> 
+</html> 
+

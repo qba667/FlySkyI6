@@ -1,0 +1,2 @@
+S'printNumberAsStringAta2f0 0xa2f6: pointer to 0x2230\na2fc @setupDMA\na308 @div\na314 0xa304: pointer to 0x210a\na318 0xa31e: pointer to 0xbdf8\nsetFactVal+114\ntypeSelectPage+28\nROMBASE+0xbf1e\nmain_screen+1494\nmodelCopyPage+26\nmodelCopyPage+100\nmodelNamePAge+28\nmodelNamePAge+374\nmodelResetPage+36\nmodelResetPage+222\nmodelSelectPage+26\n'
+.

@@ -1,0 +1,2 @@
+S'SticksAdjustPageae4c @displayPageHeader\nae58 @displayTextAt2\nae64 @displayTextAt2\nae70 @displayTextAt2\nae7c @displayTextAt2\nae80 @LCD_updateCALL\nae8c @getKeyCode\naea8 0xaebe: pointer to 0x4629\naeb8 @beep\naebc 0xaed2: pointer to 0x2d04\naed0 0xaea0: pointer to 0xa8\naed4 0xae8c\naf3c 0xaf40: pointer to 0x8971\naf44 0xaf48: pointer to 0x89b1\naf60 0xaf64: pointer to 0x8af1\naf68 0xaf6c\naf6c @sub_2574\naf74 @getKeyCode\naf94 0xaf9c: pointer to @divBy10\nafa0 @beep\nafb4 0xaf8a: pointer to 0x2006\nafb8 0xaf24: pointer to 0x8831\n'
+.

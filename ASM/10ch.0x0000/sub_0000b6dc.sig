@@ -1,0 +1,2 @@
+S'sub_B6DCb6f0 0xb764: pointer to 0x696a\nb704 0xb738: pointer to 0x2019\nb768 0xb762: pointer to 0xbdf8\n'
+.

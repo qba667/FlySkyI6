@@ -1,0 +1,2 @@
+S'sensorsFunction5390 0x53b0: pointer to 0x3401\n53b4 0x538a: pointer to 0xe1\nformatSensorData+8\nsub_61EC+176\nsub_61EC+264\nsensorsListMainScreen+62\nsensorsListMainScreen+80\nsensorsListMainScreen+98\nsensorsListMainScreen+124\nsensorsListMainScreen+140\nsensorsListMainScreen+156\nROMBASE+0xf766\n'
+.

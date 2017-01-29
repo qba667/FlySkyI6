@@ -1,0 +1,2 @@
+S'StudentModePageb15c @displayPageHeader\nb170 @displayTextAt2\nb17c @displayTextAt2\nb188 @displayTextAt2\nb194 @displayTextAt2\nb198 @LCD_updateCALL\nb19c @getKeyCode\nb1ac 0xb1e8\nb1e8 @sub_23F4\n'
+.

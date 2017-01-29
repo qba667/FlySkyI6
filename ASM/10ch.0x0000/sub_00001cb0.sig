@@ -1,0 +1,2 @@
+S'strLength1cb4 0x1cbe: pointer to 0x781\n1cbc 0x1cda: pointer to 0x1b00\n1cc0 0x1cb6: pointer to 0x7801\n1cd4 0x1cde: pointer to 0x40a\n1ce0 0x1ce6: pointer to 0x209\n1ce8 0x1ce4: pointer to 0xbd30\ndisplayTextAt2+10\ndisplayTextFromRight+10\nsensorsListMainScreen+402\nsensorsListMainScreen+570\ndisplayPageHeader+4\ndisplayPageHeader+64\n'
+.

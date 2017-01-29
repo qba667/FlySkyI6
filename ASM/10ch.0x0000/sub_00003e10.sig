@@ -1,0 +1,2 @@
+S'readEeprom3e3c @sendPacketWithTimer\n3e44 0x3e3c\n3e5c @i2cMethod\n3e64 0x3e70: pointer to 0x7920\n3e74 0x3e78: pointer to 0xb005\nmain_screen+44\nsettingsValidation+20\nsettingsValidation+100\nloadTimerSettingsFromEeprom+14\n'
+.

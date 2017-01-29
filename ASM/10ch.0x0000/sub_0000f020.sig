@@ -1,0 +1,2 @@
+S"RemapSensorIndexf024 0xf066: pointer to 0x20e0\nf028 0xf066: pointer to 0x20e0\nf02c 0xf030: pointer to 0x280f\nf03c 0xf048: pointer to 'list'\nf040 0xf04e: pointer to 0x3880\nf044 0xf054: pointer to 0x38f9\nf04c 0xf060: pointer to 0xc0\nf058 0xf060: pointer to 0xc0\nf064 0xf06a: pointer to 0xbd00\nChooseSensors+112\nsensorsListMainScreen+516\nGetSensorName+4\n"
+.

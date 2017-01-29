@@ -1,0 +1,2 @@
+S"printTimerf828 0xf850\nf82c 0xf832: pointer to 0x4b78\nf830 0xf83a: pointer to 0x4b77\nf850 @isTimerActive\nf85c 0xf862: pointer to 0x603c\nf874 0xf87c: pointer to 0x253c\nf880 0xf888: pointer to 0x253f\nf898 0xf89e: pointer to 0x1c38\nf89c 0xf8a2: pointer to 'a\\x08xpG'\nf8a8 @displaySmallTextAt\nmain_screen+476\n"
+.

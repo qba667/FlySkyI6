@@ -1,0 +1,2 @@
+S'ReverseMenu9954 @displayPageHeader\n9960 @displayTextAt2\n996c @displayTextAt\n9978 @displayTextAt\n99a4 @displayTextAt\n99b4 0x99ba: pointer to 0x4828\n99b8 0x99bc: pointer to 0x4629\n99cc @LCD_updateCALL\n99d0 @getKeyCode\n9a00 @sub_9BC0\n9a20 0x9a26: pointer to 0x3001\n9a24 0x9a28: pointer to 0x9000\n9a30 0x994e\n'
+.

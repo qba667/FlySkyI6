@@ -1,0 +1,191 @@
+<html> 
+<head><title>keyTestPage
+</title>
+<link rel="stylesheet" href="disasm.css" type="text/css" />
+</head> 
+<body> 
+<div id='toolbar'>
+<ul>
+<li><a href="functions-by-addr.htm">Functions</a></li>
+<li><a href="names-by-addr.htm">Names</a></li>
+<li><a href="strings.htm">Strings</a></li>
+<li><a href="tasks.htm">Tasks</a></li>
+<li><a href="semaphores.htm">Semaphores</a></li>
+<li><a href="msgqueues.htm">MsgQueues</a></li>
+<li><a href="properties.htm">Properties</a></li>
+<li><a href="eventprocs.htm">Eventprocs</a></li>
+<li><a href="statemachines.htm">FSMs</a></li>
+</ul>
+</div>
+<div id='main'>
+<h1>keyTestPage
+</h1>
+<h2>Function keyTestPage at 595C in 10ch.0x0000.bin</h2>
+
+
+<p>Command shortcuts (edit, copy & paste into ARM console):</p>
+<textarea rows="7" cols="80" spellcheck="false">
+dump = D[0] # adjust it if you've loaded more dumps
+n 595C keyTestPage
+html.func_full(dump.Fun(0x595C))
+html.update(dump)
+f = dump.Fun(0x595C)
+dec 0x595C
+</textarea>
+<br>
+<div class="funcmenu">
+<ul>
+<li><a href="#disasm">Disassembly</a></li>
+<li><a href="#diagram">Code flow diagram</a></li>
+<li><a href="#deco">Decompiled</a></li>
+<li><a href="#refs">References</a></li>
+<li><a href="#calls">Calls</a></li>
+<li><a href="#callers">Called by</a></li>
+</ul>
+</div>
+
+<h2 id=disasm>Disassembly:</h2> 
+<table> 
+<!--
+<tr><th>Address</th><th>Data</th><th>Code</th><th></th></tr> 
+-->
+        <tr><td class=funcstart colspan=6>Function start: <a href="sub_0000595c.htm">keyTestPage</a></td></tr>
+        <tr><td class=nstub colspan=6>NSTUB(0x<a href="00004000.htm#_595C">595C</a>, keyTestPage)</td></tr>
+            <tr><td class=addr id=_595C><a href="00004000.htm#_595C">595C</a>:</td><td class=data>b5f8      </td><td class=inst><span class="mnem">push</span><span class="flags"></span></td><td class=parm>{r3, r4, r5, r6, r7, lr}</td><td class=comm></td><td class=refs><a href="00004000.htm#_5958">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5960><a href="00004000.htm#_5960">5960</a>:</td><td class=data>2501      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r5, #1</td><td class=comm></td><td class=refs><a href="00004000.htm#_595C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5964><a href="00004000.htm#_5964">5964</a>:</td><td class=data>7085      </td><td class=inst><span class="mnem">str</span><span class="flags">b</span></td><td class=parm>r5, [r0, #2]</td><td class=comm></td><td class=refs><a href="00004000.htm#_5960">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5968><a href="00004000.htm#_5968">5968</a>:</td><td class=data>4e55      </td><td class=inst><span class="mnem">ldr</span><span class="flags"></span></td><td class=parm>r6, [pc, #340]</td><td class=comm>; (5ac0 )</td><td class=refs><a href="00004000.htm#_5964">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5974><a href="00004000.htm#_5974">5974</a>:</td><td class=data>03e0      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r4, #15</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5978><a href="00004000.htm#_5978">5978</a>:</td><td class=data>220c      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r2, #12</td><td class=comm></td><td class=refs><a href="00004000.htm#_5974">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_597C><a href="00004000.htm#_597C">597C</a>:</td><td class=data>a052      </td><td class=inst><span class="mnem">add</span><span class="flags"></span></td><td class=parm>r0, pc, #328</td><td class=comm>; *'SWB'</td><td class=refs><a href="00004000.htm#_5978">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5984><a href="00004000.htm#_5984">5984</a>:</td><td class=data>0fc3      </td><td class=inst><span class="mnem">lsr</span><span class="flags">s</span></td><td class=parm>r3, r0, #31</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5988><a href="00004000.htm#_5988">5988</a>:</td><td class=data>2124      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #36</td><td class=comm>; 0x24</td><td class=refs><a href="00004000.htm#_5984">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5990><a href="00004000.htm#_5990">5990</a>:</td><td class=data>0360      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r4, #13</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5994><a href="00004000.htm#_5994">5994</a>:</td><td class=data>220c      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r2, #12</td><td class=comm></td><td class=refs><a href="00004000.htm#_5990">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5998><a href="00004000.htm#_5998">5998</a>:</td><td class=data>a04d      </td><td class=inst><span class="mnem">add</span><span class="flags"></span></td><td class=parm>r0, pc, #308</td><td class=comm>; *'SWD'</td><td class=refs><a href="00004000.htm#_5994">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_59A0><a href="00004000.htm#_59A0">59A0</a>:</td><td class=data>0fc3      </td><td class=inst><span class="mnem">lsr</span><span class="flags">s</span></td><td class=parm>r3, r0, #31</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_59A4><a href="00004000.htm#_59A4">59A4</a>:</td><td class=data>2164      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #100</td><td class=comm>; 0x64: pointer to 0x1b3</td><td class=refs><a href="00004000.htm#_59A0">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_59AC><a href="00004000.htm#_59AC">59AC</a>:</td><td class=data>06a0      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r4, #26</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_59B0><a href="00004000.htm#_59B0">59B0</a>:</td><td class=data>2217      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r2, #23</td><td class=comm></td><td class=refs><a href="00004000.htm#_59AC">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_59B4><a href="00004000.htm#_59B4">59B4</a>:</td><td class=data>a048      </td><td class=inst><span class="mnem">add</span><span class="flags"></span></td><td class=parm>r0, pc, #288</td><td class=comm>; *'TR6'</td><td class=refs><a href="00004000.htm#_59B0">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_59BC><a href="00004000.htm#_59BC">59BC</a>:</td><td class=data>0fc3      </td><td class=inst><span class="mnem">lsr</span><span class="flags">s</span></td><td class=parm>r3, r0, #31</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_59C0><a href="00004000.htm#_59C0">59C0</a>:</td><td class=data>2124      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #36</td><td class=comm>; 0x24</td><td class=refs><a href="00004000.htm#_59BC">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_59C8><a href="00004000.htm#_59C8">59C8</a>:</td><td class=data>0720      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r4, #28</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_59CC><a href="00004000.htm#_59CC">59CC</a>:</td><td class=data>2217      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r2, #23</td><td class=comm></td><td class=refs><a href="00004000.htm#_59C8">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_59D0><a href="00004000.htm#_59D0">59D0</a>:</td><td class=data>a043      </td><td class=inst><span class="mnem">add</span><span class="flags"></span></td><td class=parm>r0, pc, #268</td><td class=comm>; *'TR4'</td><td class=refs><a href="00004000.htm#_59CC">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_59D8><a href="00004000.htm#_59D8">59D8</a>:</td><td class=data>0fc3      </td><td class=inst><span class="mnem">lsr</span><span class="flags">s</span></td><td class=parm>r3, r0, #31</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_59DC><a href="00004000.htm#_59DC">59DC</a>:</td><td class=data>2164      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #100</td><td class=comm>; 0x64: pointer to 0x1b3</td><td class=refs><a href="00004000.htm#_59D8">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_59E4><a href="00004000.htm#_59E4">59E4</a>:</td><td class=data>0620      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r4, #24</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_59E8><a href="00004000.htm#_59E8">59E8</a>:</td><td class=data>2222      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r2, #34</td><td class=comm>; 0x22</td><td class=refs><a href="00002000.htm#_363C">363C</a> <a href="00004000.htm#_59E4">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_59EC><a href="00004000.htm#_59EC">59EC</a>:</td><td class=data>a03e      </td><td class=inst><span class="mnem">add</span><span class="flags"></span></td><td class=parm>r0, pc, #248</td><td class=comm>; *'TR8'</td><td class=refs><a href="00004000.htm#_59E8">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_59F4><a href="00004000.htm#_59F4">59F4</a>:</td><td class=data>0fc3      </td><td class=inst><span class="mnem">lsr</span><span class="flags">s</span></td><td class=parm>r3, r0, #31</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_59F8><a href="00004000.htm#_59F8">59F8</a>:</td><td class=data>2124      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #36</td><td class=comm>; 0x24</td><td class=refs><a href="00004000.htm#_59F4">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A00><a href="00004000.htm#_5A00">5A00</a>:</td><td class=data>07a0      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r4, #30</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5A04><a href="00004000.htm#_5A04">5A04</a>:</td><td class=data>2222      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r2, #34</td><td class=comm>; 0x22</td><td class=refs><a href="00004000.htm#_5A00">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A08><a href="00004000.htm#_5A08">5A08</a>:</td><td class=data>a039      </td><td class=inst><span class="mnem">add</span><span class="flags"></span></td><td class=parm>r0, pc, #228</td><td class=comm>; *'TR2'</td><td class=refs><a href="00004000.htm#_5A04">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A10><a href="00004000.htm#_5A10">5A10</a>:</td><td class=data>0fdb      </td><td class=inst><span class="mnem">lsr</span><span class="flags">s</span></td><td class=parm>r3, r3, #31</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5A14><a href="00004000.htm#_5A14">5A14</a>:</td><td class=data>2164      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #100</td><td class=comm>; 0x64: pointer to 0x1b3</td><td class=refs><a href="00004000.htm#_5A10">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A1C><a href="00004000.htm#_5A1C">5A1C</a>:</td><td class=data>05a0      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r4, #22</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5A20><a href="00004000.htm#_5A20">5A20</a>:</td><td class=data>222d      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r2, #45</td><td class=comm>; 0x2d</td><td class=refs><a href="00004000.htm#_5A1C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A24><a href="00004000.htm#_5A24">5A24</a>:</td><td class=data>a034      </td><td class=inst><span class="mnem">add</span><span class="flags"></span></td><td class=parm>r0, pc, #208</td><td class=comm>; *'DOWN'</td><td class=refs><a href="00004000.htm#_5A20">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A2C><a href="00004000.htm#_5A2C">5A2C</a>:</td><td class=data>0fc3      </td><td class=inst><span class="mnem">lsr</span><span class="flags">s</span></td><td class=parm>r3, r0, #31</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5A30><a href="00004000.htm#_5A30">5A30</a>:</td><td class=data>211c      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #28</td><td class=comm></td><td class=refs><a href="00004000.htm#_5A2C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A38><a href="00004000.htm#_5A38">5A38</a>:</td><td class=data>0560      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r4, #21</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5A3C><a href="00004000.htm#_5A3C">5A3C</a>:</td><td class=data>222d      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r2, #45</td><td class=comm>; 0x2d</td><td class=refs><a href="00004000.htm#_5A38">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A40><a href="00004000.htm#_5A40">5A40</a>:</td><td class=data>a030      </td><td class=inst><span class="mnem">add</span><span class="flags"></span></td><td class=parm>r0, pc, #192</td><td class=comm>; *'MENU'</td><td class=refs><a href="00004000.htm#_5A3C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A48><a href="00004000.htm#_5A48">5A48</a>:</td><td class=data>0fc3      </td><td class=inst><span class="mnem">lsr</span><span class="flags">s</span></td><td class=parm>r3, r0, #31</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5A4C><a href="00004000.htm#_5A4C">5A4C</a>:</td><td class=data>215c      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #92</td><td class=comm>; 0x5c: pointer to 0x1b3</td><td class=refs><a href="00004000.htm#_5A48">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A54><a href="00004000.htm#_5A54">5A54</a>:</td><td class=data>04e0      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r4, #19</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5A58><a href="00004000.htm#_5A58">5A58</a>:</td><td class=data>2238      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r2, #56</td><td class=comm>; =0x38 (PendSV)</td><td class=refs><a href="00004000.htm#_5A54">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A5C><a href="00004000.htm#_5A5C">5A5C</a>:</td><td class=data>a02c      </td><td class=inst><span class="mnem">add</span><span class="flags"></span></td><td class=parm>r0, pc, #176</td><td class=comm>; 0x5b14: pointer to 0x0 (Initial_SP)</td><td class=refs><a href="00004000.htm#_5A58">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A64><a href="00004000.htm#_5A64">5A64</a>:</td><td class=data>0fc3      </td><td class=inst><span class="mnem">lsr</span><span class="flags">s</span></td><td class=parm>r3, r0, #31</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5A68><a href="00004000.htm#_5A68">5A68</a>:</td><td class=data>2125      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #37</td><td class=comm>; 0x25</td><td class=refs><a href="00004000.htm#_5A64">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A70><a href="00004000.htm#_5A70">5A70</a>:</td><td class=data>01a0      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r4, #6</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5A74><a href="00004000.htm#_5A74">5A74</a>:</td><td class=data>2238      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r2, #56</td><td class=comm>; =0x38 (PendSV)</td><td class=refs><a href="00004000.htm#_5A70">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A78><a href="00004000.htm#_5A78">5A78</a>:</td><td class=data>a029      </td><td class=inst><span class="mnem">add</span><span class="flags"></span></td><td class=parm>r0, pc, #164</td><td class=comm>; 0x5b24: pointer to 0x52</td><td class=refs><a href="00004000.htm#_5A74">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A88><a href="00004000.htm#_5A88">5A88</a>:</td><td class=data>4629      </td><td class=inst><span class="mnem">mov</span><span class="flags"></span></td><td class=parm>r1, r5</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5A8C><a href="00004000.htm#_5A8C">5A8C</a>:</td><td class=data>430c      </td><td class=inst><span class="mnem">orr</span><span class="flags">s</span></td><td class=parm>r4, r1</td><td class=comm></td><td class=refs><a href="00004000.htm#_5A88">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A90><a href="00004000.htm#_5A90">5A90</a>:</td><td class=data>43a0      </td><td class=inst><span class="mnem">bic</span><span class="flags">s</span></td><td class=parm>r0, r4</td><td class=comm></td><td class=refs><a href="00004000.htm#_5A8C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5A98><a href="00004000.htm#_5A98">5A98</a>:</td><td class=data>2802      </td><td class=inst><span class="mnem">cmp</span><span class="flags"></span></td><td class=parm>r0, #2</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5A9C><a href="00004000.htm#_5A9C">5A9C</a>:</td><td class=data>e765      </td><td class=inst><span class="mnem">b</span><span class="flags">.n</span></td><td class=parm>0x596a</td><td class=comm></td><td class=refs><a href="00004000.htm#_5A98">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_5AA0><a href="00004000.htm#_5AA0">5AA0</a>:</td><td class=data>210f      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #15</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5AA8><a href="00004000.htm#_5AA8">5AA8</a>:</td><td class=data>210f      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #15</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5AB0><a href="00004000.htm#_5AB0">5AB0</a>:</td><td class=data>e75b      </td><td class=inst><span class="mnem">b</span><span class="flags">.n</span></td><td class=parm>0x596a</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5AB4><a href="00004000.htm#_5AB4">5AB4</a>:</td><td class=data>2100      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #0</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_5AB8><a href="00004000.htm#_5AB8">5AB8</a>:</td><td class=data>2001      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r0, #1</td><td class=comm></td><td class=refs><a href="00004000.htm#_5AB4">&#x2B01;</a></td></tr>
+        <tr></td><td class=funcend colspan=6>Function end: keyTestPage</td></tr>
+</table> 
+<h2 id=diagram>Code flow diagram:</h2>
+    <object data='sub_0000595c.svg' width='8pt'> </object>
+<h2 id=deco>Decompiled:</h2> 
+<pre>
+whoops...
+</pre> 
+<h2 id=refs>References:</h2> 
+<table>
+<tr><th>Address</th><th>Value</th></tr> 
+    <tr><td class=addr><a href="sub_0000595c.htm#_5970">keyTestPage+20</a>:</td><td class=instr>@displayPageHeader</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_597C">keyTestPage+32</a>:</td><td class=instr>'SWB'</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_598C">keyTestPage+48</a>:</td><td class=instr>@displayTextAt</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5998">keyTestPage+60</a>:</td><td class=instr>'SWD'</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_59A8">keyTestPage+76</a>:</td><td class=instr>@displayTextAt</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_59B4">keyTestPage+88</a>:</td><td class=instr>'TR6'</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_59C4">keyTestPage+104</a>:</td><td class=instr>@displayTextAt</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_59D0">keyTestPage+116</a>:</td><td class=instr>'TR4'</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_59E0">keyTestPage+132</a>:</td><td class=instr>@displayTextAt</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_59EC">keyTestPage+144</a>:</td><td class=instr>'TR8'</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_59FC">keyTestPage+160</a>:</td><td class=instr>@displayTextAt</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5A08">keyTestPage+172</a>:</td><td class=instr>'TR2'</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5A18">keyTestPage+188</a>:</td><td class=instr>@displayTextAt</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5A24">keyTestPage+200</a>:</td><td class=instr>'DOWN'</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5A34">keyTestPage+216</a>:</td><td class=instr>@displayTextAt</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5A40">keyTestPage+228</a>:</td><td class=instr>'MENU'</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5A50">keyTestPage+244</a>:</td><td class=instr>@displayTextAt</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5A5C">keyTestPage+256</a>:</td><td class=instr>0x5b14: pointer to 0x0 (Initial_SP)</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5A6C">keyTestPage+272</a>:</td><td class=instr>@displayTextAt</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5A78">keyTestPage+284</a>:</td><td class=instr>0x5b24: pointer to 0x52</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5A94">keyTestPage+312</a>:</td><td class=instr>@sub_9BC0</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5A9C">keyTestPage+320</a>:</td><td class=instr>0x596a</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5AA4">keyTestPage+328</a>:</td><td class=instr>@beep</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5AAC">keyTestPage+336</a>:</td><td class=instr>@beep</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000595c.htm#_5AB0">keyTestPage+340</a>:</td><td class=instr>0x596a</td>
+    </tr>
+</table>
+<h2 id=calls>Calls:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+        <tr><td class=addr><a href="sub_0000595c.htm#_5A9C">keyTestPage+320</a>:</td><td colspan=4 class=instr>sub_596A(unk_R0)</td></tr>
+</table>
+<h2 id=callers>Called by:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+</table>
+
+</div>
+</body> 
+</html> 
+

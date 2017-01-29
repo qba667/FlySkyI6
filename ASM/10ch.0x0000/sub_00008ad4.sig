@@ -1,0 +1,2 @@
+S'sub_8AD48b10 0x8b2a: pointer to 0x2001\n8b28 0x8b2c: pointer to 0x8268\n8b38 @spiSend\n8b40 @spiSend\n8b74 @spiSend\n8b90 0x8b80: pointer to 0x2201\n8b94 @timerSendPacket\n8ba8 0x8bac: pointer to 0x2024\n8bb8 @spiSend\n8bc8 @spiSend\n8bd8 @spiSend\n8be4 @spiSend\n8bf4 @sendOverSPI_useDMA\n8c20 @spiSend\n8c40 @sendOverSPI_useDMA\n8c7c 0x8c90: pointer to 0x492c\n8ca4 0x8cac: pointer to 0x4826\n8ca8 0x8cac: pointer to 0x4826\n8cd8 0x8cdc: pointer to 0x42a0\n8cf0 0x8cbe: pointer to 0x4823\n8d14 @sub_8540\n8d18 @sub_8038\nconfigurePINandTimers+122\n'
+.

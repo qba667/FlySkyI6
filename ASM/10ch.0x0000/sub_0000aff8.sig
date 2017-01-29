@@ -1,0 +1,2 @@
+S"SticksModeb000 'JLJM xJN'\nb004 'JM xJN'\nb010 @callSetupDMAandSend\nb018 0xb01e: pointer to 0x4848\nb01c 0xb020\nb020 @displayPageHeader\nb034 @displayGFX\nb0b4 0xb0d6: pointer to 0x7820\nb0b8 0xb0d6: pointer to 0x7820\nb0bc 0xb0fc: pointer to 0x7820\nb0c0 0xb0fc: pointer to 0x7820\nb0c4 0xb110: pointer to 0x7878\nb0c8 0xb110: pointer to 0x7878\nb0cc 0xb010\nb0e0 @sub_9BC0\nb100 0xb010\nb10c 0xb010\nb114 0xb122: pointer to 0x2001\n"
+.

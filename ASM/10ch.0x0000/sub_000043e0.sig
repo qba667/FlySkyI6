@@ -1,0 +1,2 @@
+S'FailsafeReset43ec @callSetupDMAandSend\n43f0 \'safe\'\n4440 \'D!4"7H\'\n4444 \'4"7H\'\n444c @displayGFX\n4450 @LCD_updateCALL\n4454 @getKeyCode\n4474 @beep\n447c @sub_9BC0\n4488 @beep\n4490 @beep\n4494 0x43ec\n4498 0x4470: pointer to @divBy10\nROMBASE+0xf41a\nROMBASE+0xf462\nFailsafeMEnu+806\nROMBASE+0xf44c\nstartupWarning+200\n'
+.

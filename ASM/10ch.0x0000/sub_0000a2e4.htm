@@ -1,0 +1,102 @@
+<html> 
+<head><title>printNumberAsStringAt
+</title>
+<link rel="stylesheet" href="disasm.css" type="text/css" />
+</head> 
+<body> 
+<div id='toolbar'>
+<ul>
+<li><a href="functions-by-addr.htm">Functions</a></li>
+<li><a href="names-by-addr.htm">Names</a></li>
+<li><a href="strings.htm">Strings</a></li>
+<li><a href="tasks.htm">Tasks</a></li>
+<li><a href="semaphores.htm">Semaphores</a></li>
+<li><a href="msgqueues.htm">MsgQueues</a></li>
+<li><a href="properties.htm">Properties</a></li>
+<li><a href="eventprocs.htm">Eventprocs</a></li>
+<li><a href="statemachines.htm">FSMs</a></li>
+</ul>
+</div>
+<div id='main'>
+<h1>printNumberAsStringAt
+</h1>
+<h2>Function printNumberAsStringAt at A2E4 in 10ch.0x0000.bin</h2>
+
+
+<p>Command shortcuts (edit, copy & paste into ARM console):</p>
+<textarea rows="7" cols="80" spellcheck="false">
+dump = D[0] # adjust it if you've loaded more dumps
+n A2E4 printNumberAsStringAt
+html.func_full(dump.Fun(0xA2E4))
+html.update(dump)
+f = dump.Fun(0xA2E4)
+dec 0xA2E4
+</textarea>
+<br>
+<div class="funcmenu">
+<ul>
+<li><a href="#disasm">Disassembly</a></li>
+<li><a href="#diagram">Code flow diagram</a></li>
+<li><a href="#deco">Decompiled</a></li>
+<li><a href="#refs">References</a></li>
+<li><a href="#calls">Calls</a></li>
+<li><a href="#callers">Called by</a></li>
+</ul>
+</div>
+
+<h2 id=disasm>Disassembly:</h2> 
+<table> 
+<!--
+<tr><th>Address</th><th>Data</th><th>Code</th><th></th></tr> 
+-->
+        <tr><td class=funcstart colspan=6>Function start: <a href="sub_0000a2e4.htm">printNumberAsStringAt</a></td></tr>
+        <tr><td class=nstub colspan=6>NSTUB(0x<a href="0000a000.htm#_A2E4">A2E4</a>, printNumberAsStringAt)</td></tr>
+            <tr><td class=addr id=_A2E4><a href="0000a000.htm#_A2E4">A2E4</a>:</td><td class=data>b5f8      </td><td class=inst><span class="mnem">push</span><span class="flags"></span></td><td class=parm>{r3, r4, r5, r6, r7, lr}</td><td class=comm></td><td class=refs><a href="0000a000.htm#_A2E0">&#x2B01;</a> <a href="00006000.htm#_78A2">78A2</a> <a href="00006000.htm#_77A4">77A4</a> <a href="00006000.htm#_7488">7488</a> <a href="00008000.htm#_980A">980A</a>... (total 12 refs)</td></tr>
+            <tr><td class=addr id=_A2E8><a href="0000a000.htm#_A2E8">A2E8</a>:</td><td class=data>4614      </td><td class=inst><span class="mnem">mov</span><span class="flags"></span></td><td class=parm>r4, r2</td><td class=comm></td><td class=refs><a href="0000a000.htm#_A2E4">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_A2EC><a href="0000a000.htm#_A2EC">A2EC</a>:</td><td class=data>4605      </td><td class=inst><span class="mnem">mov</span><span class="flags"></span></td><td class=parm>r5, r0</td><td class=comm></td><td class=refs><a href="0000a000.htm#_A2E8">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_A2F0><a href="0000a000.htm#_A2F0">A2F0</a>:</td><td class=data>da01      </td><td class=inst><span class="mnem">b</span><span class="flags">ge.n</span></td><td class=parm><a href="0000a000.htm#_A2F6">A2F6</a></td><td class=comm></td><td class=refs><a href="0000a000.htm#_A2EC">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_A2F4><a href="0000a000.htm#_A2F4">A2F4</a>:</td><td class=data>2601      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r6, #1</td><td class=comm></td><td class=refs><a href="0000a000.htm#_A2F0">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_A2F8><a href="0000a000.htm#_A2F8">A2F8</a>:</td><td class=data>4621      </td><td class=inst><span class="mnem">mov</span><span class="flags"></span></td><td class=parm>r1, r4</td><td class=comm></td><td class=refs><a href="0000a000.htm#_A2F4">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_A300><a href="0000a000.htm#_A300">A300</a>:</td><td class=data>193c      </td><td class=inst><span class="mnem">add</span><span class="flags">s</span></td><td class=parm>r4, r7, r4</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_A304><a href="0000a000.htm#_A304">A304</a>:</td><td class=data>210a      </td><td class=inst><span class="mnem">mov</span><span class="flags">s</span></td><td class=parm>r1, #10</td><td class=comm></td><td class=refs><a href="0000a000.htm#_A300">&#x2B01;</a> <a href="0000a000.htm#_A314">A314</a></td></tr>
+            <tr><td class=addr id=_A30C><a href="0000a000.htm#_A30C">A30C</a>:</td><td class=data>3130      </td><td class=inst><span class="mnem">add</span><span class="flags">s</span></td><td class=parm>r1, #48</td><td class=comm>; 0x30</td><td class=refs></td></tr>
+            <tr><td class=addr id=_A310><a href="0000a000.htm#_A310">A310</a>:</td><td class=data>3c01      </td><td class=inst><span class="mnem">sub</span><span class="flags">s</span></td><td class=parm>r4, #1</td><td class=comm></td><td class=refs><a href="0000a000.htm#_A30C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_A314><a href="0000a000.htm#_A314">A314</a>:</td><td class=data>d1f6      </td><td class=inst><span class="mnem">b</span><span class="flags">ne.n</span></td><td class=parm><a href="0000a000.htm#_A304">A304</a></td><td class=comm></td><td class=refs><a href="0000a000.htm#_A310">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_A318><a href="0000a000.htm#_A318">A318</a>:</td><td class=data>d001      </td><td class=inst><span class="mnem">b</span><span class="flags">eq.n</span></td><td class=parm><a href="0000a000.htm#_A31E">A31E</a></td><td class=comm></td><td class=refs><a href="0000a000.htm#_A314">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_A31C><a href="0000a000.htm#_A31C">A31C</a>:</td><td class=data>7020      </td><td class=inst><span class="mnem">str</span><span class="flags">b</span></td><td class=parm>r0, [r4, #0]</td><td class=comm></td><td class=refs><a href="0000a000.htm#_A318">&#x2B01;</a></td></tr>
+        <tr></td><td class=funcend colspan=6>Function end: printNumberAsStringAt</td></tr>
+</table> 
+<h2 id=diagram>Code flow diagram:</h2>
+    <object data='sub_0000a2e4.svg' width='8pt'> </object>
+<h2 id=deco>Decompiled:</h2> 
+<pre>
+whoops...
+</pre> 
+<h2 id=refs>References:</h2> 
+<table>
+<tr><th>Address</th><th>Value</th></tr> 
+    <tr><td class=addr><a href="sub_0000a2e4.htm#_A2F0">printNumberAsStringAt+12</a>:</td><td class=instr>0xa2f6: pointer to 0x2230</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000a2e4.htm#_A2FC">printNumberAsStringAt+24</a>:</td><td class=instr>@setupDMA</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000a2e4.htm#_A308">printNumberAsStringAt+36</a>:</td><td class=instr>@div</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000a2e4.htm#_A314">printNumberAsStringAt+48</a>:</td><td class=instr>0xa304: pointer to 0x210a</td>
+    </tr>
+    <tr><td class=addr><a href="sub_0000a2e4.htm#_A318">printNumberAsStringAt+52</a>:</td><td class=instr>0xa31e: pointer to 0xbdf8</td>
+    </tr>
+</table>
+<h2 id=calls>Calls:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+        <tr><td class=addr><a href="sub_0000a2e4.htm#_A2F0">printNumberAsStringAt+12</a>:</td><td colspan=4 class=instr>sub_A2F6(arg0)</td></tr>
+</table>
+<h2 id=callers>Called by:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+</table>
+
+</div>
+</body> 
+</html> 
+

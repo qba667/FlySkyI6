@@ -1,0 +1,2 @@
+S'sub_A190a19c 0xa1a4: pointer to 0x4770\nSpeedSensor+108\nsendOverSPI_useDMA+132\nspiSend+86\nSpeedSensor+28\nSensorsList+98\nsensorsFunction+46\nsensorsFunction+66\nsend_to_lcd+52\nsend_to_lcd+78\n'
+.

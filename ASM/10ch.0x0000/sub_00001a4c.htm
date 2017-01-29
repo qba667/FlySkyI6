@@ -1,0 +1,85 @@
+<html> 
+<head><title>sub_1A4C
+</title>
+<link rel="stylesheet" href="disasm.css" type="text/css" />
+</head> 
+<body> 
+<div id='toolbar'>
+<ul>
+<li><a href="functions-by-addr.htm">Functions</a></li>
+<li><a href="names-by-addr.htm">Names</a></li>
+<li><a href="strings.htm">Strings</a></li>
+<li><a href="tasks.htm">Tasks</a></li>
+<li><a href="semaphores.htm">Semaphores</a></li>
+<li><a href="msgqueues.htm">MsgQueues</a></li>
+<li><a href="properties.htm">Properties</a></li>
+<li><a href="eventprocs.htm">Eventprocs</a></li>
+<li><a href="statemachines.htm">FSMs</a></li>
+</ul>
+</div>
+<div id='main'>
+<h1>sub_1A4C
+</h1>
+<h2>Function sub_1A4C at 1A4C in 10ch.0x0000.bin</h2>
+
+
+<p>Command shortcuts (edit, copy & paste into ARM console):</p>
+<textarea rows="7" cols="80" spellcheck="false">
+dump = D[0] # adjust it if you've loaded more dumps
+n 1A4C sub_1A4C
+html.func_full(dump.Fun(0x1A4C))
+html.update(dump)
+f = dump.Fun(0x1A4C)
+dec 0x1A4C
+</textarea>
+<br>
+<div class="funcmenu">
+<ul>
+<li><a href="#disasm">Disassembly</a></li>
+<li><a href="#diagram">Code flow diagram</a></li>
+<li><a href="#deco">Decompiled</a></li>
+<li><a href="#refs">References</a></li>
+<li><a href="#calls">Calls</a></li>
+<li><a href="#callers">Called by</a></li>
+</ul>
+</div>
+
+<h2 id=disasm>Disassembly:</h2> 
+<table> 
+<!--
+<tr><th>Address</th><th>Data</th><th>Code</th><th></th></tr> 
+-->
+        <tr><td class=funcstart colspan=6>Function start: <a href="sub_00001a4c.htm">sub_1A4C</a></td></tr>
+            <tr><td class=addr id=_1A4C><a href="00000000.htm#_1A4C">1A4C</a>:</td><td class=data>b570      </td><td class=inst><span class="mnem">push</span><span class="flags"></span></td><td class=parm>{r4, r5, r6, lr}</td><td class=comm></td><td class=refs><a href="00000000.htm#_1A48">&#x2B01;</a> <a href="00002000.htm#_20E8">20E8</a> <a href="00000000.htm#_1ABA">1ABA</a></td></tr>
+            <tr><td class=addr id=_1A50><a href="00000000.htm#_1A50">1A50</a>:</td><td class=data>6985      </td><td class=inst><span class="mnem">ldr</span><span class="flags"></span></td><td class=parm>r5, [r0, #24]</td><td class=comm></td><td class=refs><a href="00000000.htm#_1A4C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1A54><a href="00000000.htm#_1A54">1A54</a>:</td><td class=data>07c0      </td><td class=inst><span class="mnem">lsl</span><span class="flags">s</span></td><td class=parm>r0, r0, #31</td><td class=comm></td><td class=refs><a href="00000000.htm#_1A50">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1A58><a href="00000000.htm#_1A58">1A58</a>:</td><td class=data>bd70      </td><td class=inst><span class="mnem">pop</span><span class="flags"></span></td><td class=parm>{r4, r5, r6, pc}</td><td class=comm></td><td class=refs><a href="00000000.htm#_1A54">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1A5C><a href="00000000.htm#_1A5C">1A5C</a>:</td><td class=data>68a1      </td><td class=inst><span class="mnem">ldr</span><span class="flags"></span></td><td class=parm>r1, [r4, #8]</td><td class=comm></td><td class=refs></td></tr>
+            <tr><td class=addr id=_1A60><a href="00000000.htm#_1A60">1A60</a>:</td><td class=data>4790      </td><td class=inst><span class="mnem">blx</span><span class="flags"></span></td><td class=parm>r2</td><td class=comm></td><td class=refs><a href="00000000.htm#_1A5C">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1A64><a href="00000000.htm#_1A64">1A64</a>:</td><td class=data>3001      </td><td class=inst><span class="mnem">add</span><span class="flags">s</span></td><td class=parm>r0, #1</td><td class=comm></td><td class=refs><a href="00000000.htm#_1A60">&#x2B01;</a></td></tr>
+            <tr><td class=addr id=_1A68><a href="00000000.htm#_1A68">1A68</a>:</td><td class=data>3d01      </td><td class=inst><span class="mnem">sub</span><span class="flags">s</span></td><td class=parm>r5, #1</td><td class=comm></td><td class=refs><a href="00000000.htm#_1A64">&#x2B01;</a> <a href="00000000.htm#_1A56">1A56</a></td></tr>
+            <tr><td class=addr id=_1A6C><a href="00000000.htm#_1A6C">1A6C</a>:</td><td class=data>bd70      </td><td class=inst><span class="mnem">pop</span><span class="flags"></span></td><td class=parm>{r4, r5, r6, pc}</td><td class=comm></td><td class=refs><a href="00000000.htm#_1A68">&#x2B01;</a></td></tr>
+</table> 
+<h2 id=diagram>Code flow diagram:</h2>
+    <object data='sub_00001a4c.svg' width='126pt'> </object>
+<h2 id=deco>Decompiled:</h2> 
+<pre>
+whoops...
+</pre> 
+<h2 id=refs>References:</h2> 
+<table>
+<tr><th>Address</th><th>Value</th></tr> 
+</table>
+<h2 id=calls>Calls:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+</table>
+<h2 id=callers>Called by:</h2> 
+<table>
+<tr><th>Address</th><th>Call line</th></tr> 
+</table>
+
+</div>
+</body> 
+</html> 
+

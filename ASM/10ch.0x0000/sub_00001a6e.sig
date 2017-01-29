@@ -1,0 +1,2 @@
+S'sub_1A6E1a76 0x1a84: pointer to 0x2301\n1a82 0x1a8a: pointer to 0x4293\n1a86 0x1a94: pointer to 0x69a8\n1a92 0x1a88: pointer to 0x3301\n1ab6 0x1aaa: pointer to 0x686a\n1aba @sub_1A4C\nsub_2136+14\n'
+.
