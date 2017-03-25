@@ -84,7 +84,7 @@ const uint8_t __attribute__((section (".s_sensors80"))) SENSORS_80[] = {
 };
 
 const uint8_t __attribute__((section (".s_sensorsF9"))) SENSORS_F9[] = {
-/*f9@0*/		0x41, 0x6C, 0x74, 0x00, 0x00, 0x00, 0x00, 0x00,				//Alt....
+/*f9@0*/		0x47, 0x41, 0x6C, 0x74, 0x00, 0x00, 0x00, 0x00,				//GAlt...
 /*fa@8*/		0x53, 0x4E, 0x52, 0x00, 0x00, 0x00, 0x00, 0x00,			  	//SNR....
 /*fb@16*/		0x4E, 0x6F, 0x69, 0x73, 0x65, 0x00, 0x00, 0x00, 			//Noise...
 /*fc@24*/		0x52, 0x53, 0x53, 0x49, 0x00, 0x00, 0x00, 0x00, 			//RSSI....
@@ -124,7 +124,7 @@ const uint8_t __attribute__((section (".s_flyModes"))) FLY_MODES[] = {
 
 const uint8_t __attribute__((section (".s_sensorsScreens"))) sensorsScreens[] = {
 	IBUS_MEAS_TYPE_FLIGHT_MODE, IBUS_MEAS_TYPE_ARMED, IBUS_MEAS_TYPE_ERR, IBUS_MEAS_TYPE_RSSI, IBUS_MEAS_TYPE_NOISE, IBUS_MEAS_TYPE_SNR,
-	IBUS_MEAS_TYPE_GPS_STATUS, IBUS_MEAS_TYPE_GPS_LAT, IBUS_MEAS_TYPE_GPS_LON, IBUS_MEAS_TYPE_GPS_ALT, IBUS_MEAS_TYPE_GPS_DIST, 0xFF,
+	IBUS_MEAS_TYPE_GPS_STATUS, IBUS_MEAS_TYPE_GPS_LAT, IBUS_MEAS_TYPE_GPS_LON, IBUS_MEAS_TYPE_GPS_ALT, IBUS_MEAS_TYPE_GPS_DIST, IBUS_MEAS_TYPE_ALT,
 	IBUS_MEAS_TYPE_TX_V, IBUS_MEAS_TYPE_INTV, IBUS_MEAS_TYPE_EXTV, IBUS_MEAS_TYPE_BAT_CURR, IBUS_MEAS_TYPE_TEM, IBUS_MEAS_TYPE_MOT,
 	IBUS_MEAS_TYPE_CMP_HEAD, IBUS_MEAS_TYPE_COG, IBUS_MEAS_TYPE_ACC_X, IBUS_MEAS_TYPE_ACC_Y, IBUS_MEAS_TYPE_ACC_Z, IBUS_MEAS_TYPE_CLIMB_RATE,
 	IBUS_MEAS_TYPE_SPE, IBUS_MEAS_TYPE_VERTICAL_SPEED, IBUS_MEAS_TYPE_GROUND_SPEED, IBUS_MEAS_TYPE_PRES, IBUS_MEAS_TYPE_ODO1, IBUS_MEAS_TYPE_ODO2
@@ -169,7 +169,7 @@ const uint8_t __attribute__((section (".s_sensDesc00"))) sensorDesc00[] = {
 		STD_SENSOR|UNSIGNED|MUL_001|UNIT_DEG,  	//Heading
 		STD_SENSOR|UNSIGNED|MUL_100|UNIT_A,  	//Current
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_MS, 	//Climb
-		STD_SENSOR|SIGNED__|MUL_100|UNIT_DEG, 	//Acc z
+		STD_SENSOR|UNSIGNED|MUL_100|UNIT_DEG, 	//Acc z
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_DEG, 	//Acc y
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_DEG, 	//Acc x
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_MS, 	//VSpeed
@@ -209,7 +209,7 @@ const uint8_t __attribute__((section (".s_sensDescF9"))) sensorDescF9[] = {
 };
 
 
-const uint8_t __attribute__((section (".s_foramtCoord"))) formatCoord[] = { 0x25,0x75, 0x7f, 0x25, 0x30, 0x32, 0x75, 0x27, 0x25, 0x30, 0x32, 0x75,0x2e, 0x25, 0x30, 0x33, 0x75, 0x22, 0x00};//"%u°%02u'%02u.%u\"";
+const uint8_t __attribute__((section (".s_foramtCoord"))) formatCoord[] = { 0x25,0x75, 0x7f, 0x25, 0x30, 0x32, 0x75, 0x27, 0x25, 0x30, 0x32, 0x75,0x2e, 0x25, 0x30, 0x33, 0x75, 0x22, 0x00};//"%uÂ°%02u'%02u.%u\"";
 const uint8_t __attribute__((section (".s_formatGPS"))) formatGPS[] = {0x25, 0x75, 0x20, 0x25, 0x30, 0x32, 0x75, 0x00};// "%u %02u";
 const uint8_t __attribute__((section (".s_formatNumber"))) formatNumber[] = {0x25, 0x75, 0x00}; //"%u";
 const uint8_t __attribute__((section (".s_formatNumberFractial"))) formatNumberFractial[] = {0x25, 0x75, 0x2e, 0x25, 0x30, 0x32, 0x75, 0x00};// "%u.%02u";
@@ -227,7 +227,7 @@ const uint8_t __attribute__((section (".s_unitsOffsets"))) unitsOffsets[] = {
 
 const uint8_t __attribute__((section (".s_units"))) units[] = {
 	/*1@0*/  0x6d, 0x00,						//m;
-	/*2@2*/  0x7f, 0x00,						//°
+	/*2@2*/  0x7f, 0x00,						//Â°
 	/*3@4*/ 0x41, 0x00,							//A
 	/*4@6*/ 0x25, 0x00,						//%
 	/*5@8*/ 0x56, 0x00,						//V
