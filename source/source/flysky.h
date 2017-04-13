@@ -17,6 +17,9 @@
 #define ARROW_GFX_INFO 0xCBF8
 #define MEM_20000000 0x20000000
 #define TIMER_SYS_TIM 0x1FFFF8B0 //SYS_TIM
+#define LAST_ALARM_TIMER 0x2000003C
+#define TELEMETRY_UPDATE_TIMER 0x2000001C
+
 #define GFX_ARROW 0xCBF8
 #define TEXT_VALUE 0xCAE1
 #define TEXT_CHANNEL 0x9650
@@ -66,7 +69,7 @@ typedef int (*drawFun)(int x1, int y1, int x2, int y2, int value);
 typedef int (*pixelFun)(int x1, int y1, int value);
 typedef int (*displayText)(char* text, int x, int y, int val);
 typedef int (*displayHeader)(char* text);
-typedef int (*sensorValue)(int sensorID, int index);
+typedef uint16_t (*sensorValue)(uint8_t sensorID, uint8_t index, int zero);
 typedef void (*setSenValue)(char* packet);
 typedef void (*formatSensData)(uint8_t sensorID, uint8_t sensorIndex, char* packet);
 typedef void (*navPage)(const char* pageName, int numberofitems, manuEntry* menuStruct);
@@ -103,6 +106,9 @@ __attribute__((section (".s_MOD_SPACE.getSensorValue"))) const sensorValue getSe
 __attribute__((section (".s_MOD_SPACE.setSensorValue"))) const setSenValue setSensorValue = (setSenValue)0x57D5;
 __attribute__((section (".s_MOD_SPACE.formatSensorData"))) const formatSensData formatSensorData = (formatSensData)0x53CD;
 __attribute__((section (".s_MOD_SPACE.updateLCD"))) const voidFun LCD_updateCALL = (voidFun)0x25BD;
+
+__attribute__((section (".s_MOD_SPACE.CheckAlarms"))) const voidFun CheckAlarmsCall = (voidFun)0x61ED;
+
 
 
 

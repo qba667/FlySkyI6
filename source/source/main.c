@@ -53,7 +53,7 @@
 #include "alt.h"
 #include "ibustelemetry.h"
 
-unsigned char __attribute__((section (".FSi6"))) buf[] = {0xAC, 0x41, 0x4, 0x00, 0x00, 0x00, 0x00, 0x80, 0x4, 0x00, 0x00, 0x00, 0x00};
+
 /*
  *
 typedef uint32_t (*divFun)(uint32_t, uint32_t);
@@ -76,7 +76,7 @@ int main(void) {
   backlightInit();
   debug_init();
   (*(uint32_t *)(MODEL_SETTINGS)) = 0x200002AE;
-
+  unsigned char* buf = 0;
   getSensorName(2);
   loadModSettings();
   saveModSettings();
@@ -88,24 +88,27 @@ int main(void) {
   }
   acData(buf);
 
-  if( strLenCall((const char*)modConfig.byteConfig)){
+  //if( strLenCall((const char*)&modConfig)){
 
 	  getALT(10000);
-  }
-  if( strLenCall((const char*)longSensors)){
+ //}
+ // if( strLenCall((const char*)longSensors)){
 
 	  getALT(10000);
 
-   }
-  if( strLenCall((const char*)timerBuffer)){
+//   }
+//  if( strLenCall((const char*)timerBuffer)){
 	  getALT(10000);
 	  //timerVal +=1;
-  }
+//  }
   displayMenu();
   TimerConfig();
-  BatteryType(); GetBatteryVoltage();
+  BatteryType();
   strLenCall((const char*)txBat);
   strLenCall((const char*)altSensor);
+
+  ChackCustomAlarms();
+
 //strLenCall((const char*)extraMenu);
 //strLenCall((const char*)alarm);
 //strLenCall((const char*)timerValueStr);
@@ -115,13 +118,11 @@ int main(void) {
 //strLenCall((const char*)timer);
 //strLenCall((const char*)timerNull);
 //strLenCall((const char*)timerFormat);
-
+  //keep this one because of without usage signature block will be removed
   if(SIGNATURE[0] == 1){
 
   }
   formatSensorValue((char *)SIGNATURE, 0,0);
-  formatSensorValue((char *)timerBuffer, 0,0);
-  formatSensorValue((char *)timerBuffer, 0x81,0);
   //divFun dev = (divFun)0x1E5E;
   //char* format = "%d";
   //sprintfCall(buffer, format, 0);
@@ -130,6 +131,7 @@ int main(void) {
   displaySensors();
   auxChannelsPage();
   AlarmConfig();
+  printTimer(0);
   //rxTest2();
   //initALT(100000);
   uint32_t reminder=0;

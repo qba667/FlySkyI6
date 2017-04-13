@@ -29,6 +29,7 @@
 
 #define AVG_TMP			19
 
+#define SENSORS_ARRAY_LENGTH 11
 
 typedef struct sensorAlarm
 {
@@ -43,23 +44,22 @@ typedef struct configStruct
 	/*@0*/	uint8_t timerCH;
 	/*@1*/	uint16_t timerStart;
 	/*@3*/	uint16_t timerAlarm;
-	/*@5*//*@9*//*@13*/	sensorAlarm alarm[3];
-	/*@17*/	uint8_t	tempDiff;
-	/*@18*/	uint8_t	batteryType;
+	/*@5*/  uint16_t batteryVoltage;
+	/*@7*//*@11*//*@115*/	sensorAlarm alarm[3];
 } configStruct;
 
 typedef union config
 {
-	uint8_t byteConfig[19];
 	configStruct cfg;
 } config;
 
 
 uint8_t __attribute__((section (".s_mainScreenIndex"))) mainScreenIndex = 0; //referenced from assembly
-config __attribute__((section (".s_modConfigEeprom"))) modConfig; 			//16bytes
-int32_t __attribute__((section (".s_longSensors"))) longSensors[18]; 		//72bytes referenced from assembly
+configStruct __attribute__((section (".s_modConfigEeprom"))) modConfig; 			//16bytes
+int32_t __attribute__((section (".s_longSensors"))) longSensors[SENSORS_ARRAY_LENGTH]; 		//72bytes referenced from assembly
 uint8_t __attribute__((section (".s_timerBuffer"))) timerBuffer[10]; 		//10bytes
 uint32_t __attribute__((section (".s_timerValue"))) timerValue;
+uint32_t __attribute__((section (".s_lastTimerUpdate"))) lastTimerUpdate;
 uint8_t __attribute__((section (".s_ticks100ms"))) ticks100MS;
 
 uint8_t __attribute__((section (".s_mavlinkGPSFrame"))) mavlinkGPSFrame[22]; 	//22bytes
@@ -76,9 +76,9 @@ __attribute__((section (".s_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".s_timerConfig"))) void TimerConfig();
 
  __attribute__((section (".s_batteryConfig"))) void BatteryType();
- __attribute__((section (".s_batteryVoltage"))) uint32_t GetBatteryVoltage();
 
  __attribute__((section (".s_alarmConfig"))) void AlarmConfig();
+ __attribute__((section (".s_customAlarms"))) void ChackCustomAlarms();
 
 
 __attribute__((section (".s_loadModEeprom"))) void loadModSettings();
