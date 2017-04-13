@@ -108,9 +108,9 @@ SECTIONS
 	*(.s_sensors41);
 	*(.s_sensors7d);
 	*(.s_sensors80);
-	*(.s_sensorsF9);
+	*(.s_sensorsFA);
 	*(.s_unknownSensor);
-	*(.s_radioModes);
+
 	*(.s_flyModesOffset);
 	*(.s_flyModes);
 	*(.s_armed);
@@ -121,6 +121,12 @@ SECTIONS
 	*(.s_FLASH_25C8*);
 }
 
+
+.s_RadioMOD 0x3194 :
+{
+	*(.s_radioModes);
+	*(.s_RadioMOD*);
+}
 .s_SIGNATURE_2780 0x2780 :
 {
 	*(.s_signature);
@@ -133,7 +139,7 @@ SECTIONS
 	*(.s_units)
 	*(.s_sensDesc00)
  	*(.s_sensDesc80)
- 	*(.s_sensDescF9)
+ 	*(.s_sensDescFA)
 }
 
 /*
@@ -152,13 +158,19 @@ SECTIONS
 	*(.s_loadModEeprom);
 	*(.s_saveModEeprom);
 }
+
+
  
   .s_AC_SENSOR 0x65C8 :
 {
 	*(.s_parseAC);
 	*(.s_acHelper);
 }
-
+ . = ALIGN(4);
+   .s_MOD_ALARMS 0xE140 :
+{
+	*(.s_customAlarms);
+}
  . = ALIGN(1);
   
   .FontSmal 0xE471 :
@@ -247,7 +259,6 @@ SECTIONS
    .s_battery 0xF820 :
   {
     *(.s_batteryConfig);
-    *(.s_batteryVoltage);
   }   
  
  	.s_TIMER_SPACE 0xF8E0 :
@@ -263,12 +274,12 @@ SECTIONS
     *(.s_parseCoord);
   }
   
-  .s_alarmPage 0xFC60 :
+  .s_alarmPage 0xFC00 :
   {
    	 *(.s_alarmConfig);
   }
 
- .s_TimerConfigPage 0xFE28 :
+ .s_TimerConfigPage 0xFDE8 :
   {
    	 *(.s_timerConfig);
   }
@@ -412,6 +423,7 @@ SECTIONS
   *(.s_timerBuffer);
   *(.s_timerValue);
   *(.s_ticks100ms);
+  *(.s_lastTimerUpdate);
   *(.altconstVal);
   *(.altconstVal);
   *(.altinitPressure);

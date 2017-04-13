@@ -236,7 +236,7 @@ const uint8_t __attribute__((section (".s_unitsOffsets"))) unitsOffsets[] = {
 
 const uint8_t __attribute__((section (".s_units"))) units[] = {
 	/*1@0*/  'm', 0x00,						//m;
-	/*2@2*/  0x7f, 0x00,					//°
+	/*2@2*/  0x7f, 0x00,					//Â°
 	/*3@4*/ 'A', 0x00,						//A
 	/*4@6*/ '%', 0x00,						//%
 	/*5@8*/ 'V', 0x00,						//V
