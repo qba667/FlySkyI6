@@ -62,7 +62,13 @@ dataFile.close()
 bytes = endAddress - 0x1800
 for index in range(0, 4):
     data[0x2788+index] = bytes >> (index * 8) & 0xFF;
-
+	
+index2 = 0
+dataArray = bytearray(datetime.datetime.now().strftime("%d/%m/%y %H:%M"))
+for dt in dataArray:
+	data[0xEEC0 + index2] = dt
+	index2+=1
+	
 print "End address " + format(endAddress, '04x')
 print format(len(data[0x1800:endAddress]), '04x')
 crc = crc16xmodem(data[0x1800:endAddress], 0xFFFF)
@@ -70,14 +76,7 @@ print format(crc, '04x')
 for index in range(0, 2):
     data[endAddress + index] = crc >> (8* index) & 0xFF
 	
-index2 = 0
-dataArray = bytearray(datetime.datetime.now().strftime("%d/%m/%y %H:%M"))
-print dataArray
 
-for dt in dataArray:
-	print dt
-	data[0xEEC0 + index2] = dt
-	index2+=1
 
 outFile = open(targetDir + "_full_" + time.strftime("%m_%d_%H_%M") + ".bin", 'wb')
 outFile.write(data)
