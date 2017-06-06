@@ -11,6 +11,8 @@
 #include <stddef.h>
 #include "ibustelemetry.h"
 
+#define SENSORS_PER_PAGE	8
+#define SENSORS_PAGES		4
 
 #define PRESSURE_OFFSET UINT32_C(136)
 #define ODO1_OFFSET	UINT32_C(144)
@@ -58,7 +60,7 @@ const uint8_t __attribute__((section (".s_sensors00"))) SENSOR_00[] = {
 /*16@80*/		'P', 'i', 't', '.', '\0',
 /*17@85*/		'Y', 'a', 'w','\0', '\0',
 /*18@90*/		'V', 'S', 'p', 'e', '\0',
-/*19@95*/		'S', 'p', 'e', ' ', '\0',
+/*19@95*/		'G', 'S', 'p', 'e', '\0',
 /*20@100*/		'D', 'i', 's', 't', '\0',
 /*21@105*/		'A', 'r', 'm', '.', '\0',
 /*22@110*/		'M', 'o', 'd', 'e', '\0',
@@ -130,11 +132,41 @@ const uint8_t __attribute__((section (".s_flyModes"))) FLY_MODES[] = {
 };
 
 const uint8_t __attribute__((section (".s_sensorsScreens"))) sensorsScreens[] = {
-	IBUS_MEAS_TYPE_FLIGHT_MODE, IBUS_MEAS_TYPE_ARMED, IBUS_MEAS_TYPE_ERR, IBUS_MEAS_TYPE_RSSI, IBUS_MEAS_TYPE_NOISE, IBUS_MEAS_TYPE_SNR,
-	IBUS_MEAS_TYPE_GPS_STATUS, IBUS_MEAS_TYPE_GPS_LAT, IBUS_MEAS_TYPE_GPS_LON, IBUS_MEAS_TYPE_GPS_ALT, IBUS_MEAS_TYPE_ALT, IBUS_MEAS_TYPE_GPS_DIST,
-	IBUS_MEAS_TYPE_TX_V, IBUS_MEAS_TYPE_INTV, IBUS_MEAS_TYPE_EXTV, IBUS_MEAS_TYPE_BAT_CURR, IBUS_MEAS_TYPE_TEM, IBUS_MEAS_TYPE_MOT,
-	IBUS_MEAS_TYPE_CMP_HEAD, IBUS_MEAS_TYPE_COG, IBUS_MEAS_TYPE_ACC_X, IBUS_MEAS_TYPE_ACC_Y, IBUS_MEAS_TYPE_ACC_Z, IBUS_MEAS_TYPE_CLIMB_RATE,
-	IBUS_MEAS_TYPE_SPE, IBUS_MEAS_TYPE_VERTICAL_SPEED, IBUS_MEAS_TYPE_GROUND_SPEED, IBUS_MEAS_TYPE_PRES, IBUS_MEAS_TYPE_ODO1, IBUS_MEAS_TYPE_ODO2
+	IBUS_MEAS_TYPE_FLIGHT_MODE,
+	IBUS_MEAS_TYPE_ARMED,
+	IBUS_MEAS_TYPE_ERR,
+	IBUS_MEAS_TYPE_RSSI,
+	IBUS_MEAS_TYPE_NOISE,
+	IBUS_MEAS_TYPE_SNR,
+	IBUS_MEAS_TYPE_TX_V,
+	IBUS_MEAS_TYPE_INTV,
+
+	IBUS_MEAS_TYPE_GPS_STATUS,
+	IBUS_MEAS_TYPE_GPS_LAT,
+	IBUS_MEAS_TYPE_GPS_LON,
+	IBUS_MEAS_TYPE_GPS_ALT,
+	IBUS_MEAS_TYPE_ALT,
+	IBUS_MEAS_TYPE_GPS_DIST,
+	IBUS_MEAS_TYPE_CMP_HEAD,
+	IBUS_MEAS_TYPE_COG,
+
+	IBUS_MEAS_TYPE_EXTV,
+	IBUS_MEAS_TYPE_TEM,
+	IBUS_MEAS_TYPE_CELL,
+	IBUS_MEAS_TYPE_BAT_CURR,
+	IBUS_MEAS_TYPE_FUEL,
+	IBUS_MEAS_TYPE_ACC_X,
+	IBUS_MEAS_TYPE_ACC_Y,
+	IBUS_MEAS_TYPE_ACC_Z,
+
+	IBUS_MEAS_TYPE_ROLL,
+	IBUS_MEAS_TYPE_PITCH,
+	IBUS_MEAS_TYPE_YAW,
+	IBUS_MEAS_TYPE_SPE,
+	IBUS_MEAS_TYPE_GROUND_SPEED,
+	IBUS_MEAS_TYPE_VERTICAL_SPEED,
+	IBUS_MEAS_TYPE_CLIMB_RATE,
+	IBUS_MEAS_TYPE_RPM
 };
 const uint8_t __attribute__((section (".s_timerFormat"))) timerFormat[] = {
 		'%', '0', '2', 'u', ':', '%', '0', '2', 'u', ':', '%', '0', '2', 'u',  0x00
@@ -181,12 +213,12 @@ const uint8_t __attribute__((section (".s_sensDesc00"))) sensorDesc00[] = {
 /*09*/	STD_SENSOR|SIGNED__|MUL_100|UNIT_MS, 	//Climb
 /*0a*/	STD_SENSOR|UNSIGNED|MUL_001|UNIT_DEG,	//CoG.
 /*0b*/	CUS_SENSOR|UNSIGNED|MUL_001|UNIT_NONE,	//GPS. status
-/*0c*/	STD_SENSOR|SIGNED__|MUL_100|UNIT_MS, 	//Acc x
-/*0d*/	STD_SENSOR|SIGNED__|MUL_100|UNIT_MS, 	//Acc y
-/*0e*/	STD_SENSOR|SIGNED__|MUL_100|UNIT_MS, 	//Acc z
+/*0c*/	STD_SENSOR|SIGNED__|MUL_100|UNIT_CM_S, 	//Acc x
+/*0d*/	STD_SENSOR|SIGNED__|MUL_100|UNIT_CM_S, 	//Acc y
+/*0e*/	STD_SENSOR|SIGNED__|MUL_100|UNIT_CM_S, 	//Acc z
 /*0f*/	STD_SENSOR|SIGNED__|MUL_100|UNIT_DEG, 	//roll
 /*10*/	STD_SENSOR|SIGNED__|MUL_100|UNIT_DEG, 	//pitch
-/*11*/	STD_SENSOR|SIGNED__|MUL_100|UNIT_DEG, 	//yaw
+/*11*/	STD_SENSOR|UNSIGNED|MUL_100|UNIT_DEG, 	//yaw
 /*12*/	STD_SENSOR|SIGNED__|MUL_100|UNIT_MS, 	//VSpeed
 /*13*/	STD_SENSOR|UNSIGNED|MUL_100|UNIT_MS, 	//ground Speed
 /*14*/	STD_SENSOR|UNSIGNED|MUL_001|UNIT_M,  	//Dist
@@ -236,7 +268,7 @@ const uint8_t __attribute__((section (".s_unitsOffsets"))) unitsOffsets[] = {
 
 const uint8_t __attribute__((section (".s_units"))) units[] = {
 	/*1@0*/  'm', 0x00,						//m;
-	/*2@2*/  0x7f, 0x00,					//Â°
+	/*2@2*/  0x7f, 0x00,					//°
 	/*3@4*/ 'A', 0x00,						//A
 	/*4@6*/ '%', 0x00,						//%
 	/*5@8*/ 'V', 0x00,						//V
@@ -247,6 +279,8 @@ const uint8_t __attribute__((section (".s_units"))) units[] = {
 	/*10@26*/'c', 'm', '/', 's', 0x00,		//cm/s
 	/*11@31*/'m', 'A', 'h', 0x00,
 };
+
+
 
 __attribute__((section (".s_MOD_SPACE"))) signed int  auxChannelsPage();
 

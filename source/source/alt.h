@@ -64,6 +64,8 @@ uint8_t __attribute__((section (".s_ticks100ms"))) ticks100MS;
 
 uint8_t __attribute__((section (".s_mavlinkGPSFrame"))) mavlinkGPSFrame[22]; 	//22bytes
 
+ __attribute__((section (".s_getAuxChannel"))) int getAuxChannel(uint32_t request);
+ __attribute__((section (".s_getSWState"))) int getSWState(uint32_t swIndex);
 
 __attribute__((section (".s_modMenuListFun"))) void displayMenu();
 

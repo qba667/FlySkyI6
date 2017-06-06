@@ -87,7 +87,7 @@ int main(void) {
 	   acData(buf);
   }
   acData(buf);
-
+  getAuxChannel(0);
   //if( strLenCall((const char*)&modConfig)){
 
 	  getALT(10000);

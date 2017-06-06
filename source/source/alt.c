@@ -51,6 +51,20 @@ void acData(uint8_t* rxBuffer){
 				tmp+=4;
 			}
 		}
+		else if(rxBuffer[index]==IBUS_MEAS_TYPE_VOLT_FULL){
+			tmp = index+3;
+			for(i=IBUS_MEAS_TYPE_EXTV; i <=IBUS_MEAS_TYPE_RPM; i++){
+				add2ByteSensor(i, sensorIndex, rxBuffer[tmp+1] << 8 | rxBuffer[tmp]);
+				tmp+=2;
+			}
+		}
+		else if(rxBuffer[index]==IBUS_MEAS_TYPE_ACC_FULL){
+			tmp = index+3;
+			for(i=IBUS_MEAS_TYPE_ACC_X; i <=IBUS_MEAS_TYPE_YAW; i++){
+				add2ByteSensor(i, sensorIndex, rxBuffer[tmp+1] << 8 | rxBuffer[tmp]);
+				tmp+=2;
+			}
+		}
 		else if(rxBuffer[index]==IBUS_MEAS_TYPE_PRES){
 			offset = SENSORS_ARRAY_LENGTH - 1;
 		}
@@ -176,6 +190,87 @@ uint32_t isTimerActive(){
 	}
 	return 0;*/
 }
+
+int getAuxChannel(uint32_t request){
+	int sw1 = 0;
+	int sw2 = 0;
+	if(request == 0) return 0;
+	if(request > 11){
+		//12 6 -> result 	0
+		//13 5				4
+		//14 4				8
+		//15 3				12
+		//16 2				16
+		//17 1				20
+		request -= 12;
+		request *=4;
+		return  *(int32_t *)(PPM_IN_BUFFER_CH6 - request);
+	}
+	if(request == 11){ //error
+		sw1 = getSensorValue(254, 0,0);
+		if(sw1 == 0x8000) sw1 = -10000;
+		else if(sw1 > 50) sw1 = -200* (sw1 - 50);
+		else sw1 = 200 * (50 - sw1);
+		return sw1;
+	}
+	else if(request == 7){ // A+B
+		sw1 = 0;
+		sw2 = 1;
+		goto TwoPos;
+	}
+	else if(request == 10){ // A+D
+		sw1 = 0;
+		sw2 = 3;
+		goto TwoPos;
+	}
+	else if(request == 8){ // B+C
+		sw1 = 2;
+		sw2 = 1;
+		goto TreePos;
+	}
+	else if(request == 9){ // C+D
+		sw1 = 2;
+		sw2 = 3;
+		goto TreePos;
+	}
+	else if ( request > 2 ){
+      return getSWState(request - 3);
+	}
+	else { //VAR A VAR B
+		sw1 = (request -1) << 2;
+		sw1 = *(int32_t *)(ADC_VAR_A + sw1);
+		sw1 *= 10000;
+		sw1 = sw1 >> 11;
+		sw1 -= 10000;
+		return sw1;
+	}
+
+	TwoPos:
+	sw1 = getSWState(sw1);
+	sw2 = getSWState(sw2) *2;
+	return div_(sw1 + sw2, 3);
+	TreePos:
+	sw1 = getSWState(sw1) *2;
+	sw2 = getSWState(sw2) *3;
+	return div_(sw1 + sw2, 5);
+
+	return sw2;
+}
+
+int getSWState(uint32_t swIndex){
+	int result = 0;
+	uint32_t states = *((uint32_t *)INPUT_STATES);
+	if ( (1 << (swIndex + 16)) & states )
+	{
+	    result = 10000;
+	}
+	else if ( swIndex != 2 || states & 0x100000 )
+	{
+		result = -10000;
+	}
+	return result;
+}
+
 
 
 /*Belongs to .s_modMenu 0xFFA0 */
@@ -507,7 +602,7 @@ void formatSensorValue(char* target, int sensorID, uint16_t sensorValue) {
 			format = (const char*) formatGPS;
 			break;
 		case IBUS_MEAS_TYPE_ARMED:
-			if (sensorValue) {
+			if (!sensorValue) {
 				target[0] = 'U'; //U
 				target[1] = 'n'; //n
 				target += 2;
@@ -538,6 +633,10 @@ void formatSensorValue(char* target, int sensorID, uint16_t sensorValue) {
 	while(*target!=0) target++;
 	if(unit != 0) strcatCall(target, unit);
 }
+
+
+
+
 
 void displaySensors(){
 	char buffer[64];
@@ -580,8 +679,8 @@ void displaySensors(){
 			settings += 3;
 		}
 		else {
-			settings = sensorsScreens + (6* (mainScreenIndex-2));
-			sensorCount = 6;
+			sensorCount = SENSORS_PER_PAGE;
+			settings = sensorsScreens + (SENSORS_PER_PAGE* (mainScreenIndex-2));
 			yPos = 1;
 			xPos = 1;
 		}
