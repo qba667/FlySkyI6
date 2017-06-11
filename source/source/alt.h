@@ -82,7 +82,7 @@ __attribute__((section (".s_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".s_alarmConfig"))) void AlarmConfig();
  __attribute__((section (".s_customAlarms"))) void ChackCustomAlarms();
 
-
+ __attribute__((section (".s_swBHandling"))) uint8_t swBasADC();
 __attribute__((section (".s_loadModEeprom"))) void loadModSettings();
 __attribute__((section (".s_saveModEeprom"))) void saveModSettings();
 

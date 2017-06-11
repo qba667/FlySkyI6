@@ -190,11 +190,18 @@ uint32_t isTimerActive(){
 	}
 	return 0;*/
 }
-
+#define SW_A 0u
+#define SW_B 1u
+#define SW_C 2u
+#define SW_D 3u
 int getAuxChannel(uint32_t request){
 	int sw1 = 0;
 	int sw2 = 0;
 	if(request == 0) return 0;
+	if(request == 15){
+		sw1 = ADC_SW_C - ADC_VAR_A;
+		goto VarCalc;
+	}
 	if(request > 11){
 		//12 6 -> result 	0
 		//13 5				4
@@ -214,23 +221,23 @@ int getAuxChannel(uint32_t request){
 		return sw1;
 	}
 	else if(request == 7){ // A+B
-		sw1 = 0;
-		sw2 = 1;
+		sw1 = SW_A;
+		sw2 = SW_B;
 		goto TwoPos;
 	}
 	else if(request == 10){ // A+D
-		sw1 = 0;
-		sw2 = 3;
+		sw1 = SW_A;
+		sw2 = SW_D;
 		goto TwoPos;
 	}
 	else if(request == 8){ // B+C
-		sw1 = 2;
-		sw2 = 1;
+		sw1 = SW_C;
+		sw2 = SW_B;
 		goto TreePos;
 	}
 	else if(request == 9){ // C+D
-		sw1 = 2;
-		sw2 = 3;
+		sw1 = SW_C;
+		sw2 = SW_D;
 		goto TreePos;
 	}
 	else if ( request > 2 ){
@@ -238,6 +245,7 @@ int getAuxChannel(uint32_t request){
 	}
 	else { //VAR A VAR B
 		sw1 = (request -1) << 2;
+		VarCalc:
 		sw1 = *(int32_t *)(ADC_VAR_A + sw1);
 		sw1 *= 10000;
 		sw1 = sw1 >> 11;
@@ -264,9 +272,17 @@ int getSWState(uint32_t swIndex){
 	{
 	    result = 10000;
 	}
-	else if ( swIndex != 2 || states & 0x100000 )
-	{
-		result = -10000;
+	else{
+		switch(swIndex){
+			case SW_C:
+				if(states & 0x100000u) result = -10000;
+				break;
+			case SW_B:
+				if(states & 0x200000u) result = -10000;
+				break;
+			default:
+				result = -10000;
+		}
 	}
 	return result;
 }
@@ -635,7 +651,13 @@ void formatSensorValue(char* target, int sensorID, uint16_t sensorValue) {
 }
 
 
-
+//return non 0 when switch MAX value
+uint8_t swBasADC(){
+	uint32_t swBVal =((*(uint32_t *)(ADC_SW_B)));
+	uint32_t *tempInputs = (uint32_t *)TEMP_INPUT_STATES;
+	if (swBVal < 500u)	*tempInputs |= 0x200000u;
+	if(swBVal > 3800u) *tempInputs |= 0x20000u;
+}
 
 
 void displaySensors(){

@@ -1,13 +1,15 @@
 #include <stdint.h>
 #include <stddef.h>
 #define ADC_VAL 0x20000F00
-#define ADC_READING 0x20000F20
+#define ADC_READING 0x20000F24
 #define RX_BUFFER 0x20000EE4
 #define RX_BUFFER_LENGTH 28
 #define TX_BUFFER 0x1FFFFDBA
 #define TX_BUFFER_LENGTH 38
 #define MODEL_SETTINGS 0x200002A4
 #define ADC_VAR_A 0x20000F10
+#define ADC_SW_C 0x20000F1C
+#define ADC_SW_B 0x20000F20
 #define SENSOR_ARRAY 0x200001A4
 #define CHANNEL_VALUE 0x1FFFFDE0 // signed int -10k ... +10k
 #define CHANNEL_VALUE_RADIO 0x1FFFFD54
@@ -15,6 +17,7 @@
 #define PPM_IN_BUFFER_CH6 0x1FFFFCD4
 #define GFX_ARRAY 0x1FFFF8C0
 #define INPUT_STATES 0x1FFFF89C  //uint bits
+#define TEMP_INPUT_STATES 0x1FFFF898 //uint bits
 #define USED_MODEL_PTR 0x2000002C //PTR to current model
 #define ARROW_GFX_INFO 0xCBF8
 #define MEM_20000000 0x20000000

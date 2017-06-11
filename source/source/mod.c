@@ -7,11 +7,14 @@
 #include "flysky.h"
 #include "mod.h"
 #include "ibustelemetry.h"
+
+
 #define AUX_CHANNELS_COUNT 6
 #define CH_NAME_PTR 0xCC68
 #define AUX_PAGE_NAME 0xCC5A
 #define CHANEL_NAME_LEN 10
 #define ARROW_GFX_INFO 0xCBF8
+
 
 signed int  auxChannelsPage(){
 	uint8_t aux[AUX_CHANNELS_COUNT] = {0};
@@ -48,3 +51,4 @@ signed int  auxChannelsPage(){
 	}
 
 }
+
