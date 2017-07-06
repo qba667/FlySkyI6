@@ -11,6 +11,8 @@ Oryginal multiplatform updater by mhils:
 
 https://github.com/mhils/flysky-updater
 
+![alt text](https://github.com/qba667/FlySkyI6/blob/master/update.png)
+
 Implemted features:
 
 * Configurable flight timer
