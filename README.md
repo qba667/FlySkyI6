@@ -22,9 +22,10 @@ New FW can be copied to update directory - updater will detect it automatically.
 ![alt text](https://github.com/qba667/FlySkyI6/blob/master/update.png)
 
 Steps to update:
-1.Download, extract latest revision of the mod
-2.Enter firmware update mode - frome menu or by moving 2 trims to center
-3.Run Updater - select serial port if nescesary 
+1. Download, extract latest revision of the mod
+2. Enter firmware update mode - frome menu or by moving 2 trims to center
+3. Run Updater - select serial port if nescesary 
+
 
 As adviced by povlhp in case if you want to support the project and reward me the time I spent on the FW please click this affiliate link when shopping at Banggood - It is free for you, but I will get reward from Banggood: 
 
