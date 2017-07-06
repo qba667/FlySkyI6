@@ -4,14 +4,28 @@ Project description:
 Firmware modification for the FlySky i6 based on modified firware developed by dave borthwick.
 
 Latest version:
-
-https://github.com/qba667/FlySkyI6/blob/master/release/updater_06_05_10_24.bin
+386
+https://github.com/qba667/FlySkyI6/blob/master/release/flysky-updater_386.zip
+x64
+https://github.com/qba667/FlySkyI6/blob/master/release/flysky-updater_x64.zip
 
 Oryginal multiplatform updater by mhils:
 
 https://github.com/mhils/flysky-updater
 
+Improved version is handling file size correctly, autodetection serial ports and FW files.
+New FW can be copied to update directory - updater will detect it automatically.
+
 ![alt text](https://github.com/qba667/FlySkyI6/blob/master/update.png)
+
+Steps to update:
+1.Download, extract latest revision of the mod
+2.Enter firmware update mode - frome menu or by moving 2 trims to center
+3.Run Updater - select serial port if nescesary 
+
+As adviced by povlhp in case if you want to support the project and reward me the time I spent on the FW please click this affiliate link when shopping at Banggood - It is free for you, but I will get reward from Banggood: 
+
+https://www.banggood.com/?p=SB06021048261201501J
 
 Implemted features:
 
