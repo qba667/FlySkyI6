@@ -35,92 +35,88 @@ Implemted features:
 
 Supported telemetry:
 
-*Internal Voltage
+* Internal Voltage
 
-*Temperature
+* Temperature
 
-*RPM
+* RPM
 
-*External Voltage
+* External Voltage
 
-*Avg Cell voltage
+* Avg Cell voltage
 
-*Battery current A * 100
+* Battery current A * 100
 
-*Remaining battery percentage / mah drawn otherwise or fuel level no unit!
+* Remaining battery percentage / mah drawn otherwise or fuel level no unit!
 
-*Throttle value / battery capacity
+* Throttle value / battery capacity
 
-*Heading  0..360 deg, 0=north 
+* Heading  0..360 deg, 0=north 
 
-*Climb rate
+* Climb rate
 
-*Course over ground(NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. unknown max uint
+* Course over ground(NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. unknown max uint
 
-*GPS status
+* GPS status
 
-*ACC X
+* ACC X
 
-*ACC Y
+* ACC Y
 
-*ACC Z
+* ACC Z
 
-*Roll
+* Roll
 
-*Pitch
+* Pitch
 
-*Yaw
+* Yaw
 
-*Vertical speed
+* Vertical speed
 
-*Ground speed
+* Ground speed
 
-*GPS distnace
+* GPS distnace
 
-*Armed 
+* Armed 
 
-*Flight mode
+* Flight mode
 
-*Pressure
+* Pressure
 
-*Odometer1
+* Odometer1
 
-*Odometer2
+* Odometer2
 
-*Speed
+* Speed
 
-*TX Voltage
+* TX Voltage
 
-*Latitude
+* Latitude
 
-*Longitude
+* Longitude
 
-*Altitude 
+* Altitude 
 
-*GPS Altitude
+* GPS Altitude
 
-*4 byte sensor s84
+* 4 byte sensor s84
 
-*4 byte sensor s85
+* 4 byte sensor s85
 
-*4 byte sensor s86
+* 4 byte sensor s86
 
-*4 byte sensor s87
+* 4 byte sensor s87
 
-*4 byte sensor s88
+* 4 byte sensor s88
 
-*4 byte sensor s89
+* 4 byte sensor s89
 
-*4 byte sensor s8a
+* 4 byte sensor s8a
 
-*SNR
+* SNR
 
-*Noise
+* Noise
 
-*RSSI
+* RSSI
 
-*Error rate
-  
-
-
-
+* Error rate
