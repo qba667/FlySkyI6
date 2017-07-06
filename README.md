@@ -3,6 +3,10 @@ Project description:
 
 Firmware modification for the FlySky i6 based on modified firware developed by dave borthwick.
 
+Latest version:
+
+https://github.com/qba667/FlySkyI6/blob/master/release/updater_06_05_10_24.bin
+
 Implemted features:
 
 * Configurable flight timer
