@@ -7,6 +7,10 @@ Latest version:
 
 https://github.com/qba667/FlySkyI6/blob/master/release/updater_06_05_10_24.bin
 
+Oryginal multiplatform updater by mhils:
+
+https://github.com/mhils/flysky-updater
+
 Implemted features:
 
 * Configurable flight timer
