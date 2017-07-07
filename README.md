@@ -74,88 +74,32 @@ Implemted features:
 
 Supported telemetry:
 
-* Internal Voltage
+| 2 Bytes          | 4 Bytes       | RX specific      |
+| ---------------- | ------------- | ---------------- |
+| Temperature      | Pressure      | Internal Voltage |
+| RPM              | Latitude      | SNR              |
+| External Voltage | Longitude     | Noise            |
+| Avg Cell Voltage | Altitude      | RSSI             |
+| Battery current  | GPS Altitude  | Error rate       |
+| Remaining batt.  | s84           |                  |
+| Throttle         | s85           |                  |
+| Heading          | s86           |                  |
+| Climb rate       | s87           |                  |
+| CoG              | s88           |                  |
+| GPS status       | s89           |                  |
+| ACC X            | s8a           |                  |
+| ACC Y            |               |                  |
+| ACC Z            |               |                  |
+| Roll             |               |                  |
+| Pitch            |               |                  |
+| Yaw              |               |                  |
+| Vertical speed   |               |                  |
+| Ground speed     |               |                  |
+| GPS distnace     |               |                  |
+| Armed            |               |                  |
+| Flight mode      |               |                  |
+| Odometer1        |               |                  |
+| Odometer2        |               |                  |
+| Speed            |               |                  |
+| TX Voltage       |               |                  |
 
-* Temperature
-
-* RPM
-
-* External Voltage
-
-* Avg Cell voltage
-
-* Battery current A * 100
-
-* Remaining battery percentage / mah drawn otherwise or fuel level no unit!
-
-* Throttle value / battery capacity
-
-* Heading  0..360 deg, 0=north 
-
-* Climb rate
-
-* Course over ground(NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. unknown max uint
-
-* GPS status
-
-* ACC X
-
-* ACC Y
-
-* ACC Z
-
-* Roll
-
-* Pitch
-
-* Yaw
-
-* Vertical speed
-
-* Ground speed
-
-* GPS distnace
-
-* Armed 
-
-* Flight mode
-
-* Pressure
-
-* Odometer1
-
-* Odometer2
-
-* Speed
-
-* TX Voltage
-
-* Latitude
-
-* Longitude
-
-* Altitude 
-
-* GPS Altitude
-
-* 4 byte sensor s84
-
-* 4 byte sensor s85
-
-* 4 byte sensor s86
-
-* 4 byte sensor s87
-
-* 4 byte sensor s88
-
-* 4 byte sensor s89
-
-* 4 byte sensor s8a
-
-* SNR
-
-* Noise
-
-* RSSI
-
-* Error rate
