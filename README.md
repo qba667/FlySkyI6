@@ -16,7 +16,11 @@ Oryginal multiplatform updater by mhils:
 
 https://github.com/mhils/flysky-updater
 
-Improved version is handling file size correctly, autodetection serial ports and FW files.
+Improved version:
+* Handling file size correctly
+* Autodetection of serial ports
+* Autodetection of FW files
+
 New FW can be copied to update directory - updater will detect it automatically.
 
 ![alt text](https://github.com/qba667/FlySkyI6/blob/master/update.png)
