@@ -13,7 +13,7 @@ Empty space
 
 0x1400
 4 byte unique tx identity
-32 bytes of random? numbers that vary from TX to TX
+32 channel list for AFHDS2 ?
 2 bytes unknown
 
 0x1426
