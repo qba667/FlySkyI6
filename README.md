@@ -27,9 +27,20 @@ Steps to update:
 3. Run Updater - select serial port if necessary
 
 
-As  advised by povlhp in case if you want to support the project and reward me the time I spent on the FW please click this affiliate link when shopping at Banggood - It is free for you, but I will get reward from Banggood: 
+In case if you want to support the project and reward me the time I spent on the FW please click this affiliate link when shopping at Banggood - It is free for you, but I will get reward from Banggood: 
 
 https://www.banggood.com/?p=SB06021048261201501J
+
+The project is Free Software and is made available free of charge. Your donation, which is purely optional.
+If you like the software, you can also consider a donation.
+All donations are greatly appreciated!
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="6VSPPYLRMBQDC">
+<input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
 
 Implemted features:
 
