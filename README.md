@@ -27,7 +27,7 @@ New FW can be copied to update directory - updater will detect it automatically.
 
 Steps to update:
 1. Download, extract latest revision of the mod
-2. Enter firmware update mode - frome menu or by moving 2 trims to center
+2. Enter firmware update mode - from menu or by moving 2 trims to center
 3. Run Updater - select serial port if necessary
 
 
