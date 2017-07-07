@@ -1,2 +1,0 @@
-S"sendSettingsPacket7f0c 0x7f68: pointer to 0x78f1\n7f40 '0Fi'\n7f64 0x7f20: pointer to 0x2d06\n7f6c 0x7faa: pointer to 0x7a91\n7f74 @setupDMA\n7fa8 0x7ffa: pointer to 0x217d\n7fd0 @div_1\n7fe8 0x7fc0: pointer to 0x2d0a\n7ff0 0x7ffa: pointer to 0x217d\ntrySendSettingsPacket+24\n"
-.

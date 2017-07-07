@@ -1,2 +1,0 @@
-S'DisplayChannels3528 @callSetupDMAandSend\n3558 @drawLine\n3568 @sub_4E8C\n3578 @sub_4E8C\n3588 @sub_4E8C\n3598 @div_1\n35a8 0x35ae: pointer to 0x2000\n35c4 @LCD_updateCALL\n35c8 @sub_2574\n35d0 @getKeyCode\n3600 0x3528\n3608 @beep\n3610 @beep\n3614 0x3528\n361c 0x3614: pointer to 0xe788\n3638 0x3614: pointer to 0xe788\n'
-.

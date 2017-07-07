@@ -1,2 +1,0 @@
-S"failsafeOnOff4580 @callSetupDMAandSend\n4584 'safe'\n4598 0x45a2\n45a0 0x46e0: pointer to 0x2710\n45b4 @displayTextAt\n45d0 @sub_4E8C\n45ec @sub_4E8C\n45f8 @div_1\n4604 '@ 4#2!'\n4614 @fillRegion\n4618 @LCD_updateCALL\n461c @sub_2574\n4624 @getKeyCode\n4648 @beep\n4658 @sub_9BC0\n4678 0x4694: pointer to 0x4809\n46ac 0x4644: pointer to @divBy10\nFailsafeMEnu+558\n"
-.

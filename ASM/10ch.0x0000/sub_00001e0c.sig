@@ -1,2 +1,0 @@
-S'setupDMA1e18 0x1e38: pointer to 0x2900\naddPacketToResend1FFFFCF5When2000013C+24\nsendPacketToRadio+644\nsendPAcket+100\nsendPAcket+778\nibussetupmenu+360\nintToString+24\nprintNumberAsStringAt+24\nFactoryReset+136\nFactResConfirm+136\nrxpacketHandle+456\nsub_7CAC+166\nsendSettingsPacket+164\n'
-.

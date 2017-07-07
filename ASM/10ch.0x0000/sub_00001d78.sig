@@ -1,2 +1,0 @@
-S'sub_1D781d7c 0x1db6\n1d90 0x1d84: pointer to 0x3901\n1da4 0x1d94: pointer to 0x3910\n'
-.

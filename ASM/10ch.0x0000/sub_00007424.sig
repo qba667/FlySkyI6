@@ -1,2 +1,0 @@
-S"modelCopyPage7434 @displayPageHeader\n7488 @printNumberAsStringAt\n7494 @displayTextAt\n74ac @displayTextAt\n74b4 0x7508: pointer to '!4H'\n74bc @displayGFX\n74cc @displayGFX\n74d8 @displayTextAt2\n74dc @LCD_updateCALL\n74e0 @getKeyCode\n751c 0x742e\n752c 0x751c: pointer to 0xd387\n7534 @beep\n753c @beep\n7540 0x742e\n7544 0x7556: pointer to 0x2d13\n7548 0x7540: pointer to 0xe775\n754c @sub_9BC0\n7554 0x752e: pointer to 0x2031\n7558 0x7540: pointer to 0xe775\n755c @sub_9BC0\n7564 0x752e: pointer to 0x2031\n7570 0x7540: pointer to 0xe775\n7574 @sub_23F4\n"
-.

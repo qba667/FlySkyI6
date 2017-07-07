@@ -1,3 +1,0 @@
-S'varModelName'
-p1
-.

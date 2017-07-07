@@ -1,2 +1,0 @@
-S'modelResetPage7788 @callSetupDMAandSend\n77a4 @printNumberAsStringAt\n77b0 @displayTextAt\n77c4 @displayTextAt\n77cc 0x7806: pointer to 0x481e\n77d4 @displayGFX\n77ec 0x780a: pointer to @configurePINS\n77f0 0x780a: pointer to @configurePINS\n77f4 0x782c: pointer to 0x2c13\n77f8 0x782c: pointer to 0x2c13\n77fc 0x783c\n7800 0x7788\n7808 0x77d0: pointer to 0x2218\n780c 0x7788\n7810 @sub_9BC0\n7838 0x7788\n783c @sub_23F4\n'
-.

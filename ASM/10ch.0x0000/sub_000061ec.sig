@@ -1,2 +1,0 @@
-S"sub_61EC61f4 0x62da: pointer to 0xe025\n6210 0x6240: pointer to 0x4940\n6218 '8N6h`60x'\n6228 @sub_9BC0\n6234 @beep\n6244 '8N6h`60x'\n625c @beep\n6274 0x6328: pointer to 0xbdf8\n628c 0x6296: pointer to 0x2200\n6294 0x629c\n629c @sensorsFunction\n62ac @sub_9BC0\n62bc 0x6328: pointer to 0xbdf8\n62c8 0x6328: pointer to 0xbdf8\n62d8 0x6324\n62e4 0x62ee: pointer to 0x2200\n62ec 0x62f4\n62f4 @sensorsFunction\n6310 0x6328: pointer to 0xbdf8\n6324 @beep\nsendPacketWithTimer+86\ntimerSendPacket+106\n"
-.

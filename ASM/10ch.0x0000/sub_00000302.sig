@@ -1,2 +1,0 @@
-S'sub_302ROMBASE+0x148\n'
-.

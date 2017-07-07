@@ -1,2 +1,0 @@
-S'saveEepromData3ea0 0x3ea4: pointer to 0x21a0\n3ec0 @i2cMethod\n3ec8 0x3ed4: pointer to 0x7920\n3ed8 0x3f4e: pointer to 0xb005\n3ef4 @sendPacketWithTimer\n3efc 0x3ef4\n3f24 @sendPacketWithTimer\n3f2c 0x3f24\nsaveModelSettings+114\nFactoryReset+160\nFactResConfirm+160\nFactResConfirm+194\nfactoryModeMenu+572\nshowNavigationPage+406\nloadTimerSettingsFromEeprom+30\n'
-.

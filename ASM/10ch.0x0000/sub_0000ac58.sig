@@ -1,2 +1,0 @@
-S'SpeedSensorac60 @sub_A158\nac70 @strcpy\nac74 @sub_A190\naca4 0xac88: pointer to 0xca\nacac @displayPageHeader\nacb0 @sub_A158\nacc0 @strcpy\nacc4 @sub_A190\nacc8 0xae28: pointer to 0x0 (Initial_SP)\nacd8 0xad06: pointer to 0x4a41\nacf8 0xae40: pointer to 0x75\nad04 0xacda: pointer to 0xf1\nad80 @displayTextAt2\nad84 @LCD_updateCALL\nad88 @getKeyCode\nada8 0xaca6\nadb4 0xadb8\nadb8 @sub_9BC0\nadc0 0xadd0: pointer to 0x2031\nadc4 0xadc8\nadc8 @sub_9BC0\n'
-.

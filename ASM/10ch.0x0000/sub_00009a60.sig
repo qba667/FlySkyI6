@@ -1,2 +1,0 @@
-S'RotationLenMenu9a6c @displayPageHeader\n9a78 @displayTextAt\n9a94 @div_Other\n9aa8 @div_Other\n9adc @div_Other\n9ae4 @div_Other\n9afc @div_Other\n9b1c 0x9b3a: pointer to 0x6ae1\n9b20 0x9b3a: pointer to 0x6ae1\n9b24 0x9b60: pointer to 0x6ae1\n9b28 0x9b60: pointer to 0x6ae1\n9b2c 0x9b96: pointer to 0x2001\n9b30 0x9b96: pointer to 0x2001\n9b34 0x9a66\n9b4c 0x9a66\n9b5c 0x9a66\n9b70 0x9a66\n9b80 0x9b70: pointer to 0xe779\n9b88 @beep\n9b90 @beep\n9b94 0x9a66\n'
-.

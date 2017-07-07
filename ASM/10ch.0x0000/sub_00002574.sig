@@ -1,2 +1,0 @@
-S'sub_2574rxBindingPage+46\nibussetupmenu+404\nSticksAdjustPage+296\nmain_screen+2246\nDisplayChannels+164\nSensorsList+264\nendpointsPage+188\nROMBASE+0xbf3c\nmain_screen+378\nfailsafeOnOff+232\nshowSingleValuePage+428\n'
-.

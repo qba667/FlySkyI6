@@ -1,2 +1,0 @@
-S'settingsValidation6018 @readEeprom\n6024 @crcCheck\n602c 0x6048: pointer to 0x2000\n6038 0x6048: pointer to 0x2000\n6040 0x6050\n6050 @someSPImethod\n6058 0x6010: pointer to 0x321\n605c 0x608a\n6068 @readEeprom\n6074 @crcCheck\n607c 0x608a\n6088 0x608e: pointer to 0x4808 (crcOffset)\nloadTimerSettingsFromEeprom+2\n'
-.

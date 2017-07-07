@@ -1,2 +1,0 @@
-S'sub_21E0ROMBASE+0x1986\n'
-.

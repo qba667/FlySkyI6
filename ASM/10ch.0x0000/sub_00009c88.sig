@@ -1,2 +1,0 @@
-S'TMP1_method_beep_modulation9c90 0x9c9e: pointer to 0xb5f8\n9c98 0x9c9c: pointer to 0x4770\n9cac 0x9cb2: pointer to 0x4d19\n9cc8 @div_Other\n9cf4 @TMP1_method_beep_modulation\nbeep+48\nTMP1_method_beep_modulation+108\nROMBASE+0xb6ca\n'
-.

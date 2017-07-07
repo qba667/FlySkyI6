@@ -1,2 +1,0 @@
-S"SensorsList36f8 @callSetupDMAandSend\n36fc 'ors list'\n3764 @formatSensorData\n3778 '==>'\n37bc 0x37c8: pointer to 0x2300\n37c4 '   '\n37d0 @displayTextAt\n37d4 @LCD_updateCALL\n37e8 @sub_2574\n37f0 @getKeyCode\n3808 0x3856: pointer to 0x6820\n380c 0x3856: pointer to 0x6820\n3814 0x3818\n3818 @sub_9BC0\n3820 0x3856: pointer to 0x6820\n3830 0x3856: pointer to 0x6820\n3838 @beep\n3840 @beep\n3844 0x3856: pointer to 0x6820\n3854 0x3832: pointer to 0x2031\n385c 0x37e8\n"
-.

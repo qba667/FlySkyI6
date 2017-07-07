@@ -1,2 +1,0 @@
-S'getInputStatessub_237C+20\ncreateRadioPacket+86\ncreateRadioPacket+1334\nDualRateExp+10\nSwitchesAssigPage+18\nThrottleHoldPage+96\nTrainerModePage+94\nshowSingleValuePage+20\nGyroscopePAge+14\nstartupWarning+30\nstartupWarning+42\nstartupWarning+184\nstartupWarning+306\n'
-.

@@ -1,2 +1,0 @@
-S"keyTestPage5970 @displayPageHeader\n597c 'SWB'\n598c @displayTextAt\n5998 'SWD'\n59a8 @displayTextAt\n59b4 'TR6'\n59c4 @displayTextAt\n59d0 'TR4'\n59e0 @displayTextAt\n59ec 'TR8'\n59fc @displayTextAt\n5a08 'TR2'\n5a18 @displayTextAt\n5a24 'DOWN'\n5a34 @displayTextAt\n5a40 'MENU'\n5a50 @displayTextAt\n5a5c 0x5b14: pointer to 0x0 (Initial_SP)\n5a6c @displayTextAt\n5a78 0x5b24: pointer to 0x52\n5a94 @sub_9BC0\n5a9c 0x596a\n5aa4 @beep\n5aac @beep\n5ab0 0x596a\n"
-.

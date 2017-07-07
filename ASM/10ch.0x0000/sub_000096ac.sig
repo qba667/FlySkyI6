@@ -1,2 +1,0 @@
-S"PPMOutMenu96b4 @callSetupDMAandSend\n96b8 'utput'\n96d4 0x96cc: pointer to 0x2900\n96e8 0x972c: pointer to 0x7288 (def_7296)\n9700 0x971e: pointer to @tpmMethod\n9704 0x971e: pointer to @tpmMethod\n9708 0x971e: pointer to @tpmMethod\n970c 0x971e: pointer to @tpmMethod\n9710 0x971a: pointer to 0x2001\n9714 0x971a: pointer to 0x2001\n9718 0x96b4\n9730 0x9738: pointer to 0x2500\n9734 @timerSendPacket\n9740 @sendPacketWithTimer\n9748 0x9740\n9750 0x973a: pointer to 0x7820\n9758 0x96b4\n9760 @beep\n9768 @beep\n976c 0x96b4\n"
-.

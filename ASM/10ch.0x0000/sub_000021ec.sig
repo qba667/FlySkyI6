@@ -1,2 +1,0 @@
-S'adc_setup2218 0x221e: pointer to 0x2b07\n2220 0x223a: pointer to 0x6047\n'
-.

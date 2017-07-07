@@ -1,2 +1,0 @@
-S'sub_204C205c 0x2068: pointer to 0x2001\n206c 0x2072: pointer to 0x2700\n2070 0x2074: pointer to 0x9804\n2084 0x208c: pointer to 0x2600\n2088 @sub_1A20\n20ac 0x20c4: pointer to 0x4638\n20b0 @sub_1A20\n20b4 0x20c4: pointer to 0x4638\n20cc 0x20de: pointer to 0x4628\n20e4 0x20ce: pointer to 0x9800\n20e8 @sub_1A4C\n20f0 0x20f8: pointer to 0x2001\nsub_1AC0+84\n'
-.

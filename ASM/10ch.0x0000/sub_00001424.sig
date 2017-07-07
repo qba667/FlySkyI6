@@ -1,3 +1,0 @@
-S'UNKNOWN_ID'
-p1
-.

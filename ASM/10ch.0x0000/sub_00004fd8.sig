@@ -1,2 +1,0 @@
-S'getGFX4ff8 0x5006: pointer to 0x4308\n4ffc 0x500a: pointer to 0x4388\n5008 0x5000: pointer to 0x7018\nDualRateExp+280\nDualRateExp+290\nDualRateExp+300\nDualRateExp+310\nshowSingleValuePage+146\nshowSingleValuePage+170\nshowSingleValuePage+208\nshowSingleValuePage+232\nsub_4E8C+40\nsub_4E8C+82\nsub_4E8C+164\nsub_4E8C+190\nsub_4E8C+276\nsub_4E8C+302\n'
-.

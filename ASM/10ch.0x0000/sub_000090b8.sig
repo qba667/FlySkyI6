@@ -1,2 +1,0 @@
-S"rxBindingPage90bc @timerSendPacket\n90c8 @addPacketToResend1FFFFCF5When2000013C\n90dc 'nding..'\n90ec 0x90f6: pointer to 0x78e0\n90f4 0x90fc: pointer to 0x78e0\n9100 0x9118: pointer to 0x4f1f\n9108 'nd Fail'\n9114 @addPacketToResend1FFFFCF5When2000013C\n9128 0x916e: pointer to 0x702e\n9138 @displayTextAt\n913c @LCD_updateCALL\n9148 @addPacketToResend1FFFFCF5When2000013C\nrxBindingShow+4\nmain_screen+396\n"
-.

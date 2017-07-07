@@ -1,2 +1,0 @@
-S'someSPImethodsaveModelSettings+72\nFactoryReset+140\nFactoryReset+172\nmain_screen+68\nFactResConfirm+140\nFactResConfirm+172\nFactResConfirm+206\nloadTimerSettingsFromEeprom+34\nsettingsValidation+76\nsettingsValidation+154\nfactoryModeMenu+576\nshowNavigationPage+410\n'
-.

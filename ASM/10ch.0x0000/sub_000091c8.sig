@@ -1,2 +1,0 @@
-S'RFStandardPage91d4 @callSetupDMAandSend\n91d8 \'tandard\'\n91f8 0x91fe: pointer to \'("@!.H\'\n91fc 0x9200: pointer to 0x2300\n9214 0x9234: pointer to 0x7a60\n9218 0x9234: pointer to 0x7a60\n921c 0x9296: pointer to 0x7a60\n9220 0x9296: pointer to 0x7a60\n9224 0x930c: pointer to 0x2001\n9228 0x930c: pointer to 0x2001\n922c 0x91d4\n9288 @sendPacketToRadio\n928c @sub_9BC0\n9294 0x92f6: pointer to 0x2031\n92a8 0x92ee\n92ac @timerSendPacket\n92f4 0x9292: pointer to 0xd39f\n92fc @beep\n9304 @beep\n9308 0x91d4\n'
-.

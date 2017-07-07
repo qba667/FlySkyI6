@@ -1,2 +1,0 @@
-S'FactResConfirm481c @callSetupDMAandSend\n4878 0x48f6: pointer to 0x2000\n487c 0x4872\n4884 0x48f2: pointer to 0xb011\n48a0 @setupDMA\n48a4 @someSPImethod\n48b8 @saveEepromData\n48c4 @someSPImethod\n48cc 0x48ac: pointer to 0x335\n48e4 0x48d4: pointer to 0x2240\nROMBASE+0xaee\nROMBASE+0xafe\nSubtrimPage+192\nSubtrimPage+196\n'
-.

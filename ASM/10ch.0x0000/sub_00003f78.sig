@@ -1,2 +1,0 @@
-S'sub_3F78ROMBASE+0x3f74\n'
-.

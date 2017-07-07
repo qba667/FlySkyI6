@@ -1,2 +1,0 @@
-S'sub_1D761d82 0x1d8e: pointer to 0x793\n1d92 0x1da2: pointer to 0x2a10\n1da6 0x1db0: pointer to 0x3a04\n1db2 0x1da8: pointer to 0x3804\n1db6 @strcpy\nROMBASE+0x1dda\nsetSensorValue+340\nsensorsFunction4+46\n'
-.

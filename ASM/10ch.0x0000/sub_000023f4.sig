@@ -1,2 +1,0 @@
-S'sub_23F42400 @beep\n2410 @fillRegion\n241c @displayTextAt2\n2428 @displayTextAt\n2434 @displayTextAt\n2444 @fillRegion\n2458 0x245e: pointer to 0x2144\n245c 0x2460: pointer to 0x2238\n2464 @displayGFX\n2468 @LCD_updateCALL\n246c @getKeyCode\n2490 @beep\n24a0 0x243a: pointer to 0x233f\nResetOdo1Menu+40\nResetOdo2Menu+40\nStudentModePage+148\nFactoryReset+102\nFirmwareUpdatePage+100\nFactResConfirm+102\nmodelCopyPage+336\nmodelResetPage+188\n'
-.

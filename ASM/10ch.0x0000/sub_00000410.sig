@@ -1,2 +1,0 @@
-S'sub_410ROMBASE+0x660\n'
-.
