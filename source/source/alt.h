@@ -38,6 +38,26 @@ typedef struct sensorAlarm
 	uint16_t value;
 } sensorAlarm;
 
+//146 bytes by 19 models
+typedef struct modelConfStruct
+{
+	uint8_t ch11_12;
+	uint8_t ch12_13;
+	uint8_t ch14;
+	uint16_t timerAlarm;
+} modelConfStruct;
+
+typedef struct globalConfigStruct
+{
+	uint16_t batteryVoltage;
+	uint8_t swB3Pos;
+	uint8_t timerCH;
+	uint16_t timerStart;
+	sensorAlarm alarm[3];
+	modelConfStruct modelConfig[19];
+
+} globalConfigStruct;
+
 
 typedef struct configStruct
 {
@@ -46,6 +66,7 @@ typedef struct configStruct
 	/*@3*/	uint16_t timerAlarm;
 	/*@5*/  uint16_t batteryVoltage;
 	/*@7*//*@11*//*@115*/	sensorAlarm alarm[3];
+	/*@19*/ /*uint8_t swB3Pos*/;
 } configStruct;
 
 typedef union config
@@ -53,7 +74,7 @@ typedef union config
 	configStruct cfg;
 } config;
 
-
+globalConfigStruct __attribute__((section (".s_modConfigAsModel20"))) modConfig2;
 uint8_t __attribute__((section (".s_mainScreenIndex"))) mainScreenIndex = 0; //referenced from assembly
 configStruct __attribute__((section (".s_modConfigEeprom"))) modConfig; 			//16bytes
 int32_t __attribute__((section (".s_longSensors"))) longSensors[SENSORS_ARRAY_LENGTH]; 		//72bytes referenced from assembly
@@ -79,6 +100,7 @@ __attribute__((section (".s_parseAC"))) void acData(uint8_t* rxBuffer);
 
  __attribute__((section (".s_batteryConfig"))) void BatteryType();
 
+ __attribute__((section (".s_SW_B_config"))) void SwBConfig();
  __attribute__((section (".s_alarmConfig"))) void AlarmConfig();
  __attribute__((section (".s_customAlarms"))) void ChackCustomAlarms();
 

@@ -180,15 +180,15 @@ const uint8_t __attribute__((section (".s_alarm"))) alarm[] = {
 const uint8_t __attribute__((section (".s_extraMenu"))) extraMenu[] = {
 		'E', 'x', 't', 'r', 'a',  0x00
 };
-const uint8_t __attribute__((section (".s_altSensor"))) altSensor[] = {
-		'A', 'L', 'T', ' ', 'S', 'e', 'n',  0x00
+const uint8_t __attribute__((section (".s_swbMenu"))) altSensor[] = {
+		'N', 'o', 't', ' ', 'S', 'e', 't',  0x00
 };
 const uint8_t __attribute__((section (".s_txBat"))) txBat[] = {
 		'T', 'X', ' ', 'B', 'a', 't',  0x00
 };
 //contains pointers to functions!!!
 const uint32_t __attribute__((section (".s_modMenuList"))) menuList[] = {
-	TEXT_TIMMER, 0xFDE9, 0xFF98, 0xFC01,  0xFFA0, 0xf821, 0xFFA8, 0xf821
+	TEXT_TIMMER, 0xFDE9, 0xFF98, 0xFC01,  0xedc7, 0xE6E1, 0xFFA8, 0xf821,
 };
 
 

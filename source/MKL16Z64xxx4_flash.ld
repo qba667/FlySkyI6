@@ -171,7 +171,28 @@ SECTIONS
 {
 	*(.s_customAlarms);
 }
+
+
+	.s_AUX_CH_SW_STATE 0xE6A0 :
+  {
+ 	 *(.s_getSWState*);
+  }
+ 
+
+
+.s_MOD_SWB 0xE6E0 :
+{
+	*(.s_SW_B_config);
+}
+
+
+   .s_MOD_SwbADC 0x5310 :
+{
+	*(.s_swBHandling);
+}
+
  . = ALIGN(1);
+  /*5*128 bytes FREE up to E752*/
   
   .FontSmal 0xE471 :
   {
@@ -181,7 +202,7 @@ SECTIONS
   
   
    . = ALIGN(4);
-  /*method redefinition*/
+  /*method redefinition not needed any more*/
   
   .s_displaySmallTextAt 0x5174 :
   {
@@ -204,7 +225,7 @@ SECTIONS
   {
   	*(.s_extraMenu); 
   	*(.s_alarm);
-  	*(.s_altSensor);
+  	*(.s_swbMenu);
   	*(.s_txBat);
  }
  .s_modMenuFun 0xFFB0 : /*FFC0 - FFFF*/
@@ -245,10 +266,6 @@ SECTIONS
   }
   
 
- .s_getSensorName 0xF020 : /*f020 - f0b7*/
-  {
-    KEEP(*(.s_getSensorName))
-  }
   
   .s_MOD_SPACE 0xF4D0 :
   {
@@ -261,6 +278,17 @@ SECTIONS
     *(.s_batteryConfig);
   }   
  
+ 	.s_AUX_CH 0xF66C :
+  {
+ 	 *(.s_getAuxChannel*);
+  }
+ 
+ 
+ .s_getSensorName 0xF7B0 : /*f020 - f0b7*/
+  {
+    KEEP(*(.s_getSensorName))
+  }
+  
  	.s_TIMER_SPACE 0xF8E0 :
   {
  	 *(.s_printTimer*);
@@ -413,6 +441,12 @@ SECTIONS
   {
       *(.screenBuffer);
   }
+  
+  .MOD_CONFIG2 0x20000D7A :
+  {
+      *(.s_modConfigAsModel20);
+  }
+
   
   .AUX_MEM 0x20000F4A :
   {

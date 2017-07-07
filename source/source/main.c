@@ -104,6 +104,7 @@ int main(void) {
   displayMenu();
   TimerConfig();
   BatteryType();
+  SwBConfig();
   strLenCall((const char*)txBat);
   strLenCall((const char*)altSensor);
 

@@ -197,6 +197,7 @@ uint32_t isTimerActive(){
 int getAuxChannel(uint32_t request){
 	int sw1 = 0;
 	int sw2 = 0;
+	uint8_t swB_3pos = modConfig2.swB3Pos;
 	if(request == 0) return 0;
 	if(request == 15){
 		sw1 = ADC_SW_C - ADC_VAR_A;
@@ -221,9 +222,16 @@ int getAuxChannel(uint32_t request){
 		return sw1;
 	}
 	else if(request == 7){ // A+B
-		sw1 = SW_A;
-		sw2 = SW_B;
-		goto TwoPos;
+		if(swB_3pos != 0){
+			sw1 = SW_B;
+			sw2 = SW_A;
+			goto TreePos;
+		}
+		else{
+			sw1 = SW_A;
+			sw2 = SW_B;
+			goto TwoPos;
+		}
 	}
 	else if(request == 10){ // A+D
 		sw1 = SW_A;
@@ -233,6 +241,7 @@ int getAuxChannel(uint32_t request){
 	else if(request == 8){ // B+C
 		sw1 = SW_C;
 		sw2 = SW_B;
+		if(swB_3pos != 0) goto NinePos;
 		goto TreePos;
 	}
 	else if(request == 9){ // C+D
@@ -261,7 +270,10 @@ int getAuxChannel(uint32_t request){
 	sw1 = getSWState(sw1) *2;
 	sw2 = getSWState(sw2) *3;
 	return div_(sw1 + sw2, 5);
-
+	NinePos:
+	sw1 = getSWState(sw1);
+	sw2 = getSWState(sw2) *3;
+	return div_(sw1 + sw2, 4);
 	return sw2;
 }
 
@@ -286,6 +298,7 @@ int getSWState(uint32_t swIndex){
 	}
 	return result;
 }
+
 
 
 
@@ -327,9 +340,10 @@ void BatteryType() {
 	 int32_t lastTelemetryUpdate = *((int32_t *)TELEMETRY_UPDATE_TIMER);
 	 uint8_t beepCount = 0;
 	 uint8_t sensorID = 0;
+
 	 if(timer < 100 ) return;
 
-	 if(timerValue > (uint32_t)modConfig.timerAlarm) {
+	 if((uint32_t)modConfig.timerAlarm != 0 && timerValue > (uint32_t)modConfig.timerAlarm) {
 		 beepCount = 1;
 	 }
 
@@ -377,6 +391,37 @@ void BatteryType() {
 
 	 CheckAlarmsCall();
  }
+
+void SwBConfig() {
+	uint32_t key = 0;
+	uint8_t swbType = modConfig2.swB3Pos;
+	uint8_t mode = 2;
+	char buffer[32];
+	while (1) {
+		callSetupDMAandSend();
+		displayPageHeader((char*) 0xEDC7);//SwB
+		displayTextAt((char*) 0xCAAE, 8, 24, 0); //Mode
+		if(swbType == 0) mode = 2;
+		else mode = 3;
+		sprintfCall(buffer, (const char*) formatNumber, mode);
+		displayTextAt((char*) buffer, 48, 24, 0);
+		LCD_updateCALL();
+		key = getKeyCode();
+		if (key == KEY_SHORT_UP || key == KEY_LONG_UP || key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN)
+		{
+			if(swbType==0)swbType = 1;
+			else swbType = 0;
+		}
+		else break;
+
+	}
+
+	if (key == KEY_LONG_CANCEL) {
+		modConfig2.swB3Pos = swbType;
+		//saveModSettings();
+	}
+
+}
 
 void AlarmConfig(){
 	sensorAlarm alarms[3];
@@ -564,6 +609,8 @@ void parseCoord(uint32_t *deg, uint32_t *min, uint32_t *sec, uint32_t *subSec, u
 	*sec = divMod(coord, 10000000, &tmp);*/
 }
 
+
+
 void formatSensorValue(char* target, int sensorID, uint16_t sensorValue) {
 	const char* format = (const char*) formatNumber;
 	const char* unit = 0;
@@ -665,14 +712,14 @@ void displaySensors(){
 	uint32_t bufferOffset = 0;
 	uint8_t batteryID = IBUS_MEAS_TYPE_INTV;
 	const uint8_t* settings = (uint8_t*)((*(uint32_t *)(USED_MODEL_PTR)));
-	uint32_t batteryType = (uint32_t)settings[2];
+	uint32_t batteryType = (uint32_t)settings[98];
 	int32_t timer = ((*(int32_t *)(TIMER_SYS_TIM)));
 	int32_t telemetryUpdateTimer = ((*(int32_t *)(MEM_20000000 + 0x1C)));
 	uint8_t sensorCount = 3;
 	uint32_t yPos = 34;
 	uint32_t xPos = 9;
-	if(timer - telemetryUpdateTimer > 1000 && mainScreenIndex < 2) {
 
+	if(timer - telemetryUpdateTimer > 1000 && mainScreenIndex < 2) {
 		return;
 	}
 

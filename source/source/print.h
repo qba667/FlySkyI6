@@ -5,7 +5,7 @@
 #define fontW 5
 #define pageH 8
 
-const uint8_t __attribute__((section (".FontSmal"))) font[] = {
+const uint8_t /*__attribute__((section (".FontSmal")))*/ font[] = {
 	    0x00, 0x00, 0x00, 0x00, 0x00,// (space)
 	    0x00, 0x00, 0x5F, 0x00, 0x00,// !
 	    0x00, 0x07, 0x00, 0x07, 0x00,// "
