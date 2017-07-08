@@ -82,6 +82,7 @@ typedef void (*beepFun)(int freq, int duration);
 typedef void (*crcFun)(char* data, int length);
 
 
+__attribute__((section (".s_MOD_SPACE.CONFIGPINS"))) const voidFun configurePINs = (voidFun)0x2C01;
 __attribute__((section (".s_MOD_SPACE.NAVPAGE"))) const navPage showNavPage = (navPage)0x6DD5;
 __attribute__((section (".s_MOD_SPACE.SETTINGSVALID"))) const voidFun settingsValidation = (voidFun)0x6005;
 __attribute__((section (".s_MOD_SPACE.SPIMETHOD"))) const voidFun someSPImethod = (voidFun)0xA339;

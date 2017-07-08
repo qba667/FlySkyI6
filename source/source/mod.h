@@ -188,7 +188,7 @@ const uint8_t __attribute__((section (".s_txBat"))) txBat[] = {
 };
 //contains pointers to functions!!!
 const uint32_t __attribute__((section (".s_modMenuList"))) menuList[] = {
-	TEXT_TIMMER, 0xFDE9, 0xFF98, 0xFC01,  0xedc7, 0xE6E1, 0xFFA8, 0xf821,
+	TEXT_TIMMER, 0xFDE9, 0xFF98, 0xFC01,  0xf63e, 0xE571, 0xFFA8, 0xf821,
 };
 
 

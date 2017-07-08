@@ -11,6 +11,8 @@
 #include "ibustelemetry.h"
 #include "mod.h"
 #include "print.h"
+#include "fsl_gpio.h"
+#include "fsl_port.h"
 #define OPERATOR_LT 0
 #define OPERATOR_GT 1
 
@@ -194,14 +196,15 @@ uint32_t isTimerActive(){
 #define SW_B 1u
 #define SW_C 2u
 #define SW_D 3u
+#define SW_E 6u
 int getAuxChannel(uint32_t request){
 	int sw1 = 0;
 	int sw2 = 0;
-	uint8_t swB_3pos = modConfig2.swB3Pos;
+	uint8_t swB_3pos = modConfig2.swConfig & 1;
+	uint8_t varC = modConfig2.swConfig & 2;
 	if(request == 0) return 0;
 	if(request == 15){
-		sw1 = ADC_SW_C - ADC_VAR_A;
-		goto VarCalc;
+		return getSWState(SW_E);
 	}
 	if(request > 11){
 		//12 6 -> result 	0
@@ -233,7 +236,12 @@ int getAuxChannel(uint32_t request){
 			goto TwoPos;
 		}
 	}
-	else if(request == 10){ // A+D
+	else if(request == 10){ // A+D or E
+		/*
+		 uint32_t portD = ((*(uint32_t *)(0x400FF0D0)));
+		if ( !(portD & 0x4))  return 10000;
+		return -10000;
+		 */
 		sw1 = SW_A;
 		sw2 = SW_D;
 		goto TwoPos;
@@ -250,6 +258,11 @@ int getAuxChannel(uint32_t request){
 		goto TreePos;
 	}
 	else if ( request > 2 ){
+		//swA = 3  swB = 4 swC = 5 swD = 6
+		if(request == 5 && varC){
+			sw1 = ADC_SW_C - ADC_VAR_A;
+			goto VarCalc;
+		}
       return getSWState(request - 3);
 	}
 	else { //VAR A VAR B
@@ -394,30 +407,50 @@ void BatteryType() {
 
 void SwBConfig() {
 	uint32_t key = 0;
-	uint8_t swbType = modConfig2.swB3Pos;
-	uint8_t mode = 2;
+	uint8_t swConfig = modConfig2.swConfig;
+	uint8_t modeSWB = 2;
+
 	char buffer[32];
 	while (1) {
 		callSetupDMAandSend();
-		displayPageHeader((char*) 0xEDC7);//SwB
-		displayTextAt((char*) 0xCAAE, 8, 24, 0); //Mode
-		if(swbType == 0) mode = 2;
-		else mode = 3;
-		sprintfCall(buffer, (const char*) formatNumber, mode);
+		displayPageHeader((char*) 0xd075); //Switches
+		displayTextAt((char*)0xEDC7, 8, 24, 0); //SwB
+		if((swConfig & 1) == 0) modeSWB = 2;
+		else modeSWB = 3;
+
+		sprintfCall(buffer, (const char*) formatNumber, modeSWB);
 		displayTextAt((char*) buffer, 48, 24, 0);
+
+		displayTextAt((char*)0xEDCB, 8, 32, 0); //SwC
+
+		if((swConfig & 2) == 0){
+			sprintfCall(buffer, (const char*) formatNumber, 3);
+		}
+		else {
+			buffer[0] = 'V';
+			buffer[1] = 'a';
+			buffer[2] = 'r';
+			buffer[3] = 0;
+		}
+		displayTextAt((char*) buffer, 48, 32, 0);
+
 		LCD_updateCALL();
 		key = getKeyCode();
-		if (key == KEY_SHORT_UP || key == KEY_LONG_UP || key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN)
+		if (key == KEY_SHORT_UP || key == KEY_LONG_UP)
 		{
-			if(swbType==0)swbType = 1;
-			else swbType = 0;
+			if((swConfig & 1) == 0)swConfig |= 1 << 0;
+			else swConfig &= ~(1 << 0);
+		}
+		else if(key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN){
+			if((swConfig & 2) == 0)swConfig |= 2;
+			else swConfig &= ~(2);
 		}
 		else break;
 
 	}
 
 	if (key == KEY_LONG_CANCEL) {
-		modConfig2.swB3Pos = swbType;
+		modConfig2.swConfig = swConfig;
 		//saveModSettings();
 	}
 
@@ -697,15 +730,25 @@ void formatSensorValue(char* target, int sensorID, uint16_t sensorValue) {
 	if(unit != 0) strcatCall(target, unit);
 }
 
+void configurePINS2(){
+	configurePINs();
+	PORT_SetPinMux(PORTD, 2u, kPORT_MuxAsGpio);
+	GPIOD->PDDR &= ~(1U << 2); //input
+}
 
 //return non 0 when switch MAX value
-uint8_t swBasADC(){
+void swBasADC(){
 	uint32_t swBVal =((*(uint32_t *)(ADC_SW_B)));
 	uint32_t *tempInputs = (uint32_t *)TEMP_INPUT_STATES;
 	if (swBVal < 500u)	*tempInputs |= 0x200000u;
 	if(swBVal > 3800u) *tempInputs |= 0x20000u;
 }
 
+void swEHandling(){
+	uint32_t *tempInputs = (uint32_t *)TEMP_INPUT_STATES;
+	uint32_t portD = ((*(uint32_t *)(0x400FF0D0)));
+	if ( !(portD & 0x4)) *tempInputs |= 1 << 22;
+}
 
 void displaySensors(){
 	char buffer[64];

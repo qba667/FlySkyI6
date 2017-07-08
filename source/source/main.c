@@ -105,6 +105,7 @@ int main(void) {
   TimerConfig();
   BatteryType();
   SwBConfig();
+  configurePINS2();
   strLenCall((const char*)txBat);
   strLenCall((const char*)altSensor);
 
@@ -127,10 +128,8 @@ int main(void) {
   //divFun dev = (divFun)0x1E5E;
   //char* format = "%d";
   //sprintfCall(buffer, format, 0);
-  if(swBasADC()==1){
-
-
-  }
+  swBasADC();
+  swEHandling();
   //uint32_t resutl = dev(100U, 10U);
   displaySensors();
   auxChannelsPage();

@@ -50,7 +50,7 @@ typedef struct modelConfStruct
 typedef struct globalConfigStruct
 {
 	uint16_t batteryVoltage;
-	uint8_t swB3Pos;
+	uint8_t swConfig;
 	uint8_t timerCH;
 	uint16_t timerStart;
 	sensorAlarm alarm[3];
@@ -85,6 +85,8 @@ uint8_t __attribute__((section (".s_ticks100ms"))) ticks100MS;
 
 uint8_t __attribute__((section (".s_mavlinkGPSFrame"))) mavlinkGPSFrame[22]; 	//22bytes
 
+__attribute__((section (".s_configurePins"))) void configurePINS2();
+
  __attribute__((section (".s_getAuxChannel"))) int getAuxChannel(uint32_t request);
  __attribute__((section (".s_getSWState"))) int getSWState(uint32_t swIndex);
 
@@ -104,7 +106,9 @@ __attribute__((section (".s_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".s_alarmConfig"))) void AlarmConfig();
  __attribute__((section (".s_customAlarms"))) void ChackCustomAlarms();
 
- __attribute__((section (".s_swBHandling"))) uint8_t swBasADC();
+
+ __attribute__((section (".s_swEHandling"))) void swEHandling();
+ __attribute__((section (".s_swBHandling"))) void swBasADC();
 __attribute__((section (".s_loadModEeprom"))) void loadModSettings();
 __attribute__((section (".s_saveModEeprom"))) void saveModSettings();
 
