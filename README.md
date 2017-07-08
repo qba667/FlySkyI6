@@ -3,14 +3,10 @@ Project description:
 
 Firmware modification for the FlySky i6 based on modified firware developed by dave borthwick.
 
-Latest version:
+Latest version available on Release page:
 
- * 386
- 
-https://github.com/qba667/FlySkyI6/blob/master/release/flysky-updater_386.zip
- * x64
- 
-https://github.com/qba667/FlySkyI6/blob/master/release/flysky-updater_x64.zip
+https://github.com/qba667/FlySkyI6/releases
+
 
 Oryginal multiplatform updater by mhils:
 
