@@ -197,6 +197,97 @@ uint32_t isTimerActive(){
 #define SW_C 2u
 #define SW_D 3u
 #define SW_E 6u
+
+
+void auxChannels2(){
+	uint8_t row = 0;
+	uint32_t key = 0;
+	uint32_t* namePtr = (uint32_t*)0x200000B8;
+	char* name2Ptr = (char*) 0xF638;
+	char* tmp = 0;
+	//0x200002AD
+	uint8_t modelIndex = ((*(uint8_t *)(CURRENT_MODEL_INDEX)));
+	modelConfStruct model = modConfig2.modelConfig[modelIndex];
+
+	uint8_t auxChannels[4];
+	auxChannels[0] = model.ch11_12 >> 4;
+	auxChannels[1] = model.ch11_12 &  0xF;
+	auxChannels[2] = model.ch13_14 >> 4;
+	auxChannels[3] = model.ch13_14 &  0xF;
+
+	char buffer[32];
+
+	while(1){
+		callSetupDMAandSend();
+		displayPageHeader((char*)0xCC5A);
+		uint32_t ptr = 0x9650;
+		//copy channel
+		for(uint8_t i=0; i <7; i++){
+			buffer[i] = *((char*)(ptr + i));
+		}
+		buffer[7] = '1';
+
+		for(uint8_t i=0; i < sizeof(auxChannels); i++){
+			buffer[8] = '1' + i;
+			buffer[9] = 0;
+			displayTextAt(buffer, 8, 16 + i*8, 0);
+
+			if(auxChannels[i] <= 6){
+				tmp = (char*)(*(namePtr + auxChannels[i]));
+			}
+			else if(auxChannels[i] <= 15){
+				tmp = name2Ptr + (6 * (auxChannels[i] - 7));
+			}
+
+			if(tmp!=0 && tmp[0]!=0){
+				displayTextAt(tmp, 88, 16 + i*8, 0);
+			}
+		}
+		displayGFX((gfxInfo*) GFX_ARROW, 0, 16 + (row*8));
+
+		LCD_updateCALL();
+		key = getKeyCode();
+		if(key == KEY_SHORT_OK) {
+			row++;
+			if(row >=4)row = 0;
+		}
+		else if(key == KEY_LONG_OK) {
+			auxChannels[row] = 0;
+		}
+		else if(key == KEY_SHORT_UP || key == KEY_LONG_UP) {
+			if(auxChannels[row] < 15){
+				auxChannels[row]++;
+			}
+		}
+		else if(key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
+			if(auxChannels[row] > 0){
+				auxChannels[row]--;
+			}
+		}
+		else break;
+	}
+	if(key == KEY_LONG_CANCEL){
+		modConfig2.modelConfig[modelIndex].ch11_12 = (auxChannels[0] << 4) | auxChannels[1];
+		modConfig2.modelConfig[modelIndex].ch13_14 = (auxChannels[2] << 4) | auxChannels[3];
+	}
+
+}
+void createPacketCh1114(){
+	int32_t channel11Address = 0x1FFFFE08;
+	uint8_t modelIndex = ((*(uint8_t *)(CURRENT_MODEL_INDEX)));
+	modelConfStruct model = modConfig2.modelConfig[modelIndex];
+
+	uint8_t auxChannels[4];
+	auxChannels[0] = model.ch11_12 >> 4;
+	auxChannels[1] = model.ch11_12 &  0xF;
+	auxChannels[2] = model.ch13_14 >> 4;
+	auxChannels[3] = model.ch13_14 &  0xF;
+
+	for(uint8_t i=0; i < sizeof(auxChannels); i++){
+		*((int32_t*)(channel11Address + 4*i)) = getAuxChannel(auxChannels[i]);
+	}
+
+}
 int getAuxChannel(uint32_t request){
 	int sw1 = 0;
 	int sw2 = 0;
@@ -313,11 +404,9 @@ int getSWState(uint32_t swIndex){
 }
 
 
-
-
 /*Belongs to .s_modMenu 0xFFA0 */
 void displayMenu(){
-	showNavPage((const char*) extraMenu, 4, (manuEntry*)menuList);
+	showNavPage((const char*) extraMenu, 5, (manuEntry*)menuList);
 }
 
 void BatteryType() {

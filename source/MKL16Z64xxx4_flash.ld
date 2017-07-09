@@ -167,24 +167,44 @@ SECTIONS
 	*(.s_acHelper);
 }
  . = ALIGN(4);
+ 
+    .s_MOD_CHANNELS_11_14 0xE400 :
+{
+	*(.s_channels1114);
+}
+ 
    .s_MOD_ALARMS 0xE140 :
 {
 	*(.s_customAlarms);
 }
 
 
+	.s_CONFIG_PINS 0xe660 :
+  {
+ 	 *(.s_configurePins*);
+  }
+
+
 	.s_AUX_CH_SW_STATE 0xE6A0 :
   {
  	 *(.s_getSWState*);
   }
- 
+ 	.s_AUX_CH_SET_VAL 0xE700 :
+  {
+ 	 *(.s_createPacketCh1114*);
+  }
 
 
-.s_MOD_SWB 0xE6E0 :
+.s_MOD_SWB 0xE570 :
 {
 	*(.s_SW_B_config);
 }
 
+
+   .s_MOD_SwE 0x52F0 :
+{
+	*(.s_swEHandling);
+}
 
    .s_MOD_SwbADC 0x5310 :
 {

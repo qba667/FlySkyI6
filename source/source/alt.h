@@ -42,8 +42,7 @@ typedef struct sensorAlarm
 typedef struct modelConfStruct
 {
 	uint8_t ch11_12;
-	uint8_t ch12_13;
-	uint8_t ch14;
+	uint8_t ch13_14;
 	uint16_t timerAlarm;
 } modelConfStruct;
 
@@ -102,6 +101,9 @@ __attribute__((section (".s_parseAC"))) void acData(uint8_t* rxBuffer);
 
  __attribute__((section (".s_batteryConfig"))) void BatteryType();
 
+
+ __attribute__((section (".s_channels1114"))) void auxChannels2();
+ __attribute__((section (".s_createPacketCh1114"))) void createPacketCh1114();
  __attribute__((section (".s_SW_B_config"))) void SwBConfig();
  __attribute__((section (".s_alarmConfig"))) void AlarmConfig();
  __attribute__((section (".s_customAlarms"))) void ChackCustomAlarms();

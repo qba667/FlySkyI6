@@ -105,6 +105,7 @@ int main(void) {
   TimerConfig();
   BatteryType();
   SwBConfig();
+  createPacketCh1114();
   configurePINS2();
   strLenCall((const char*)txBat);
   strLenCall((const char*)altSensor);
@@ -135,6 +136,7 @@ int main(void) {
   auxChannelsPage();
   AlarmConfig();
   printTimer(0);
+  auxChannels2();
   //rxTest2();
   //initALT(100000);
   uint32_t reminder=0;

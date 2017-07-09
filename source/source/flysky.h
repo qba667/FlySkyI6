@@ -19,6 +19,7 @@
 #define INPUT_STATES 0x1FFFF89C  //uint bits
 #define TEMP_INPUT_STATES 0x1FFFF898 //uint bits
 #define USED_MODEL_PTR 0x2000002C //PTR to current model
+#define CURRENT_MODEL_INDEX 0x200002AD
 #define ARROW_GFX_INFO 0xCBF8
 #define MEM_20000000 0x20000000
 #define TIMER_SYS_TIM 0x1FFFF8B0 //SYS_TIM
@@ -80,6 +81,8 @@ typedef void (*formatSensData)(uint8_t sensorID, uint8_t sensorIndex, char* pack
 typedef void (*navPage)(const char* pageName, int numberofitems, manuEntry* menuStruct);
 typedef void (*beepFun)(int freq, int duration);
 typedef void (*crcFun)(char* data, int length);
+typedef void (*formatNumFun)(int number, char* buffer, int digits);
+
 
 
 __attribute__((section (".s_MOD_SPACE.CONFIGPINS"))) const voidFun configurePINs = (voidFun)0x2C01;
@@ -115,8 +118,7 @@ __attribute__((section (".s_MOD_SPACE.updateLCD"))) const voidFun LCD_updateCALL
 
 __attribute__((section (".s_MOD_SPACE.CheckAlarms"))) const voidFun CheckAlarmsCall = (voidFun)0x61ED;
 
-
-
+__attribute__((section (".s_MOD_SPACE.sPrintNumer"))) const formatNumFun sprintfNumer = (formatNumFun)0xA2E4;
 
 __attribute__((section (".s_MOD_SPACE.showNavigationPage"))) const navPage showNavigationPage = (navPage)0x6DD5;
 __attribute__((section (".s_MOD_SPACE.beep"))) const beepFun beep = (beepFun)0x9C3D;
