@@ -17,6 +17,15 @@ Improved version:
 * Autodetection of serial ports
 * Autodetection of FW files
 
+28 bytes telemetry data only with IA6B after patching - firmware can be found in my other repository.
+There is also version sending IBus channel data and telemetry on same wire (serial port):
+
+https://github.com/qba667/MAVLinkToIbus/tree/master/IA6B
+
+How to update firmware can be found in povlhp repository. 
+https://github.com/povlhp/FlySkyRxFirmware
+
+
 New FW can be copied to update directory - updater will detect it automatically.
 
 ![alt text](https://github.com/qba667/FlySkyI6/blob/master/update.png)
