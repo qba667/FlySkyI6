@@ -63,6 +63,8 @@ Implemted features:
 
 * 3 positions Switch B
 
+* 2 positions Switch E added
+
 * Variable in place of Switch C
 
 * Using PPM input for custom channels
