@@ -71,9 +71,9 @@ Implemted features:
 
 * Refefined main screen
 
-* Channels 12-14 sendinng PPM values 6,5,4
+* Channels 12-14 sendinng PPM values 6,5,4 (in older version)
 
-* RSSI (Error) send on channel 11
+* RSSI (Error) send on channel 11 (in older version)
 
 * Handling AC frames (up to 28 bytes)
 
