@@ -102,75 +102,75 @@ SECTIONS
   } > m_text
   
   
-    .GFX_ARRAY 0x1FFFF8C0 :
+  .GFX_ARRAY 0x1FFFF8C0 :
   {
-      *(.screenBuffer);
+    *(.screenBuffer);
   } > m_data
   
   .MOD_CONFIG2 0x20000D7A :
   {
-      *(.mod_modConfigAsModel20);
+    *(.mod_modConfigAsModel20);
   }  > m_data
 
-  
   .AUX_MEM 0x20000F4A :
   {
-  *(.mod_mainScreenIndex)
-  *(.mod_modConfigEeprom);
-  *(.mod_longSensors);
-  *(.mod_mavlinkGPSFrame)
-  *(.mod_timerBuffer);
-  *(.mod_timerValue);
-  *(.mod_ticks100ms);
-  *(.mod_lastTimerUpdate);
-  *(.altconstVal);
-  *(.altconstVal);
-  *(.altinitPressure);
-  *(.altinitPressureRaw);
-  
+    *(.mod_mainScreenIndex)
+    *(.mod_modConfigEeprom);
+    *(.mod_longSensors);
+    *(.mod_mavlinkGPSFrame)
+    *(.mod_timerBuffer);
+    *(.mod_timerValue);
+    *(.mod_ticks100ms);
+    *(.mod_lastTimerUpdate);
+    *(.altconstVal);
+	*(.altconstVal);
+	*(.altinitPressure);
+	*(.altinitPressureRaw);
     KEEP(*(.AUX_MEM))
   } > m_data
   
   
   .mod_FLASH_25C8 0x25C8 :
-{
+  {
 	*(.mod_sensors00);
 	*(.mod_sensors41);
 	*(.mod_sensors7d);
 	*(.mod_sensors80);
 	*(.mod_sensorsFA);
 	*(.mod_unknownSensor);
-
 	*(.mod_flyModesOffset);
 	*(.mod_flyModes);
 	*(.mod_armed);
 	*(.mod_formatNumberFractial);
 	*(.mod_formatNumber);
 	*(.mod_formatGPS);		
-	
 	*(.mod_FLASH_25C8*);
-}
-
-
-.mod_RadioMOD 0x3194 :
-{
-	*(.mod_radioModes);
-	*(.mod_RadioMOD*);
-}
-.mod_SIGNATURE_2780 0x2780 :
-{
+  }
+  .mod_SIGNATURE_2780 0x2780 :
+  {
 	*(.mod_signature);
 	*(.mod_SIGNATURE_2780*);
-}
+  }
   .mod_FLASH_2790 0x2790 :
-{
+  {
 	*(.mod_foramtCoord)
 	*(.mod_unitsOffsets)
 	*(.mod_units)
 	*(.mod_sensDesc00)
  	*(.mod_sensDesc80)
  	*(.mod_sensDescFA)
-}
+  }
+  .reserved_main 0x2800:
+  {
+    KEEP(*(.reserved_main))
+  }
+  .mod_RadioMOD 0x3194 :
+  {
+	*(.mod_radioModes);
+	*(.mod_RadioMOD*);
+  }
+
+
 
 /*
 *(.mod_foramtDBm);
@@ -236,12 +236,12 @@ SECTIONS
 	*(.mod_swEHandling);
 }
 
-   .mod_MOD_SwbADC 0x5310 :
-{
-	*(.mod_swBHandling);
-}
-
- . = ALIGN(1);
+  .mod_MOD_SwbADC 0x5310 :
+  {
+  	*(.mod_swBHandling);
+  }
+  
+  . = ALIGN(1);
   /*5*128 bytes FREE up to E752*/
   
   .FontSmal 0xE471 :

@@ -88,19 +88,9 @@ int main(void) {
   }
   acData(buf);
   getAuxChannel(0);
-  //if( strLenCall((const char*)&modConfig)){
 
-	  getALT(10000);
- //}
- // if( strLenCall((const char*)longSensors)){
+	getALT(10000);
 
-	  getALT(10000);
-
-//   }
-//  if( strLenCall((const char*)timerBuffer)){
-	  getALT(10000);
-	  //timerVal +=1;
-//  }
   displayMenu();
   TimerConfig();
   BatteryType();
@@ -111,16 +101,8 @@ int main(void) {
   strLenCall((const char*)altSensor);
 
   ChackCustomAlarms();
-
-//strLenCall((const char*)extraMenu);
-//strLenCall((const char*)alarm);
-//strLenCall((const char*)timerValueStr);
-//strLenCall((const char*)timerChannel);
-//strLenCall((const char*)timerStartWhen);
-//strLenCall((const char*)timerOff);
-//strLenCall((const char*)timer);
-//strLenCall((const char*)timerNull);
-//strLenCall((const char*)timerFormat);
+  //keep this one
+  if( keep1 = 0){  }
   //keep this one because of without usage signature block will be removed
   if(SIGNATURE[0] == 1){
 

@@ -132,4 +132,7 @@ __attribute__((section (".altgetALT"))) int16_t getALT(uint32_t pressure);
 __attribute__((section (".altlogfix"))) int32_t logfix(uint32_t x, size_t precision);
 __attribute__((section (".altlog2fix"))) int32_t log2fix(uint32_t x, size_t precision);
 
+__attribute__((section (".reserved_main"))) uint32_t keep1 = 0;
+
+
 #endif /* SOURCE_ALT_H_ */
