@@ -85,89 +85,89 @@ typedef void (*formatNumFun)(int number, char* buffer, int digits);
 
 
 
-__attribute__((section (".s_MOD_SPACE.CONFIGPINS"))) const voidFun configurePINs = (voidFun)0x2C01;
-__attribute__((section (".s_MOD_SPACE.NAVPAGE"))) const navPage showNavPage = (navPage)0x6DD5;
-__attribute__((section (".s_MOD_SPACE.SETTINGSVALID"))) const voidFun settingsValidation = (voidFun)0x6005;
-__attribute__((section (".s_MOD_SPACE.SPIMETHOD"))) const voidFun someSPImethod = (voidFun)0xA339;
+__attribute__((section (".mod_MOD_SPACE.CONFIGPINS"))) const voidFun configurePINs = (voidFun)0x2C01;
+__attribute__((section (".mod_MOD_SPACE.NAVPAGE"))) const navPage showNavPage = (navPage)0x6DD5;
+__attribute__((section (".mod_MOD_SPACE.SETTINGSVALID"))) const voidFun settingsValidation = (voidFun)0x6005;
+__attribute__((section (".mod_MOD_SPACE.SPIMETHOD"))) const voidFun someSPImethod = (voidFun)0xA339;
 
-__attribute__((section (".s_MOD_SPACE.SPRINTF"))) const sprintfFun sprintfCall = (sprintfFun)0x19F9;
-__attribute__((section (".s_MOD_SPACE.STRCAT"))) const strcatFun strcatCall = (strcatFun)0x1C65;
+__attribute__((section (".mod_MOD_SPACE.SPRINTF"))) const sprintfFun sprintfCall = (sprintfFun)0x19F9;
+__attribute__((section (".mod_MOD_SPACE.STRCAT"))) const strcatFun strcatCall = (strcatFun)0x1C65;
 
-__attribute__((section (".s_MOD_SPACE.STRLEN"))) const strLenFun strLenCall = (strLenFun)0x1CB1;
-__attribute__((section (".s_MOD_SPACE.MEMSET"))) const memSetFun memsetCall = (memSetFun)0x3201;
-__attribute__((section (".s_MOD_SPACE.SEND"))) const voidFun sendPacketWithSysTick = (voidFun)0x9EFD;
-__attribute__((section (".s_MOD_SPACE.DIVMOD"))) const divFun uidivmod = (divFun)0x1E5F;
-__attribute__((section (".s_MOD_SPACE.DIV"))) const divFun div_ = (divFun)0x1E7B;
-__attribute__((section (".s_MOD_SPACE.GETKEY"))) const intVoidFun getKeyCode = (intVoidFun)0x2535;
-__attribute__((section (".s_MOD_SPACE.GETINPUT"))) const intVoidFun getInputStates = (intVoidFun)0x3569;
-__attribute__((section (".s_MOD_SPACE.DMASEND"))) const voidFun callSetupDMAandSend = (voidFun)0x25B5;
-__attribute__((section (".s_MOD_SPACE.EEPROMTREAD"))) const eepromFun readEeprom = (eepromFun)0x3E11;
-__attribute__((section (".s_MOD_SPACE.EEPROMWRITE"))) const eepromFun saveEeprom = (eepromFun)0x3E85;
-__attribute__((section (".s_MOD_SPACE.displayGFX"))) const gfxFun displayGFX = (gfxFun)0x4BA1;
-__attribute__((section (".s_MOD_SPACE.fillRegion"))) const drawFun fillRegion = (drawFun)0x4C71;
-__attribute__((section (".s_MOD_SPACE.drawLine"))) const drawFun drawLine = (drawFun)0x4E8D;
-__attribute__((section (".s_MOD_SPACE.drawRect"))) const drawFun drawRect = (drawFun)0x5019;
-__attribute__((section (".s_MOD_SPACE.setPixel"))) const pixelFun setPixel = (pixelFun)0x4FD9;
-__attribute__((section (".s_MOD_SPACE.displayTextAt"))) const displayText displayTextAt = (displayText)0x505D;
-//__attribute__((section (".s_MOD_SPACE.displaySmallTextAt"))) const displayText displaySmallTextAt = (displayText)0x5175;
-__attribute__((section (".s_MOD_SPACE.displayPageHeader"))) const displayHeader displayPageHeader = (displayHeader)0x6D5D;
-__attribute__((section (".s_MOD_SPACE.getSensorValue"))) const sensorValue getSensorValue = (sensorValue)0x5375;
-__attribute__((section (".s_MOD_SPACE.setSensorValue"))) const setSenValue setSensorValue = (setSenValue)0x57D5;
-__attribute__((section (".s_MOD_SPACE.formatSensorData"))) const formatSensData formatSensorData = (formatSensData)0x53CD;
-__attribute__((section (".s_MOD_SPACE.updateLCD"))) const voidFun LCD_updateCALL = (voidFun)0x25BD;
+__attribute__((section (".mod_MOD_SPACE.STRLEN"))) const strLenFun strLenCall = (strLenFun)0x1CB1;
+__attribute__((section (".mod_MOD_SPACE.MEMSET"))) const memSetFun memsetCall = (memSetFun)0x3201;
+__attribute__((section (".mod_MOD_SPACE.SEND"))) const voidFun sendPacketWithSysTick = (voidFun)0x9EFD;
+__attribute__((section (".mod_MOD_SPACE.DIVMOD"))) const divFun uidivmod = (divFun)0x1E5F;
+__attribute__((section (".mod_MOD_SPACE.DIV"))) const divFun div_ = (divFun)0x1E7B;
+__attribute__((section (".mod_MOD_SPACE.GETKEY"))) const intVoidFun getKeyCode = (intVoidFun)0x2535;
+__attribute__((section (".mod_MOD_SPACE.GETINPUT"))) const intVoidFun getInputStates = (intVoidFun)0x3569;
+__attribute__((section (".mod_MOD_SPACE.DMASEND"))) const voidFun callSetupDMAandSend = (voidFun)0x25B5;
+__attribute__((section (".mod_MOD_SPACE.EEPROMTREAD"))) const eepromFun readEeprom = (eepromFun)0x3E11;
+__attribute__((section (".mod_MOD_SPACE.EEPROMWRITE"))) const eepromFun saveEeprom = (eepromFun)0x3E85;
+__attribute__((section (".mod_MOD_SPACE.displayGFX"))) const gfxFun displayGFX = (gfxFun)0x4BA1;
+__attribute__((section (".mod_MOD_SPACE.fillRegion"))) const drawFun fillRegion = (drawFun)0x4C71;
+__attribute__((section (".mod_MOD_SPACE.drawLine"))) const drawFun drawLine = (drawFun)0x4E8D;
+__attribute__((section (".mod_MOD_SPACE.drawRect"))) const drawFun drawRect = (drawFun)0x5019;
+__attribute__((section (".mod_MOD_SPACE.setPixel"))) const pixelFun setPixel = (pixelFun)0x4FD9;
+__attribute__((section (".mod_MOD_SPACE.displayTextAt"))) const displayText displayTextAt = (displayText)0x505D;
+//__attribute__((section (".mod_MOD_SPACE.displaySmallTextAt"))) const displayText displaySmallTextAt = (displayText)0x5175;
+__attribute__((section (".mod_MOD_SPACE.displayPageHeader"))) const displayHeader displayPageHeader = (displayHeader)0x6D5D;
+__attribute__((section (".mod_MOD_SPACE.getSensorValue"))) const sensorValue getSensorValue = (sensorValue)0x5375;
+__attribute__((section (".mod_MOD_SPACE.setSensorValue"))) const setSenValue setSensorValue = (setSenValue)0x57D5;
+__attribute__((section (".mod_MOD_SPACE.formatSensorData"))) const formatSensData formatSensorData = (formatSensData)0x53CD;
+__attribute__((section (".mod_MOD_SPACE.updateLCD"))) const voidFun LCD_updateCALL = (voidFun)0x25BD;
 
-__attribute__((section (".s_MOD_SPACE.CheckAlarms"))) const voidFun CheckAlarmsCall = (voidFun)0x61ED;
+__attribute__((section (".mod_MOD_SPACE.CheckAlarms"))) const voidFun CheckAlarmsCall = (voidFun)0x61ED;
 
-__attribute__((section (".s_MOD_SPACE.sPrintNumer"))) const formatNumFun sprintfNumer = (formatNumFun)0xA2E4;
+__attribute__((section (".mod_MOD_SPACE.sPrintNumer"))) const formatNumFun sprintfNumer = (formatNumFun)0xA2E4;
 
-__attribute__((section (".s_MOD_SPACE.showNavigationPage"))) const navPage showNavigationPage = (navPage)0x6DD5;
-__attribute__((section (".s_MOD_SPACE.beep"))) const beepFun beep = (beepFun)0x9C3D;
-__attribute__((section (".s_MOD_SPACE.beepCheck"))) const intVoidFun beepCheck = (intVoidFun)0x9BC1;
-__attribute__((section (".s_MOD_SPACE.checkCRC"))) const crcFun checkCRC = (crcFun)0xA021;
-__attribute__((section (".s_MOD_SPACE.getCurrentTicks"))) const intVoidFun getCurrentTicks = (intVoidFun)0xA1B1;
-__attribute__((section (".s_MOD_SPACE.someBeepCheck"))) const intVoidFun someBeepCheck = (intVoidFun)0x9BC1;
+__attribute__((section (".mod_MOD_SPACE.showNavigationPage"))) const navPage showNavigationPage = (navPage)0x6DD5;
+__attribute__((section (".mod_MOD_SPACE.beep"))) const beepFun beep = (beepFun)0x9C3D;
+__attribute__((section (".mod_MOD_SPACE.beepCheck"))) const intVoidFun beepCheck = (intVoidFun)0x9BC1;
+__attribute__((section (".mod_MOD_SPACE.checkCRC"))) const crcFun checkCRC = (crcFun)0xA021;
+__attribute__((section (".mod_MOD_SPACE.getCurrentTicks"))) const intVoidFun getCurrentTicks = (intVoidFun)0xA1B1;
+__attribute__((section (".mod_MOD_SPACE.someBeepCheck"))) const intVoidFun someBeepCheck = (intVoidFun)0x9BC1;
 
 //volatile unsigned int *adcVal = (volatile unsigned int *)0x20000F00;
 //volatile unsigned int *adcRead = (volatile unsigned int *)0x20000F20;
 /*
-__attribute__((section (".s_SendPacketWithSysTick"))) void SendPacketWithSysTick(void);
-__attribute__((section (".s_strLength"))) size_t _strlen( const char * str );
-__attribute__((section (".s_sprintf")))int sprintf ( char* buffer, const char* format, ...);
-__attribute__((section (".s_memset"))) void *_memset(void *str, int c, size_t n);
+__attribute__((section (".mod_SendPacketWithSysTick"))) void SendPacketWithSysTick(void);
+__attribute__((section (".mod_strLength"))) size_t _strlen( const char * str );
+__attribute__((section (".mod_sprintf")))int sprintf ( char* buffer, const char* format, ...);
+__attribute__((section (".mod_memset"))) void *_memset(void *str, int c, size_t n);
 
-__attribute__((section (".s_uidivmod"))) uint32_t uidivmod(uint32_t a, uint32_t b);
-__attribute__((section (".s_div"))) uint32_t div(uint32_t a, uint32_t b);
+__attribute__((section (".mod_uidivmod"))) uint32_t uidivmod(uint32_t a, uint32_t b);
+__attribute__((section (".mod_div"))) uint32_t div(uint32_t a, uint32_t b);
 
-__attribute__((section (".s_getKeyCode"))) int getKeyCode();
-__attribute__((section (".s_getInputStates"))) int getInputStates();
-__attribute__((section (".s_chooseSensors"))) void chooseSensors(); //must re reimpl
-__attribute__((section (".s_callSetupDMAandSend"))) void callSetupDMAandSend();
-__attribute__((section (".s_readEeprom"))) int readEeprom(uint8_t * target, int16_t eepromOffset, int length);
-__attribute__((section (".s_saveEeprom"))) int saveEeprom(uint8_t * target, int16_t eepromOffset, int length);
-__attribute__((section (".s_displayGFX"))) int displayGFX(gfxInfo* gfx, int x, int y);
-__attribute__((section (".s_fillRegion"))) int fillRegion(int x1, int y1, int x2, int y2, int value);  //value 0 for clear 1 for fill
-__attribute__((section (".s_drawLine"))) int drawLine(int x1, int y1, int x2, int y2, int value);  //value always 0
-__attribute__((section (".s_setPixel"))) int setPixel(int x1, int y1, int value);  //value always 0
-__attribute__((section (".s_drawRect"))) signed int drawRect(int x1, signed int y1, int x2, signed int y2, int value);//value is always 0
-__attribute__((section (".s_displayTextAt"))) signed int displayTextAt(char* text, int x, int y, int val);//value is always 0
-__attribute__((section (".s_displayPageHeader"))) signed int displayPageHeader(char* text);
-//inline __attribute__((section (".s_displaySmallTextAt"))) signed int displaySmallTextAt(int x1, signed int y1, int x2, signed int y2, int value){return 0;}//value is always 0
+__attribute__((section (".mod_getKeyCode"))) int getKeyCode();
+__attribute__((section (".mod_getInputStates"))) int getInputStates();
+__attribute__((section (".mod_chooseSensors"))) void chooseSensors(); //must re reimpl
+__attribute__((section (".mod_callSetupDMAandSend"))) void callSetupDMAandSend();
+__attribute__((section (".mod_readEeprom"))) int readEeprom(uint8_t * target, int16_t eepromOffset, int length);
+__attribute__((section (".mod_saveEeprom"))) int saveEeprom(uint8_t * target, int16_t eepromOffset, int length);
+__attribute__((section (".mod_displayGFX"))) int displayGFX(gfxInfo* gfx, int x, int y);
+__attribute__((section (".mod_fillRegion"))) int fillRegion(int x1, int y1, int x2, int y2, int value);  //value 0 for clear 1 for fill
+__attribute__((section (".mod_drawLine"))) int drawLine(int x1, int y1, int x2, int y2, int value);  //value always 0
+__attribute__((section (".mod_setPixel"))) int setPixel(int x1, int y1, int value);  //value always 0
+__attribute__((section (".mod_drawRect"))) signed int drawRect(int x1, signed int y1, int x2, signed int y2, int value);//value is always 0
+__attribute__((section (".mod_displayTextAt"))) signed int displayTextAt(char* text, int x, int y, int val);//value is always 0
+__attribute__((section (".mod_displayPageHeader"))) signed int displayPageHeader(char* text);
+//inline __attribute__((section (".mod_displaySmallTextAt"))) signed int displaySmallTextAt(int x1, signed int y1, int x2, signed int y2, int value){return 0;}//value is always 0
 
-__attribute__((section (".s_getSensorValue"))) int getSensorValue(int sensorID, int index);//value is always 0
+__attribute__((section (".mod_getSensorValue"))) int getSensorValue(int sensorID, int index);//value is always 0
 //s_formatSensorData
-__attribute__((section (".s_getSensorValue"))) int setSensorValue(char* sensorArray);
-__attribute__((section (".s_updateVoltageTelemetry"))) void updateVoltageTelemetry();
+__attribute__((section (".mod_getSensorValue"))) int setSensorValue(char* sensorArray);
+__attribute__((section (".mod_updateVoltageTelemetry"))) void updateVoltageTelemetry();
 
-__attribute__((section (".s_checkAlarms"))) void checkAlarms(); //reimplement
-
-
-__attribute__((section (".s_sensorsListMainScreen"))) void sensorsListMainScreen(); //already moved find correct lcoaotpn
-__attribute__((section (".s_showNavigationPage"))) signed int showNavigationPage(char* sensorArray, int numberofitems, manuEntry* menuStruct); //already moved find correct lcoaotpn
+__attribute__((section (".mod_checkAlarms"))) void checkAlarms(); //reimplement
 
 
-__attribute__((section (".s_beep"))) void beep(int freq, int duration);
-__attribute__((section (".s_crcCheck"))) int crcCheck(char* data, int length);
-__attribute__((section (".s_getCurrentTicks"))) int getCurrentTicks();
+__attribute__((section (".mod_sensorsListMainScreen"))) void sensorsListMainScreen(); //already moved find correct lcoaotpn
+__attribute__((section (".mod_showNavigationPage"))) signed int showNavigationPage(char* sensorArray, int numberofitems, manuEntry* menuStruct); //already moved find correct lcoaotpn
+
+
+__attribute__((section (".mod_beep"))) void beep(int freq, int duration);
+__attribute__((section (".mod_crcCheck"))) int crcCheck(char* data, int length);
+__attribute__((section (".mod_getCurrentTicks"))) int getCurrentTicks();
 */
 
 

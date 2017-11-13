@@ -400,7 +400,7 @@ int getSWState(uint32_t swIndex){
 }
 
 
-/*Belongs to .s_modMenu 0xFFA0 */
+/*Belongs to .mod_modMenu 0xFFA0 */
 void displayMenu(){
 	showNavPage((const char*) extraMenu, 5, (manuEntry*)menuList);
 }

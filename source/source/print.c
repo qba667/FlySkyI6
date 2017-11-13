@@ -9,7 +9,7 @@
 #include "flysky.h"
 #include "screen.h"
 
-__attribute__((section (".s_displaySmallTextAt"))) void displaySmalString(char *buffer, unsigned int x, unsigned int y)
+__attribute__((section (".obsolete_displaySmallTextAt"))) void displaySmalString(char *buffer, unsigned int x, unsigned int y)
 {
 
 	uint32_t characterIndex = 0;

@@ -40,7 +40,7 @@
 #define UNIT_MAH	11
 
 
-const uint8_t __attribute__((section (".s_sensors00"))) SENSOR_00[] = {
+const uint8_t __attribute__((section (".mod_sensors00"))) SENSOR_00[] = {
 /*00@0*/		'I', 'n', 't', 'V', '\0',
 /*01@5*/		'T', 'e', 'm', 'p', '\0',
 /*02@10*/		'M', 'o', 't', '\0','\0',
@@ -67,18 +67,18 @@ const uint8_t __attribute__((section (".s_sensors00"))) SENSOR_00[] = {
 
 
 };
-const uint8_t __attribute__((section (".s_sensors41"))) SENSOR_41[] = {
+const uint8_t __attribute__((section (".mod_sensors41"))) SENSOR_41[] = {
 /*41@0*/		'P', 'r', 'e', 's', 's', '.', 0x00, 0x00
 };
 
-const uint8_t __attribute__((section (".s_sensors7d"))) SENSORS_7D[] = {
+const uint8_t __attribute__((section (".mod_sensors7d"))) SENSORS_7D[] = {
 /*7c@0*/		'O', 'd','o', '1', '\0',			//Odo1....
 /*7d@5*/		'O', 'd','o', '2', '\0',			//Odo2....
 /*7e@10*/		'S', 'p','e', ' ', '\0',			// Spe....
 /*7f@15*/		'T', 'x', ' ', 'V', '\0',			//Tx V....
 };
 
-const uint8_t __attribute__((section (".s_sensors80"))) SENSORS_80[] = {
+const uint8_t __attribute__((section (".mod_sensors80"))) SENSORS_80[] = {
 			'L', 'a', 't', 0x0, 0x0, /*0x80*/
 			'L', 'o', 'n', 0x0, 0x0, /*0x81*/
 			'G', 'A', 'l', 't', 0x0, /*0x82*/
@@ -93,7 +93,7 @@ const uint8_t __attribute__((section (".s_sensors80"))) SENSORS_80[] = {
 };
 
 
-const uint8_t __attribute__((section (".s_sensorsFA"))) SENSORS_FA[] = {
+const uint8_t __attribute__((section (".mod_sensorsFA"))) SENSORS_FA[] = {
 			'S', 'N', 'R', 0x0, 0x0,
 			'N', 'o', 'i', '.', 0x0,
 			'R', 'S', 'S', 'I', 0x0,
@@ -102,23 +102,23 @@ const uint8_t __attribute__((section (".s_sensorsFA"))) SENSORS_FA[] = {
 			'N', 'o', 'n', 'e', 0x0,
 };
 
-const uint8_t __attribute__((section (".s_unknownSensor"))) UNKNOWN_SENSOR[] = {
+const uint8_t __attribute__((section (".mod_unknownSensor"))) UNKNOWN_SENSOR[] = {
 			'U', 'n', 'k', 'n', 'o', 'w', 'n', 0x0,
 };
 
-const uint8_t __attribute__((section (".s_radioModes"))) RADIO_MODES[] = {
+const uint8_t __attribute__((section (".mod_radioModes"))) RADIO_MODES[] = {
 	'I', 'B', 'U', 'S', '/', 'P', 'W', 'M', 0x00,						//IBUS/PWM.
 	'I', 'B', 'U', 'S', '/', 'P', 'P', 'M', 0x00,						//IBUS/PPM.
 	'S', 'B', 'U', 'S', '/', 'P', 'W', 'M', 0x00,						//SBUS/PWM
 	'S', 'B', 'U', 'S', '/', 'P', 'P', 'M', 0x00,						//SBUS/PPM
 };
 
-const uint8_t __attribute__((section (".s_armed"))) ARMED[] = {0x41, 0x72, 0x6d, 0x65, 0x64}; //Armed
+const uint8_t __attribute__((section (".mod_armed"))) ARMED[] = {0x41, 0x72, 0x6d, 0x65, 0x64}; //Armed
 
-const uint8_t __attribute__((section (".s_flyModesOffset"))) flyModesOffset[] = {
+const uint8_t __attribute__((section (".mod_flyModesOffset"))) flyModesOffset[] = {
 	0, 5, 10, 16, 21, 28, 35, 39, 46, 52
 };
-const uint8_t __attribute__((section (".s_flyModes"))) FLY_MODES[] = {
+const uint8_t __attribute__((section (".mod_flyModes"))) FLY_MODES[] = {
 	/*0@00*/ 0x53, 0x74, 0x61, 0x62, 0x00,						//stab
 	/*1@05*/ 0x41, 0x63, 0x72, 0x6F, 0x00, 						//acro
 	/*2@10*/ 0x41, 0x48, 0x6F, 0x6C, 0x64, 0x00, 				//AHold
@@ -131,7 +131,7 @@ const uint8_t __attribute__((section (".s_flyModes"))) FLY_MODES[] = {
 	/*9@52*/ 0x4C, 0x61, 0x6E, 0x64, 0x00, 						//Land
 };
 
-const uint8_t __attribute__((section (".s_sensorsScreens"))) sensorsScreens[] = {
+const uint8_t __attribute__((section (".mod_sensorsScreens"))) sensorsScreens[] = {
 	IBUS_MEAS_TYPE_FLIGHT_MODE,
 	IBUS_MEAS_TYPE_ARMED,
 	IBUS_MEAS_TYPE_ERR,
@@ -168,26 +168,26 @@ const uint8_t __attribute__((section (".s_sensorsScreens"))) sensorsScreens[] = 
 	IBUS_MEAS_TYPE_CLIMB_RATE,
 	IBUS_MEAS_TYPE_RPM
 };
-const uint8_t __attribute__((section (".s_timerFormat"))) timerFormat[] = {
+const uint8_t __attribute__((section (".mod_timerFormat"))) timerFormat[] = {
 		'%', '0', '2', 'u', ':', '%', '0', '2', 'u', ':', '%', '0', '2', 'u',  0x00
 };
-const uint8_t __attribute__((section (".s_timerNull"))) timerNull[] = {
+const uint8_t __attribute__((section (".mod_timerNull"))) timerNull[] = {
 		'0', '0', ':', '0', '0', ':', '0', '0', 0x00
 };
-const uint8_t __attribute__((section (".s_alarm"))) alarm[] = {
+const uint8_t __attribute__((section (".mod_alarm"))) alarm[] = {
 		'A', 'l', 'a', 'r', 'm',  0x00
 };
-const uint8_t __attribute__((section (".s_extraMenu"))) extraMenu[] = {
+const uint8_t __attribute__((section (".mod_extraMenu"))) extraMenu[] = {
 		'E', 'x', 't', 'r', 'a',  0x00
 };
-const uint8_t __attribute__((section (".s_swbMenu"))) altSensor[] = {
+const uint8_t __attribute__((section (".mod_swbMenu"))) altSensor[] = {
 		'N', 'o', 't', ' ', 'S', 'e', 't',  0x00
 };
-const uint8_t __attribute__((section (".s_txBat"))) txBat[] = {
+const uint8_t __attribute__((section (".mod_txBat"))) txBat[] = {
 		'T', 'X', ' ', 'B', 'a', 't',  0x00
 };
 //contains pointers to functions!!!
-const uint32_t __attribute__((section (".s_modMenuList"))) menuList[] = {
+const uint32_t __attribute__((section (".mod_modMenuList"))) menuList[] = {
 	TEXT_TIMMER, 0xFDE9, 0xFF98, 0xFC01,  0xf63e, 0xE571, 0xFFA8, 0xf821, 0xcc5a, 0xE401
 };
 
@@ -200,7 +200,7 @@ MM mulitplayed by 00=1 10=100
 UUUU UNIT
  * */
 
-const uint8_t __attribute__((section (".s_sensDesc00"))) sensorDesc00[] = {
+const uint8_t __attribute__((section (".mod_sensDesc00"))) sensorDesc00[] = {
 /*00*/	STD_SENSOR|UNSIGNED|MUL_100|UNIT_V,		//IntV
 /*01*/	STD_SENSOR|SIGNED__|MUL_001|UNIT_DEG, 	//Temp
 /*02*/	STD_SENSOR|UNSIGNED|MUL_001|UNIT_NONE, 	//Mot
@@ -227,7 +227,7 @@ const uint8_t __attribute__((section (".s_sensDesc00"))) sensorDesc00[] = {
 };
 //0x41 is custom
 
-const uint8_t __attribute__((section (".s_sensDesc80"))) sensorDesc80[] = {
+const uint8_t __attribute__((section (".mod_sensDesc80"))) sensorDesc80[] = {
 		CUS_SENSOR|SIGNED__|MUL_001|UNIT_NONE,	//Lat.
 		CUS_SENSOR|SIGNED__|MUL_001|UNIT_NONE,	//Lon.
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_M,		//Alt -> GPS alt
@@ -241,7 +241,7 @@ const uint8_t __attribute__((section (".s_sensDesc80"))) sensorDesc80[] = {
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s89
 };
 
-const uint8_t __attribute__((section (".s_sensDescFA"))) sensorDescFA[] = {
+const uint8_t __attribute__((section (".mod_sensDescFA"))) sensorDescFA[] = {
 		STD_SENSOR|UNSIGNED|MUL_001|UNIT_DB,	//SNR
 		STD_SENSOR|UNSIGNED|MUL_001|UNIT_DBM,	//Noise
 		STD_SENSOR|UNSIGNED|MUL_001|UNIT_DBM,	//RSSI
@@ -250,23 +250,23 @@ const uint8_t __attribute__((section (".s_sensDescFA"))) sensorDescFA[] = {
 		STD_SENSOR|UNSIGNED|MUL_001|UNIT_NONE,	//None
 };
 
-const uint8_t __attribute__((section (".s_foramtCoord"))) formatCoord[] = { '%', 'u', '.', '%', '0', '6', 'u', 0x7f, 0x00};
-const uint8_t __attribute__((section (".s_formatGPS"))) formatGPS[] = {0x25, 0x75, 0x20, 0x25, 0x30, 0x32, 0x75, 0x00};// "%u %02u";
-const uint8_t __attribute__((section (".s_formatNumber"))) formatNumber[] = {0x25, 0x75, 0x00}; //"%u";
-const uint8_t __attribute__((section (".s_formatNumberFractial"))) formatNumberFractial[] = {0x25, 0x75, 0x2e, 0x25, 0x30, 0x32, 0x75, 0x00};// "%u.%02u";
+const uint8_t __attribute__((section (".mod_foramtCoord"))) formatCoord[] = { '%', 'u', '.', '%', '0', '6', 'u', 0x7f, 0x00};
+const uint8_t __attribute__((section (".mod_formatGPS"))) formatGPS[] = {0x25, 0x75, 0x20, 0x25, 0x30, 0x32, 0x75, 0x00};// "%u %02u";
+const uint8_t __attribute__((section (".mod_formatNumber"))) formatNumber[] = {0x25, 0x75, 0x00}; //"%u";
+const uint8_t __attribute__((section (".mod_formatNumberFractial"))) formatNumberFractial[] = {0x25, 0x75, 0x2e, 0x25, 0x30, 0x32, 0x75, 0x00};// "%u.%02u";
 
-const uint8_t __attribute__((section (".s_signature"))) SIGNATURE[] = {
+const uint8_t __attribute__((section (".mod_signature"))) SIGNATURE[] = {
 		0xCC, 0x51 , 0x72, 0xC8, 0xA0, 0x7E, 0x01, 0x92, 0xF0, 0xE7, 0x00, 0x00, 0x0A, 0x00, 0x01, 0x00
 };
 
 
 //if unit > 0 sub 1
-const uint8_t __attribute__((section (".s_unitsOffsets"))) unitsOffsets[] = {
+const uint8_t __attribute__((section (".mod_unitsOffsets"))) unitsOffsets[] = {
 	0, 2, 4, 6, 8, 10, 14, 18, 21, 26, 31
 };
 
 
-const uint8_t __attribute__((section (".s_units"))) units[] = {
+const uint8_t __attribute__((section (".mod_units"))) units[] = {
 	/*1@0*/  'm', 0x00,						//m;
 	/*2@2*/  0x7f, 0x00,					//°
 	/*3@4*/ 'A', 0x00,						//A
@@ -282,7 +282,7 @@ const uint8_t __attribute__((section (".s_units"))) units[] = {
 
 
 
-__attribute__((section (".s_MOD_SPACE"))) signed int  auxChannelsPage();
+__attribute__((section (".mod_MOD_SPACE"))) signed int  auxChannelsPage();
 
 
 

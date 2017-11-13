@@ -109,20 +109,20 @@ SECTIONS
   
   .MOD_CONFIG2 0x20000D7A :
   {
-      *(.s_modConfigAsModel20);
+      *(.mod_modConfigAsModel20);
   }  > m_data
 
   
   .AUX_MEM 0x20000F4A :
   {
-  *(.s_mainScreenIndex)
-  *(.s_modConfigEeprom);
-  *(.s_longSensors);
-  *(.s_mavlinkGPSFrame)
-  *(.s_timerBuffer);
-  *(.s_timerValue);
-  *(.s_ticks100ms);
-  *(.s_lastTimerUpdate);
+  *(.mod_mainScreenIndex)
+  *(.mod_modConfigEeprom);
+  *(.mod_longSensors);
+  *(.mod_mavlinkGPSFrame)
+  *(.mod_timerBuffer);
+  *(.mod_timerValue);
+  *(.mod_ticks100ms);
+  *(.mod_lastTimerUpdate);
   *(.altconstVal);
   *(.altconstVal);
   *(.altinitPressure);
@@ -132,113 +132,113 @@ SECTIONS
   } > m_data
   
   
-  .s_FLASH_25C8 0x25C8 :
+  .mod_FLASH_25C8 0x25C8 :
 {
-	*(.s_sensors00);
-	*(.s_sensors41);
-	*(.s_sensors7d);
-	*(.s_sensors80);
-	*(.s_sensorsFA);
-	*(.s_unknownSensor);
+	*(.mod_sensors00);
+	*(.mod_sensors41);
+	*(.mod_sensors7d);
+	*(.mod_sensors80);
+	*(.mod_sensorsFA);
+	*(.mod_unknownSensor);
 
-	*(.s_flyModesOffset);
-	*(.s_flyModes);
-	*(.s_armed);
-	*(.s_formatNumberFractial);
-	*(.s_formatNumber);
-	*(.s_formatGPS);		
+	*(.mod_flyModesOffset);
+	*(.mod_flyModes);
+	*(.mod_armed);
+	*(.mod_formatNumberFractial);
+	*(.mod_formatNumber);
+	*(.mod_formatGPS);		
 	
-	*(.s_FLASH_25C8*);
+	*(.mod_FLASH_25C8*);
 }
 
 
-.s_RadioMOD 0x3194 :
+.mod_RadioMOD 0x3194 :
 {
-	*(.s_radioModes);
-	*(.s_RadioMOD*);
+	*(.mod_radioModes);
+	*(.mod_RadioMOD*);
 }
-.s_SIGNATURE_2780 0x2780 :
+.mod_SIGNATURE_2780 0x2780 :
 {
-	*(.s_signature);
-	*(.s_SIGNATURE_2780*);
+	*(.mod_signature);
+	*(.mod_SIGNATURE_2780*);
 }
-  .s_FLASH_2790 0x2790 :
+  .mod_FLASH_2790 0x2790 :
 {
-	*(.s_foramtCoord)
-	*(.s_unitsOffsets)
-	*(.s_units)
-	*(.s_sensDesc00)
- 	*(.s_sensDesc80)
- 	*(.s_sensDescFA)
+	*(.mod_foramtCoord)
+	*(.mod_unitsOffsets)
+	*(.mod_units)
+	*(.mod_sensDesc00)
+ 	*(.mod_sensDesc80)
+ 	*(.mod_sensDescFA)
 }
 
 /*
-*(.s_foramtDBm);
-	*(.s_foramtAmp);
-	*(.s_formatNumber);
-	*(.s_formatMsFractial);
-	*(.s_foramtNumFractial);
-	*(.s_foramtAngleFractial);
-	*(.s_foramtAngle);			
-	*(.s_foramtCoord);	
+*(.mod_foramtDBm);
+	*(.mod_foramtAmp);
+	*(.mod_formatNumber);
+	*(.mod_formatMsFractial);
+	*(.mod_foramtNumFractial);
+	*(.mod_foramtAngleFractial);
+	*(.mod_foramtAngle);			
+	*(.mod_foramtCoord);	
 */
  
-   .s_MOD_EEPROM 0xC9B0 :
+   .mod_MOD_EEPROM 0xC9B0 :
 {
-	*(.s_loadModEeprom);
-	*(.s_saveModEeprom);
+	*(.mod_loadModEeprom);
+	*(.mod_saveModEeprom);
 }
 
 
  
-  .s_AC_SENSOR 0x65C8 :
+  .mod_AC_SENSOR 0x65C8 :
 {
-	*(.s_parseAC);
-	*(.s_acHelper);
+	*(.mod_parseAC);
+	*(.mod_acHelper);
 }
  . = ALIGN(4);
  
-    .s_MOD_CHANNELS_11_14 0xE400 :
+    .mod_MOD_CHANNELS_11_14 0xE400 :
 {
-	*(.s_channels1114);
+	*(.mod_channels1114);
 }
  
-   .s_MOD_ALARMS 0xE140 :
+   .mod_MOD_ALARMS 0xE140 :
 {
-	*(.s_customAlarms);
+	*(.mod_customAlarms);
 }
 
 
-	.s_CONFIG_PINS 0xe660 :
+	.mod_CONFIG_PINS 0xe660 :
   {
- 	 *(.s_configurePins*);
+ 	 *(.mod_configurePins*);
   }
 
 
-	.s_AUX_CH_SW_STATE 0xE6A0 :
+	.mod_AUX_CH_SW_STATE 0xE6A0 :
   {
- 	 *(.s_getSWState*);
+ 	 *(.mod_getSWState*);
   }
- 	.s_AUX_CH_SET_VAL 0xE700 :
+ 	.mod_AUX_CH_SET_VAL 0xE700 :
   {
- 	 *(.s_createPacketCh1114*);
+ 	 *(.mod_createPacketCh1114*);
   }
 
 
-.s_MOD_SWB 0xE570 :
+.mod_MOD_SWB 0xE570 :
 {
-	*(.s_SW_B_config);
+	*(.mod_SW_B_config);
 }
 
 
-   .s_MOD_SwE 0x52F0 :
+   .mod_MOD_SwE 0x52F0 :
 {
-	*(.s_swEHandling);
+	*(.mod_swEHandling);
 }
 
-   .s_MOD_SwbADC 0x5310 :
+   .mod_MOD_SwbADC 0x5310 :
 {
-	*(.s_swBHandling);
+	*(.mod_swBHandling);
 }
 
  . = ALIGN(1);
@@ -254,46 +254,46 @@ SECTIONS
    . = ALIGN(4);
   /*method redefinition not needed any more*/
   
-  .s_displaySmallTextAt 0x5174 :
+  .obsolete_displaySmallTextAt 0x5174 :
   {
-    KEEP(*(.s_displaySmallTextAt))
+    KEEP(*(.obsolete_displaySmallTextAt))
   }
   
-   .s_sensorConst 0x5260 : /*5260 - 533F */
+   .mod_sensorConst 0x5260 : /*5260 - 533F */
   {
-	*(.s_sensorsScreens);
-	*(.s_timerOff);
-	*(.s_timerNull);
-	*(.s_timerFormat);
+	*(.mod_sensorsScreens);
+	*(.mod_timerOff);
+	*(.mod_timerNull);
+	*(.mod_timerFormat);
   }
 
 
  
 
 
-.s_extraMenu 0xFF90 : /*FFA0 - FFFF*/ 
+.mod_extraMenu 0xFF90 : /*FFA0 - FFFF*/ 
   {
-  	*(.s_extraMenu); 
-  	*(.s_alarm);
-  	*(.s_swbMenu);
-  	*(.s_txBat);
+  	*(.mod_extraMenu); 
+  	*(.mod_alarm);
+  	*(.mod_swbMenu);
+  	*(.mod_txBat);
  }
- .s_modMenuFun 0xFFB0 : /*FFC0 - FFFF*/
+ .mod_modMenuFun 0xFFB0 : /*FFC0 - FFFF*/
   {
-	*(.s_modMenuListFun);
-	*(.s_modMenuList);
+	*(.mod_modMenuListFun);
+	*(.mod_modMenuList);
   }
 
    . = ALIGN(1);
   
-  .s_FREE_FLASH_65A8_768 0x65A8 : 
+  .mod_FREE_FLASH_65A8_768 0x65A8 : 
   {
      KEEP(*(.FREE_FLASH_65A8_768)) /* 65A8 redirect rx packet and add handling for ac sensor main screen goes here */
   }
   . = ALIGN(4);
-  .s_SENSORS_MAIN_SCREEN_6704 0x6704 : 
+  .mod_SENSORS_MAIN_SCREEN_6704 0x6704 : 
 {
-  *(.s_displaySensors); 
+  *(.mod_displaySensors); 
     KEEP(*(.SENSORS_MAIN_SCREEN_6704))
 }
    . = ALIGN(4);
@@ -317,56 +317,56 @@ SECTIONS
   
 
   
-  .s_MOD_SPACE 0xF4D0 :
+  .mod_MOD_SPACE 0xF4D0 :
   {
- 	 *(.s_MOD_SPACE*);
+ 	 *(.mod_MOD_SPACE*);
   }
 
    
-   .s_battery 0xF820 :
+   .mod_battery 0xF820 :
   {
-    *(.s_batteryConfig);
+    *(.mod_batteryConfig);
   }   
  
- 	.s_AUX_CH 0xF66C :
+ 	.mod_AUX_CH 0xF66C :
   {
- 	 *(.s_getAuxChannel*);
+ 	 *(.mod_getAuxChannel*);
   }
  
  
- .s_getSensorName 0xF7B0 : /*f020 - f0b7*/
+ .mod_getSensorName 0xF7B0 : /*f020 - f0b7*/
   {
-    KEEP(*(.s_getSensorName))
+    KEEP(*(.mod_getSensorName))
   }
   
- 	.s_TIMER_SPACE 0xF8E0 :
+ 	.mod_TIMER_SPACE 0xF8E0 :
   {
- 	 *(.s_printTimer*);
- 	 *(.s_checkTimerActive*);
+ 	 *(.mod_printTimer*);
+ 	 *(.mod_checkTimerActive*);
   }
      
-  .s_formatSensorValue 0xFA00 :
+  .mod_formatSensorValue 0xFA00 :
   {
-    *(.s_formatSensorValue);
-    *(.s_divMod);
-    *(.s_parseCoord);
+    *(.mod_formatSensorValue);
+    *(.mod_divMod);
+    *(.mod_parseCoord);
   }
   
-  .s_alarmPage 0xFC00 :
+  .mod_alarmPage 0xFC00 :
   {
-   	 *(.s_alarmConfig);
+   	 *(.mod_alarmConfig);
   }
 
- .s_TimerConfigPage 0xFDE8 :
+ .mod_TimerConfigPage 0xFDE8 :
   {
-   	 *(.s_timerConfig);
+   	 *(.mod_timerConfig);
   }
     
 
   
   
   /* to be added later
-  .s_ALT 0xFD20 :
+  .mod_ALT 0xFD20 :
   {
 
   *(.altmulu16);
@@ -374,7 +374,7 @@ SECTIONS
   *(.altgetALT);
   *(.altlogfix);
   *(.altlog2fix);
-  *(.s_ALT*);
+  *(.mod_ALT*);
   }
   */
 

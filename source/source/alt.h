@@ -73,52 +73,52 @@ typedef union config
 	configStruct cfg;
 } config;
 
-globalConfigStruct __attribute__((section (".s_modConfigAsModel20"))) modConfig2;
-uint8_t __attribute__((section (".s_mainScreenIndex"))) mainScreenIndex = 0; //referenced from assembly
-configStruct __attribute__((section (".s_modConfigEeprom"))) modConfig; 			//16bytes
-int32_t __attribute__((section (".s_longSensors"))) longSensors[SENSORS_ARRAY_LENGTH]; 		//72bytes referenced from assembly
-uint8_t __attribute__((section (".s_timerBuffer"))) timerBuffer[10]; 		//10bytes
-uint32_t __attribute__((section (".s_timerValue"))) timerValue;
-uint32_t __attribute__((section (".s_lastTimerUpdate"))) lastTimerUpdate;
-uint8_t __attribute__((section (".s_ticks100ms"))) ticks100MS;
+globalConfigStruct __attribute__((section (".mod_modConfigAsModel20"))) modConfig2;
+uint8_t __attribute__((section (".mod_mainScreenIndex"))) mainScreenIndex = 0; //referenced from assembly
+configStruct __attribute__((section (".mod_modConfigEeprom"))) modConfig; 			//16bytes
+int32_t __attribute__((section (".mod_longSensors"))) longSensors[SENSORS_ARRAY_LENGTH]; 		//72bytes referenced from assembly
+uint8_t __attribute__((section (".mod_timerBuffer"))) timerBuffer[10]; 		//10bytes
+uint32_t __attribute__((section (".mod_timerValue"))) timerValue;
+uint32_t __attribute__((section (".mod_lastTimerUpdate"))) lastTimerUpdate;
+uint8_t __attribute__((section (".mod_ticks100ms"))) ticks100MS;
 
-uint8_t __attribute__((section (".s_mavlinkGPSFrame"))) mavlinkGPSFrame[22]; 	//22bytes
+uint8_t __attribute__((section (".mod_mavlinkGPSFrame"))) mavlinkGPSFrame[22]; 	//22bytes
 
-__attribute__((section (".s_configurePins"))) void configurePINS2();
+__attribute__((section (".mod_configurePins"))) void configurePINS2();
 
- __attribute__((section (".s_getAuxChannel"))) int getAuxChannel(uint32_t request);
- __attribute__((section (".s_getSWState"))) int getSWState(uint32_t swIndex);
+ __attribute__((section (".mod_getAuxChannel"))) int getAuxChannel(uint32_t request);
+ __attribute__((section (".mod_getSWState"))) int getSWState(uint32_t swIndex);
 
-__attribute__((section (".s_modMenuListFun"))) void displayMenu();
+__attribute__((section (".mod_modMenuListFun"))) void displayMenu();
 
-__attribute__((section (".s_acHelper")))  void add2ByteSensor(uint8_t sensorID, uint8_t sensorIndex, uint16_t value);
-__attribute__((section (".s_parseAC"))) void acData(uint8_t* rxBuffer);
-
-
- __attribute__((section (".s_printTimer"))) void printTimer();
- __attribute__((section (".s_checkTimerActive"))) uint32_t isTimerActive();
- __attribute__((section (".s_timerConfig"))) void TimerConfig();
-
- __attribute__((section (".s_batteryConfig"))) void BatteryType();
+__attribute__((section (".mod_acHelper")))  void add2ByteSensor(uint8_t sensorID, uint8_t sensorIndex, uint16_t value);
+__attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
 
 
- __attribute__((section (".s_channels1114"))) void auxChannels2();
- __attribute__((section (".s_createPacketCh1114"))) void createPacketCh1114();
- __attribute__((section (".s_SW_B_config"))) void SwBConfig();
- __attribute__((section (".s_alarmConfig"))) void AlarmConfig();
- __attribute__((section (".s_customAlarms"))) void ChackCustomAlarms();
+ __attribute__((section (".mod_printTimer"))) void printTimer();
+ __attribute__((section (".mod_checkTimerActive"))) uint32_t isTimerActive();
+ __attribute__((section (".mod_timerConfig"))) void TimerConfig();
+
+ __attribute__((section (".mod_batteryConfig"))) void BatteryType();
 
 
- __attribute__((section (".s_swEHandling"))) void swEHandling();
- __attribute__((section (".s_swBHandling"))) void swBasADC();
-__attribute__((section (".s_loadModEeprom"))) void loadModSettings();
-__attribute__((section (".s_saveModEeprom"))) void saveModSettings();
+ __attribute__((section (".mod_channels1114"))) void auxChannels2();
+ __attribute__((section (".mod_createPacketCh1114"))) void createPacketCh1114();
+ __attribute__((section (".mod_SW_B_config"))) void SwBConfig();
+ __attribute__((section (".mod_alarmConfig"))) void AlarmConfig();
+ __attribute__((section (".mod_customAlarms"))) void ChackCustomAlarms();
 
-__attribute__((section (".s_displaySensors"))) void displaySensors();
-__attribute__((section (".s_getSensorName"))) const uint8_t* getSensorName(int sensor);
-__attribute__((section (".s_formatSensorValue"))) void formatSensorValue(char* target, int sensorID, uint16_t sensorValue);
-__attribute__((section (".s_divMod"))) uint32_t divMod(uint32_t val, uint32_t divisor, uint32_t* mod);
-__attribute__((section (".s_parseCoord"))) void parseCoord(uint32_t *deg, uint32_t *min, uint32_t *sec, uint32_t *subSec, uint32_t coord);
+
+ __attribute__((section (".mod_swEHandling"))) void swEHandling();
+ __attribute__((section (".mod_swBHandling"))) void swBasADC();
+__attribute__((section (".mod_loadModEeprom"))) void loadModSettings();
+__attribute__((section (".mod_saveModEeprom"))) void saveModSettings();
+
+__attribute__((section (".mod_displaySensors"))) void displaySensors();
+__attribute__((section (".mod_getSensorName"))) const uint8_t* getSensorName(int sensor);
+__attribute__((section (".mod_formatSensorValue"))) void formatSensorValue(char* target, int sensorID, uint16_t sensorValue);
+__attribute__((section (".mod_divMod"))) uint32_t divMod(uint32_t val, uint32_t divisor, uint32_t* mod);
+__attribute__((section (".mod_parseCoord"))) void parseCoord(uint32_t *deg, uint32_t *min, uint32_t *sec, uint32_t *subSec, uint32_t coord);
 
 __attribute__((section (".altconstVal"))) uint32_t constVal = 0;
 __attribute__((section (".altinitPressure"))) uint32_t initPressure = 0;
