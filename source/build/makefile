@@ -67,16 +67,17 @@ fs-i6.elf: $(OBJS) $(USER_OBJS)
 fs-i6.bin: fs-i6.elf
 	@echo 'Invoking: Cross ARM GNU Create Flash Image'
 	#arm-none-eabi-objcopy -O binary "fs-i6.elf"  "fs-i6.bin"
-	arm-none-eabi-objcopy --update-section .interrupts=org.bin
+	arm-none-eabi-objcopy --update-section .interrupts=org.bin "fs-i6.elf"
 	arm-none-eabi-objcopy -j .interrupts -j s_* -O binary "fs-i6.elf"  "fs-i6.bin"
-	python flysky2.py fs-i6.bin fs-i6
-	#python3 flysky3.py i6.bin i6
+	#python flysky2.py fs-i6.bin fs-i6
+	python3 flysky3.py fs-i6.bin fs-i6
 	@echo 'Finished building: $@'
 	@echo ' '
 
 fs-i6.siz: fs-i6.elf
 	@echo 'Invoking: Cross ARM GNU Print Size'
 	arm-none-eabi-size --format=berkeley "fs-i6.elf"
+	arm-none-eabi-size --format=sysv "fs-i6.elf" -x
 	@echo 'Finished building: $@'
 	@echo ' '
 

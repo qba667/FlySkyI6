@@ -102,6 +102,36 @@ SECTIONS
   } > m_text
   
   
+    .GFX_ARRAY 0x1FFFF8C0 :
+  {
+      *(.screenBuffer);
+  } > m_data
+  
+  .MOD_CONFIG2 0x20000D7A :
+  {
+      *(.s_modConfigAsModel20);
+  }  > m_data
+
+  
+  .AUX_MEM 0x20000F4A :
+  {
+  *(.s_mainScreenIndex)
+  *(.s_modConfigEeprom);
+  *(.s_longSensors);
+  *(.s_mavlinkGPSFrame)
+  *(.s_timerBuffer);
+  *(.s_timerValue);
+  *(.s_ticks100ms);
+  *(.s_lastTimerUpdate);
+  *(.altconstVal);
+  *(.altconstVal);
+  *(.altinitPressure);
+  *(.altinitPressureRaw);
+  
+    KEEP(*(.AUX_MEM))
+  } > m_data
+  
+  
   .s_FLASH_25C8 0x25C8 :
 {
 	*(.s_sensors00);
@@ -457,34 +487,6 @@ SECTIONS
     __data_end__ = .;        /* define a global symbol at data end */
   } > m_data
 
-  .GFX_ARRAY 0x1FFFF8C0 :
-  {
-      *(.screenBuffer);
-  }
-  
-  .MOD_CONFIG2 0x20000D7A :
-  {
-      *(.s_modConfigAsModel20);
-  }
-
-  
-  .AUX_MEM 0x20000F4A :
-  {
-  *(.s_mainScreenIndex)
-  *(.s_modConfigEeprom);
-  *(.s_longSensors);
-  *(.s_mavlinkGPSFrame)
-  *(.s_timerBuffer);
-  *(.s_timerValue);
-  *(.s_ticks100ms);
-  *(.s_lastTimerUpdate);
-  *(.altconstVal);
-  *(.altconstVal);
-  *(.altinitPressure);
-  *(.altinitPressureRaw);
-  
-    KEEP(*(.AUX_MEM))
-  }
   
 
   __DATA_END = __DATA_ROM + (__data_end__ - __data_start__);

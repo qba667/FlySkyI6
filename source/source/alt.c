@@ -124,15 +124,15 @@ uint32_t divMod(uint32_t val, uint32_t divisor, uint32_t* mod){
 }
 
 void printTimer(int32_t skipPrint){
-	uint32_t now = *(uint32_t *)(0xE000E018);
+	uint32_t* nowPtr = (uint32_t *)(0xE000E018);
 	uint32_t diff = 0;
 	uint32_t h = 0;
 	uint32_t m = 0;
 	uint32_t s = 0;
 	if(timerValue > 0 || isTimerActive()){
-		if(lastTimerUpdate == 0) lastTimerUpdate = *(uint32_t *)(0xE000E018);
+		if(lastTimerUpdate == 0) lastTimerUpdate = *nowPtr;
 		else{
-			diff = (now - lastTimerUpdate) & 0xFFFFFF;
+			diff = (*nowPtr - lastTimerUpdate) & 0xFFFFFF;
 			if(diff > 480008){ //3529827,038475115 0x35DC63
 				//0.00002083ms
 				ticks100MS++; //+100ms
@@ -141,19 +141,15 @@ void printTimer(int32_t skipPrint){
 				//1s = 1000000us
 				//100ms = 100000us
 				//1000 ms = 1s
-
 				//100 ms = 100000 us =
 				if(ticks100MS>=10){
 					ticks100MS-=10;
 					timerValue++;
 					h = divMod(timerValue, 3600, &m);
 					m = divMod(m, 60, &s);
-					lastTimerUpdate = *(uint32_t *)(0xE000E018);
+					lastTimerUpdate = *nowPtr;
 					sprintfCall((char*)timerBuffer, (const char*)timerFormat, h,m,s);
 				}
-			//if(diff > 0x2DC347){
-
-
 			}
 		}
 
@@ -555,11 +551,18 @@ void AlarmConfig(){
 	uint16_t y = 0;
 	sensorAlarm alarmItem;
 	char buffer[32];
+	uint32_t size = sizeof(sensorAlarm)*3;
+	
+	for(int i = 0; i < size; i++){
+		*((char*)alarms + i) = *((char*)modConfig.alarm + i);
+	}
+	/*
 	for(int i = 0; i < 3; i++){
+		
 		alarms[i].operator = modConfig.alarm[i].operator;
 		alarms[i].sensorID = modConfig.alarm[i].sensorID;
 		alarms[i].value = modConfig.alarm[i].value;
-	}
+	}*/
 	do{
 		 while ( 1 )
 		 {
@@ -632,11 +635,16 @@ void AlarmConfig(){
 	while ( key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
 
 	if( key == KEY_LONG_CANCEL) {
+		for(int i = 0; i < size; i++){
+			*((char*)modConfig.alarm + i) = *((char*)alarms + i);
+		}
+		/*
 		for(int i = 0; i < 3; i++){
 			modConfig.alarm[i].operator = alarms[i].operator;
 			modConfig.alarm[i].sensorID = alarms[i].sensorID;
 			modConfig.alarm[i].value = alarms[i].value;
 		}
+		*/
 		saveModSettings();
 	}
 
