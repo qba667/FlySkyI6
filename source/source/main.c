@@ -101,8 +101,13 @@ int main(void) {
   strLenCall((const char*)altSensor);
 
   ChackCustomAlarms();
-  //keep this one
-  if( keep1 = 0){  }
+  //keep few regions
+  if(keep1==0){}
+  if(keep2==0){}
+  if(keep3==0){}
+  if(keep4==0){}
+  if(keep5==0){}
+  if(keep6==0){}
   //keep this one because of without usage signature block will be removed
   if(SIGNATURE[0] == 1){
 

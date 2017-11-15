@@ -48,12 +48,24 @@ def _crc16(data, crc, table):
 def crc16xmodem(data, crc=0xFFFF):
     return _crc16(data, crc, CRC16_XMODEM_TABLE)
 
+def saveFile (name,data,endAddress):
+	crc = crc16xmodem(data[0x1800:endAddress], 0xFFFF)
+	print(format(crc, '04x'))
+	for index in range(0, 2):
+		data[endAddress + index] = crc >> (8* index) & 0xFF
+	outFile = open(name + "_full_" + time.strftime("%m_%d_%H_%M") + ".bin", 'wb')
+	outFile.write(data)
+	outFile.close()
+	outFile = open(name + "_updater_" + time.strftime("%m_%d_%H_%M") + ".bin", 'wb')
+	outFile.write(data[0x1800:endAddress+2])
+	outFile.close()
+	
 
 print('Number of arguments: ' + str(len(sys.argv)) +' arguments.')
 print('Argument List: ' + str(sys.argv))
 
 baseFile = sys.argv[1]
-targetDir = sys.argv[2]
+destFile = sys.argv[2]
 endAddress =  0xfffd
 dataFile = open(baseFile, 'rb')
 data = bytearray(dataFile.read())
@@ -75,15 +87,8 @@ for dt in dataArray:
 	data[0xEEC0 + index2] = dt
 	index2+=1
 
-crc = crc16xmodem(data[0x1800:endAddress], 0xFFFF)
-print(format(crc, '04x'))
-for index in range(0, 2):
-    data[endAddress + index] = crc >> (8* index) & 0xFF
-	
-outFile = open(targetDir + "_full_" + time.strftime("%m_%d_%H_%M") + ".bin", 'wb')
-outFile.write(data)
-outFile.close()
-outFile = open(targetDir + "_updater_" + time.strftime("%m_%d_%H_%M") + ".bin", 'wb')
-outFile.write(data[0x1800:endAddress+2])
-outFile.close()
+saveFile(destFile, data, endAddress)
+
+
+
 

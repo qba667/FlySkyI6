@@ -105,7 +105,9 @@ const uint8_t __attribute__((section (".mod_sensorsFA"))) SENSORS_FA[] = {
 const uint8_t __attribute__((section (".mod_unknownSensor"))) UNKNOWN_SENSOR[] = {
 			'U', 'n', 'k', 'n', 'o', 'w', 'n', 0x0,
 };
-
+/////////////////////////////////////////
+//never change - referenced from assembly
+/////////////////////////////////////////
 const uint8_t __attribute__((section (".mod_radioModes"))) RADIO_MODES[] = {
 	'I', 'B', 'U', 'S', '/', 'P', 'W', 'M', 0x00,						//IBUS/PWM.
 	'I', 'B', 'U', 'S', '/', 'P', 'P', 'M', 0x00,						//IBUS/PPM.
@@ -282,7 +284,7 @@ const uint8_t __attribute__((section (".mod_units"))) units[] = {
 
 
 
-__attribute__((section (".mod_MOD_SPACE"))) signed int  auxChannelsPage();
+__attribute__((section (".notImplemented_AUX_CHANNEL_PAGE"))) signed int  auxChannelsPage();
 
 
 

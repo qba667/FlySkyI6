@@ -829,8 +829,10 @@ void formatSensorValue(char* target, int sensorID, uint16_t sensorValue) {
 
 void configurePINS2(){
 	configurePINs();
+#ifndef NO_SWE
 	PORT_SetPinMux(PORTD, 2u, kPORT_MuxAsGpio);
 	GPIOD->PDDR &= ~(1U << 2); //input
+#endif
 }
 
 //return non 0 when switch MAX value
