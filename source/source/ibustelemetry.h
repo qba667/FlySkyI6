@@ -46,7 +46,7 @@
 #define IBUS_MEAS_TYPE_GPS_LON			0x81 //4bytes signed WGS84 in degrees * 1E7
 #define IBUS_MEAS_TYPE_GPS_ALT			0x82 //4bytes signed!!! GPS alt m*100
 #define IBUS_MEAS_TYPE_ALT				0x83 //4bytes signed!!! Alt m*100
-#define IBUS_MEAS_TYPE_S84				0x84
+#define IBUS_MEAS_TYPE_ALT_MAX				0x84 //4bytes signed MaxAlt m*100
 #define IBUS_MEAS_TYPE_S85				0x85
 #define IBUS_MEAS_TYPE_S86				0x86
 #define IBUS_MEAS_TYPE_S87				0x87
