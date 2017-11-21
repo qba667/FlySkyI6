@@ -449,7 +449,7 @@ void BatteryType() {
 		 for(int i = 0; i < 3; i++){
 			sensorID = modConfig.alarm[i].sensorID;
 			if(sensorID == 0xff) continue;
-			int32_t sensorValue = getSensorValue(sensorID, 0, 0);
+			int32_t sensorValue = (int16_t)getSensorValue(sensorID, 0, 0);
 			if(sensorID >= IBUS_MEAS_TYPE_GPS_LAT && sensorID <= IBUS_MEAS_TYPE_S8a && sensorValue < SENSORS_ARRAY_LENGTH){
 				sensorValue = longSensors[sensorValue];
 			}
