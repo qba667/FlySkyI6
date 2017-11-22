@@ -382,7 +382,7 @@ int getSWState(uint32_t swIndex){
 
 /*Belongs to .mod_modMenu 0xFFA0 */
 void displayMenu(){
-	showNavPage((const char*) extraMenu, 5, (manuEntry*)menuList);
+	showNavPage((const char*) extraMenu, 6, (manuEntry*)menuList);
 }
 
 void BatteryType() {
@@ -392,8 +392,8 @@ void BatteryType() {
 		while (1) {
 			callSetupDMAandSend();
 			if(batteryVolt > 900) batteryVolt = 0;
-			displayPageHeader((char*)0xFFA8);
-			displayTextAt((char*)0xFF98, 8, 24,0);
+			displayPageHeader((char*)&txBat);
+			displayTextAt((char*)&alarm, 8, 24,0);
 			formatSensorValue(buffer, IBUS_MEAS_TYPE_INTV, batteryVolt);
 			displayTextAt((char*)buffer, 8, 32,0);
 			LCD_updateCALL();
@@ -905,6 +905,23 @@ void displaySensors(){
 		settings++;
 	}
 
+}
+
+void testMethod(){
+	char buffer[32];
+	allocationTest = 100;
+	uint32_t key = 0;
+	while ( 1 )
+	{
+		callSetupDMAandSend();
+		displayPageHeader((char*)alarm);
+		LCD_updateCALL();
+		key = getKeyCode();
+		if (key == KEY_LONG_CANCEL)
+		{
+			break;
+		}
+	}
 }
 
 uint32_t mulu16(uint32_t x, uint32_t y)

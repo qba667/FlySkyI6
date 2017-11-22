@@ -109,6 +109,8 @@ int main(void) {
   if(keep4==0){keep4++;}
   if(keep5==0){keep5++;}
   if(keep6==0){keep6++;}
+  if(keep7==0){keep7++;}
+  
   if(keepChecksum == 0){keepChecksum++;}
   //keep this one because of without usage signature block will be removed
   if(SIGNATURE[0] == 1){

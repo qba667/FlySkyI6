@@ -113,6 +113,8 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_swBHandling"))) void swBasADC();
 __attribute__((section (".mod_loadModEeprom"))) void loadModSettings();
 __attribute__((section (".mod_saveModEeprom"))) void saveModSettings();
+__attribute__((section (".mod_yenyaSpace"))) void testMethod();
+
 
 __attribute__((section (".mod_displaySensors"))) void displaySensors();
 __attribute__((section (".mod_getSensorName"))) const uint8_t* getSensorName(int sensor);
@@ -120,9 +122,10 @@ __attribute__((section (".mod_formatSensorValue"))) void formatSensorValue(char*
 __attribute__((section (".mod_divMod"))) uint32_t divMod(uint32_t val, uint32_t divisor, uint32_t* mod);
 __attribute__((section (".mod_parseCoord"))) void parseCoord(uint32_t *deg, uint32_t *min, uint32_t *sec, uint32_t *subSec, uint32_t coord);
 
-__attribute__((section (".altconstVal"))) uint32_t constVal = 0;
-__attribute__((section (".altinitPressure"))) uint32_t initPressure = 0;
-__attribute__((section (".altinitPressureRaw"))) uint32_t initPressureRaw = 0;
+__attribute__((section (".mod_altconstVal"))) uint32_t constVal = 0;
+__attribute__((section (".mod_altinitPressure"))) uint32_t initPressure = 0;
+__attribute__((section (".mod_altinitPressureRaw"))) uint32_t initPressureRaw = 0;
+__attribute__((section (".mod_auxMem_test1"))) uint32_t allocationTest = 0;
 
 
 
@@ -138,6 +141,7 @@ __attribute__((section (".reserved_after_ac_sensor")))  uint32_t keep3 = 0;
 __attribute__((section (".reserved_after_set_ch_val"))) uint32_t keep4 = 0;
 __attribute__((section (".reserved_afterSwB_adac"))) uint32_t keep5 = 0;
 __attribute__((section (".reserved_after_free_space_in_display"))) uint32_t keep6 = 0;
+__attribute__((section (".reserved_after_AFHDSLogo"))) uint32_t keep7 = 0;
 __attribute__((section (".reserved_after_free_space_in_display"))) uint16_t keepChecksum = 0;
 
 

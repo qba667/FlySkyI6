@@ -168,7 +168,17 @@ const uint8_t __attribute__((section (".mod_sensorsScreens"))) sensorsScreens[] 
 	IBUS_MEAS_TYPE_GROUND_SPEED,
 	IBUS_MEAS_TYPE_VERTICAL_SPEED,
 	IBUS_MEAS_TYPE_CLIMB_RATE,
-	IBUS_MEAS_TYPE_RPM
+	IBUS_MEAS_TYPE_RPM,
+	
+	IBUS_MEAS_TYPE_ALT_MAX,
+	IBUS_MEAS_TYPE_S85,
+	IBUS_MEAS_TYPE_S86,
+	IBUS_MEAS_TYPE_S87,
+	IBUS_MEAS_TYPE_S88,
+	IBUS_MEAS_TYPE_S89,
+	IBUS_MEAS_TYPE_S8a,
+	IBUS_MEAS_TYPE_UNKNOWN
+	
 };
 const uint8_t __attribute__((section (".mod_timerFormat"))) timerFormat[] = {
 		'%', '0', '2', 'u', ':', '%', '0', '2', 'u', ':', '%', '0', '2', 'u',  0x00
@@ -195,7 +205,7 @@ const uint32_t __attribute__((section (".mod_modMenuList"))) menuList[] = {
 	SW_B_C, (uint32_t)(&SwBConfig+1), 
 	(uint32_t)&txBat, (uint32_t)(&BatteryType+1), 
 	AUX_CH_TEXT, (uint32_t)(&auxChannels2+1),
-	(uint32_t)&altSensor, (uint32_t)(&displayMenu+1), 
+	(uint32_t)&altSensor, (uint32_t)(&testMethod+1), 
 };
 
 

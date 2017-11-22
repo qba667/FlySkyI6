@@ -122,12 +122,12 @@ SECTIONS
     *(.mod_timerValue);
     *(.mod_ticks100ms);
     *(.mod_lastTimerUpdate);
-    *(.altconstVal);
-	*(.altconstVal);
-	*(.altinitPressure);
-	*(.altinitPressureRaw);
+    *(.mod_altconstVal);
+	*(.mod_altinitPressure);
+	*(.mod_altinitPressureRaw);
+	*(.mod_auxMem*)
     KEEP(*(.AUX_MEM))
-  } > m_data
+  } > data
   
   
   .mod_FLASH_25C8 0x25C8 :
@@ -237,7 +237,16 @@ SECTIONS
   {
 	*(.reserved_after_eeprom);
   }
-
+  
+  .mod_freeSpaceAFHDSLogo 0xD50C :
+  {
+	*(.mod_yenyaSpace*);
+  }
+  .reserved_after_AFHDSLogo 0xD5F8 :
+  {
+	*(.reserved_after_AFHDSLogo);
+  }
+	
  . = ALIGN(4);
  
   .mod_MOD_ALARMS 0xE140 : 
