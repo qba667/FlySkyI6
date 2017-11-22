@@ -104,9 +104,7 @@ const uint8_t /*__attribute__((section (".FontSmal")))*/ font[] = {
 	    0x00, 0x06, 0x09, 0x09, 0x06, // degree symbol
 		0x08, 0x1C, 0x2A, 0x08, 0x08// <-
 	};
-
 /*__attribute__((section (".obsolete_displaySmallTextAt")))*/ void displaySmalString(char *buffer, unsigned int x, unsigned int y);
-
 
 
 

@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "ibustelemetry.h"
-
+#include "alt.h"
 #define SENSORS_PER_PAGE	8
 #define SENSORS_PAGES		4
 
@@ -83,7 +83,7 @@ const uint8_t __attribute__((section (".mod_sensors80"))) SENSORS_80[] = {
 			'L', 'o', 'n', 0x0, 0x0, /*0x81*/
 			'G', 'A', 'l', 't', 0x0, /*0x82*/
 			'A', 'l', 't', 0x0, 0x0, /*0x83*/
-			'S', '8', '4', 0x0, 0x0, /*0x84*/
+			'M', 'x', 'A', 'l', 0x0, /*0x84*/
 			'S', '8', '5', 0x0, 0x0, /*0x85*/
 			'S', '8', '6', 0x0, 0x0, /*0x86*/
 			'S', '8', '7', 0x0, 0x0, /*0x87*/
@@ -182,15 +182,20 @@ const uint8_t __attribute__((section (".mod_alarm"))) alarm[] = {
 const uint8_t __attribute__((section (".mod_extraMenu"))) extraMenu[] = {
 		'E', 'x', 't', 'r', 'a',  0x00
 };
-const uint8_t __attribute__((section (".mod_swbMenu"))) altSensor[] = {
-		'N', 'o', 't', ' ', 'S', 'e', 't',  0x00
+const uint8_t __attribute__((section (".mod_altText"))) altSensor[] = {
+		'A', 'l', 't',  0x00,  
 };
 const uint8_t __attribute__((section (".mod_txBat"))) txBat[] = {
 		'T', 'X', ' ', 'B', 'a', 't',  0x00
 };
 //contains pointers to functions!!!
 const uint32_t __attribute__((section (".mod_modMenuList"))) menuList[] = {
-	TEXT_TIMMER, 0xFDE9, 0xFF98, 0xFC01,  0xf63e, 0xE571, 0xFFA8, 0xf821, 0xcc5a, 0xE401
+	TEXT_TIMMER, (uint32_t)(&TimerConfig+1), 
+	(uint32_t)&alarm, (uint32_t)(&AlarmConfig+1), 
+	SW_B_C, (uint32_t)(&SwBConfig+1), 
+	(uint32_t)&txBat, (uint32_t)(&BatteryType+1), 
+	AUX_CH_TEXT, (uint32_t)(&auxChannels2+1),
+	(uint32_t)&altSensor, (uint32_t)(&displayMenu+1), 
 };
 
 
@@ -234,7 +239,7 @@ const uint8_t __attribute__((section (".mod_sensDesc80"))) sensorDesc80[] = {
 		CUS_SENSOR|SIGNED__|MUL_001|UNIT_NONE,	//Lon.
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_M,		//Alt -> GPS alt
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_M,		//ALT
-		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s84
+		STD_SENSOR|SIGNED__|MUL_100|UNIT_M,	//Max Alt
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s85
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s86
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s87

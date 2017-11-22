@@ -324,18 +324,22 @@ SECTIONS
   {
    	 *(.mod_timerConfig);
   }
+  . = ALIGN(1);
   .mod_extraMenu 0xFF90 : /*FFA0 - FFFF*/ 
   {
   	*(.mod_extraMenu); 
   	*(.mod_alarm);
-  	*(.mod_swbMenu);
   	*(.mod_txBat);
+	*(.mod_altText);
    }
   .mod_modMenuFun 0xFFB0 : /*FFC0 - FFFF*/
   {
 	*(.mod_modMenuListFun);
 	*(.mod_modMenuList);
   }    
+  .reserved_checksum 0xFFFD :{
+   	 *(.reserved_checksum*);
+  }
   .ARM.extab :
   {
     *(.ARM.extab* .gnu.linkonce.armextab.*)

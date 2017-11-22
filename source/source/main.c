@@ -97,20 +97,21 @@ int main(void) {
   SwBConfig();
   createPacketCh1114();
   configurePINS2();
+  /*
   strLenCall((const char*)txBat);
-  strLenCall((const char*)altSensor);
 
+*/
   ChackCustomAlarms();
   //keep few regions
-  if(keep1==0){}
-  if(keep2==0){}
-  if(keep3==0){}
-  if(keep4==0){}
-  if(keep5==0){}
-  if(keep6==0){}
+  if(keep1==0){keep1++;}
+  if(keep2==0){keep2++;}
+  if(keep3==0){keep3++;}
+  if(keep4==0){keep4++;}
+  if(keep5==0){keep5++;}
+  if(keep6==0){keep6++;}
+  if(keepChecksum == 0){keepChecksum++;}
   //keep this one because of without usage signature block will be removed
   if(SIGNATURE[0] == 1){
-
   }
   formatSensorValue((char *)SIGNATURE, 0,0);
   //divFun dev = (divFun)0x1E5E;
