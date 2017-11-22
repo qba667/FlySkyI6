@@ -518,6 +518,32 @@ void SwBConfig() {
 
 }
 
+uint8_t nextSensorID(uint8_t sensorID)
+{
+	sensorID++;
+
+	if (sensorID == IBUS_MEAS_TYPE_FLIGHT_MODE + 1)
+		sensorID = IBUS_MEAS_TYPE_GPS_LAT;
+
+	if (sensorID == IBUS_MEAS_TYPE_S8a + 1)
+		sensorID = IBUS_MEAS_TYPE_SNR;
+
+	return sensorID;
+}
+
+uint8_t prevSensorID(uint8_t sensorID)
+{
+	sensorID--;
+
+	if (sensorID == IBUS_MEAS_TYPE_SNR -1)
+		sensorID = IBUS_MEAS_TYPE_S8a;
+
+	if (sensorID == IBUS_MEAS_TYPE_GPS_LAT -1)
+		sensorID = IBUS_MEAS_TYPE_FLIGHT_MODE;
+
+	return sensorID;
+}
+
 void AlarmConfig(){
 	struct modelConfStruct *configPtr = getModelModConfig();
 	sensorAlarm alarmItem;
@@ -583,17 +609,13 @@ void AlarmConfig(){
 				 }
 				 if(column == 0){
 					 alarms[row].value = 0;
-					 alarms[row].sensorID += 1;
-					 if(alarms[row].sensorID == IBUS_MEAS_TYPE_FLIGHT_MODE + 1) alarms[row].sensorID = IBUS_MEAS_TYPE_GPS_LAT;
-					 if(alarms[row].sensorID == IBUS_MEAS_TYPE_S8a + 1) alarms[row].sensorID = IBUS_MEAS_TYPE_SNR;
+					 alarms[row].sensorID = nextSensorID(alarms[row].sensorID);
 				 }
 			 }
 			 else if(key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
 				 if(column == 0){
 					 alarms[row].value = 0;
-					 alarms[row].sensorID -= 1;
-					 if(alarms[row].sensorID == IBUS_MEAS_TYPE_SNR -1) alarms[row].sensorID = IBUS_MEAS_TYPE_S8a;
-					 if(alarms[row].sensorID == IBUS_MEAS_TYPE_GPS_LAT -1) alarms[row].sensorID = IBUS_MEAS_TYPE_FLIGHT_MODE;
+					 alarms[row].sensorID = prevSensorID(alarms[row].sensorID);
 				 }
 				 if(column == 2){
 					 alarms[row].value -= step;
