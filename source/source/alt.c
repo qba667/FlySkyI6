@@ -411,63 +411,56 @@ void BatteryType() {
 		saveModSettings();
 	}
 }
+void play(int freq, int duration, int pause){
+	if(someBeepCheck() >= 2){
+		beep(freq,duration);
+		if(pause > 0) beep(0,pause);
+	}
+}
+
+#define BEEP_DEFAULT_FREQ (900)
+
 
  void ChackCustomAlarms(){
-	 int32_t timer = ((*(int32_t *)(TIMER_SYS_TIM)));
-	 int32_t lastAlarm = *((int32_t *)LAST_ALARM_TIMER);
-	 int32_t lastTelemetryUpdate = *((int32_t *)TELEMETRY_UPDATE_TIMER);
-	 uint8_t beepCount = 0;
-	 uint8_t sensorID = 0;
-
-	 if(timer < 100 ) return;
-
-	 if((uint32_t)modConfig.timerAlarm != 0 && timerValue > (uint32_t)modConfig.timerAlarm) {
-		 beepCount = 1;
-	 }
-
-	 if(timer - lastTelemetryUpdate < 1000){
-		 for(int i = 0; i < 3; i++){
-			sensorID = modConfig.alarm[i].sensorID;
-			if(sensorID == 0xff) continue;
-			int32_t sensorValue = getSensorValue(sensorID, 0, 0);
-			if(sensorID >= IBUS_MEAS_TYPE_GPS_LAT && sensorID <= IBUS_MEAS_TYPE_S8a && sensorValue < SENSORS_ARRAY_LENGTH){
-				sensorValue = longSensors[sensorValue];
-			}
-			if(modConfig.alarm[i].operator == OPERATOR_GT){
-				if(sensorValue > modConfig.alarm[i].value){
-					beepCount = i+2;
-					break;
+	int32_t timer = ((*(int32_t *)(TIMER_SYS_TIM)));
+	int32_t lastAlarm = *((int32_t *)LAST_ALARM_TIMER);
+	int32_t lastTelemetryUpdate = *((int32_t *)TELEMETRY_UPDATE_TIMER);
+	uint8_t sensorID = 0;
+	uint8_t active = 0;
+	uint32_t defFreq = 100;
+	if(timer < 100 ) return;
+	if(timer - lastAlarm >= 500){
+		if((uint32_t)modConfig.timerAlarm != 0 && timerValue > (uint32_t)modConfig.timerAlarm) {
+			*((int32_t *)LAST_ALARM_TIMER) = timer;
+			play(BEEP_DEFAULT_FREQ, 100, 50);
+		}
+		if(timer - lastTelemetryUpdate < 1000){
+			for(int i = 0; i < 3; i++){
+				active = 0;
+				sensorID = modConfig.alarm[i].sensorID;
+				if(sensorID == IBUS_MEAS_TYPE_UNKNOWN) continue;
+				int32_t sensorValue = getSensorValue(sensorID, 0, 0);
+				if(sensorID >= IBUS_MEAS_TYPE_GPS_LAT && sensorID <= IBUS_MEAS_TYPE_S8a && sensorValue < SENSORS_ARRAY_LENGTH){
+					sensorValue = longSensors[sensorValue];
+				}
+				if(modConfig.alarm[i].operator == OPERATOR_GT){
+					if(sensorValue > modConfig.alarm[i].value){
+						active = 1;
+					}
+				}
+				if(modConfig.alarm[i].operator == OPERATOR_LT){
+					if(sensorValue < modConfig.alarm[i].value){
+						active = 1;
+					}
+				}
+				if(active){
+					*((int32_t *)LAST_ALARM_TIMER) = timer;
+					play(BEEP_DEFAULT_FREQ + ((i+1)* defFreq), 100, 40);
 				}
 			}
-			if(modConfig.alarm[i].operator == OPERATOR_LT){
-				if(sensorValue < modConfig.alarm[i].value){
-					beepCount = i+2;
-					break;
-				}
-			}
-
-		 	//modConfig.alarms[i].operator = modConfig.alarm[i].operator;
-		 	//modConfig.alarms[i].sensorID = modConfig.alarm[i].sensorID;
-		 	//modConfig.alarms[i].value = modConfig.alarm[i].value;
-		 }
-	 }
-
-	 if(beepCount > 0 && ((timer - lastAlarm) >= 2000)){
-		 *((int32_t *)LAST_ALARM_TIMER) = timer;
-		 while(beepCount > 0){
-			 beepCount --;
-		 if(someBeepCheck() >= 2){
-			beep(700,100);
-			beep(0,100);
-		 }}
-		//if(someBeepCheck >= 2){
-		//	beep(1000, 350);
-		//	beep(500, 350);
-		//}
-	 }
-
-
-	 CheckAlarmsCall();
+		}
+	}
+	CheckAlarmsCall();
  }
 
 void SwBConfig() {

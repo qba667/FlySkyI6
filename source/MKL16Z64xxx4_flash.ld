@@ -251,7 +251,8 @@ SECTIONS
  
   .mod_MOD_ALARMS 0xE140 : 
   {
-	*(.mod_customAlarms);
+	*(.mod_customAlarmsCheck);
+	*(.mod_customAlarmsPlay);
   }
   /*Free space until 0xE400*/
 

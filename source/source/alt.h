@@ -106,9 +106,8 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_createPacketCh1114"))) void createPacketCh1114();
  __attribute__((section (".mod_SW_B_config"))) void SwBConfig();
  __attribute__((section (".mod_alarmConfig"))) void AlarmConfig();
- __attribute__((section (".mod_customAlarms"))) void ChackCustomAlarms();
-
-
+ __attribute__((section (".mod_customAlarmsCheck"))) void ChackCustomAlarms();
+ __attribute__((section (".mod_customAlarmsPlay"))) void play(int freq, int duration, int pause);
  __attribute__((section (".mod_swEHandling"))) void swEHandling();
  __attribute__((section (".mod_swBHandling"))) void swBasADC();
 __attribute__((section (".mod_loadModEeprom"))) void loadModSettings();
