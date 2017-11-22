@@ -83,7 +83,7 @@ const uint8_t __attribute__((section (".mod_sensors80"))) SENSORS_80[] = {
 			'L', 'o', 'n', 0x0, 0x0, /*0x81*/
 			'G', 'A', 'l', 't', 0x0, /*0x82*/
 			'A', 'l', 't', 0x0, 0x0, /*0x83*/
-			'S', '8', '4', 0x0, 0x0, /*0x84*/
+			'M', 'x', 'A', 'l', 0x0, /*0x84*/
 			'S', '8', '5', 0x0, 0x0, /*0x85*/
 			'S', '8', '6', 0x0, 0x0, /*0x86*/
 			'S', '8', '7', 0x0, 0x0, /*0x87*/
@@ -239,7 +239,7 @@ const uint8_t __attribute__((section (".mod_sensDesc80"))) sensorDesc80[] = {
 		CUS_SENSOR|SIGNED__|MUL_001|UNIT_NONE,	//Lon.
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_M,		//Alt -> GPS alt
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_M,		//ALT
-		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s84
+		STD_SENSOR|SIGNED__|MUL_100|UNIT_M,	//Max Alt
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s85
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s86
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s87
