@@ -172,10 +172,11 @@ SECTIONS
   }
   /*method redefinition not needed any more*/
   /*free flash to 0x5260*/
-  .obsolete_displaySmallTextAt 0x5174 :
-  {
-    KEEP(*(.obsolete_displaySmallTextAt))
+  
+  .mod_TIMER_EXTENSION 0x5174 : {
+	*(.mod_TIMER_EXTENSION);
   }
+  
   .mod_sensorConst 0x5260 : /*5260 - 0x52F0 */
   {
 	*(.mod_sensorsScreens);

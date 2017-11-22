@@ -124,69 +124,49 @@ uint32_t divMod(uint32_t val, uint32_t divisor, uint32_t* mod){
 }
 
 void printTimer(int32_t skipPrint){
-	uint32_t* nowPtr = (uint32_t *)(0xE000E018);
+	const uint32_t now = *((uint32_t *)(0xE000E018));
+	const uint32_t ms100 = 480007;
 	uint32_t diff = 0;
 	uint32_t h = 0;
 	uint32_t m = 0;
 	uint32_t s = 0;
-	if(timerValue > 0 || isTimerActive()){
-		if(lastTimerUpdate == 0) lastTimerUpdate = *nowPtr;
+	if(isTimerActive()){
+		if(lastTimerUpdate == 0) lastTimerUpdate = now;
 		else{
-			diff = (*nowPtr - lastTimerUpdate) & 0xFFFFFF;
-			if(diff > 480008){ //3529827,038475115 0x35DC63
-				//0.00002083ms
-				ticks100MS++; //+100ms
-				//1 tick = 0,208 us 0.02083us
-				//1000 us = 1ms
-				//1s = 1000000us
-				//100ms = 100000us
-				//1000 ms = 1s
-				//100 ms = 100000 us =
-				if(ticks100MS>=10){
-					ticks100MS-=10;
-					timerValue++;
-					h = divMod(timerValue, 3600, &m);
-					m = divMod(m, 60, &s);
-					lastTimerUpdate = *nowPtr;
-					sprintfCall((char*)timerBuffer, (const char*)timerFormat, h,m,s);
-				}
+			diff = (now - lastTimerUpdate) & 0xFFFFFF;
+			if(diff > ms100){
+				ticks100MS++;
+			}
+			if(ticks100MS>=9){
+				ticks100MS=0;
+				timerValue++;
+				h = divMod(timerValue, 3600, &m);
+				m = divMod(m, 60, &s);
+				lastTimerUpdate = now - diff;
+				sprintfCall((char*)timerBuffer, (const char*)timerFormat, h,m,s);
 			}
 		}
-
 	}
 	if(timerBuffer[0]==0) strcatCall((char*)timerBuffer, (const char*)timerNull);
 	if(skipPrint ==0)displayTextAt((char*)timerBuffer, 1, 0, 0);
 }
 
 uint32_t isTimerActive(){
+	const uint32_t one_hundred = 100;
+	int32_t one_thousand = one_hundred * 10;
+	int32_t ten_thousands = one_thousand * 10;
+	
 	uint8_t channel = modConfig.timerCH;
-	if(channel > 16) return 0;
+	if(timerValue > 0 && (channel & (1<<7))) return 1; //HOLD mode
+	channel = channel & 0xf;
+	//if(channel > (1 <<4)) return 0;
 	uint16_t value	= modConfig.timerStart;
-	if(value > 2000) return 0;
-
-	uint32_t address = 0x1FFFFD9C;
-	if(*(uint8_t *)(address) == 0x58){
-		address++;
-		channel -=1;
-		address += 2*channel;
-		uint16_t val = (uint16_t)(*(uint8_t *)address) | ((uint16_t)(*(uint8_t *)(address+1)) << 8);
-		if(val > value) return 1;
-	}
-	return 0;
-
-	/*
-
-
-	if(*(uint8_t *)(address) == 0x58){
-		address++;
-		channel -=1;
-		address += 2*channel;
-		uint16_t val = (uint16_t)(*(uint8_t *)address) | ((uint16_t)(*(uint8_t *)(address+1)) << 8);
-		if(val > 1100){
-			return 1;
-		}
-	}
-	return 0;*/
+	//if(value > one_thousand*2) return 0; // > 2000
+	
+	int32_t chValue = *(((int32_t *)CHANNEL_VALUE)+(channel-1));
+	int32_t configVal = ((int32_t)value - one_thousand) * 20 - ten_thousands;
+	
+	return chValue > configVal;
 }
 #define SW_A 0u
 #define SW_B 1u
@@ -652,21 +632,25 @@ void AlarmConfig(){
 
 
 void TimerConfig(){
-	uint16_t data[3];
-	uint16_t max[3];
-	data[0] = (uint16_t) modConfig.timerCH;
-	data[1] = modConfig.timerStart;
+	uint16_t data[4];
+	uint16_t max[4];
+	data[0] = (uint16_t) modConfig.timerCH & 0xF;
+	data[1] = (modConfig.timerStart);
 	data[2] = modConfig.timerAlarm;
+	data[3] = (modConfig.timerCH & (1<<7)) != 0; 
+	
 	max[0] = 10;
 	max[1] = 2200;
 	max[2] = 0xffff;
+	max[3] = 1;
 	uint32_t h = 0;
 	uint32_t m = 0;
 	uint32_t s = 0;
 	uint8_t navPos = 0;
 	uint32_t key = 0;
 	uint16_t step = 1;
-
+	
+	uint8_t labelPos = 9;
 	char buffer[32];
 	do
 	 {
@@ -674,11 +658,13 @@ void TimerConfig(){
 	    {
 	      callSetupDMAandSend();
 	      displayPageHeader((char*)TEXT_TIMMER);
-	      displayTextAt((char*)TEXT_CHANNEL, 9, 16,0);
-	      displayTextAt((char*)TEXT_VALUE, 9, 24,0);
-	      displayTextAt((char*)alarm, 9, 32,0);
+	      displayTextAt((char*)TEXT_CHANNEL, labelPos, 16,0);
+	      displayTextAt((char*)TEXT_VALUE, labelPos, 24,0);
+	      displayTextAt((char*)alarm, labelPos, 32,0);
+		  displayTextAt((char*)TEXT_HOLD, labelPos, 40,0);
+		  
 
-	      for(int i = 0; i < 3; i++){
+	      for(int i = 0; i < 4; i++){
 	    	  sprintfCall(buffer, (const char*) formatNumber, data[i]);
 	    	  if(i==2){
 	    		  h = divMod(data[i], 3600, &m);
@@ -693,14 +679,14 @@ void TimerConfig(){
 	      key = getKeyCode();
 
 	      step = 1;
-	      if(navPos != 0) step = 10;
+	      if(navPos == 1 || navPos ==2) step = 10;
 
 	      if(key == KEY_LONG_OK){
 	    	  data[navPos] = 0;
 	      }
 	      else if(key == KEY_SHORT_OK){
 	    	  navPos++;
-	    	  if(navPos >=3)navPos = 0;
+	    	  if(navPos >=4)navPos = 0;
 	      }
 	      else if(key == KEY_SHORT_UP || key == KEY_LONG_UP){
 	    	  data[navPos] += step;
@@ -712,17 +698,18 @@ void TimerConfig(){
 	      else  {
 	    	  break;
 	      }
+		  /*
 	      key = someBeepCheck();
 	      if ( key >= 2 )
 	      {
 	        beep(784, 15);
 	        beep(0, 15);
-	      }
+	      }*/
 	    }
 	  }
 	  while ( key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
 	  if( key == KEY_LONG_CANCEL) {
-		modConfig.timerCH = (uint8_t) data[0];
+		modConfig.timerCH = (uint8_t) data[0] | (data[3] << 7);
 		modConfig.timerStart = data[1];
 		modConfig.timerAlarm = data[2];
 		saveModSettings();
