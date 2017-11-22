@@ -1,0 +1,5 @@
+*.o
+*.d
+fs-i6-*.bin
+fs-i6-*.elf
+fs-i6-*.map
