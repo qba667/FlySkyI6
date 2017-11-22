@@ -184,7 +184,7 @@ const uint8_t __attribute__((section (".mod_extraMenu"))) extraMenu[] = {
 };
 const uint8_t __attribute__((section (".mod_altText"))) altSensor[] = {
 		'A', 'l', 't',  0x00,  
-		
+};
 const uint8_t __attribute__((section (".mod_txBat"))) txBat[] = {
 		'T', 'X', ' ', 'B', 'a', 't',  0x00
 };
