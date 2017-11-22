@@ -138,6 +138,8 @@ __attribute__((section (".reserved_after_ac_sensor")))  uint32_t keep3 = 0;
 __attribute__((section (".reserved_after_set_ch_val"))) uint32_t keep4 = 0;
 __attribute__((section (".reserved_afterSwB_adac"))) uint32_t keep5 = 0;
 __attribute__((section (".reserved_after_free_space_in_display"))) uint32_t keep6 = 0;
+__attribute__((section (".reserved_after_free_space_in_display"))) uint16_t keepChecksum = 0;
+
 
 
 #endif /* SOURCE_ALT_H_ */
