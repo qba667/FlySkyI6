@@ -80,6 +80,7 @@ int main(void) {
   getSensorName(2);
   loadModSettings();
   saveModSettings();
+  getModelModConfig();
   printTimer();
   if( strLenCall((const char*)RADIO_MODES)){
 	  init(10000);
@@ -101,7 +102,7 @@ int main(void) {
   strLenCall((const char*)txBat);
 
 */
-  ChackCustomAlarms();
+  CheckCustomAlarms();
   //keep few regions
   if(keep1==0){keep1++;}
   if(keep2==0){keep2++;}
@@ -110,6 +111,11 @@ int main(void) {
   if(keep5==0){keep5++;}
   if(keep6==0){keep6++;}
   if(keep7==0){keep7++;}
+  if(txVoltageAddress==0){txVoltageAddress++;}
+  if(timerBufferAddress==0){timerBufferAddress++;}
+  if(timerValueAddress==0){timerValueAddress++;}
+  if(mainScreenIndexAddress==0){mainScreenIndexAddress++;}
+
   
   if(keepChecksum == 0){keepChecksum++;}
   //keep this one because of without usage signature block will be removed

@@ -68,7 +68,7 @@ typedef struct manuEntry{
 } manuEntry;
 
 
-
+typedef void* (*memcpyFun)(void *dest, const void *source, size_t n);
 typedef int (*sprintfFun)(char* buffer, const char* format, ...);
 typedef void (*voidFun)(void);
 typedef size_t (*strLenFun)(const char * str);
@@ -96,7 +96,7 @@ __attribute__((section (".mod_MOD_SPACE.CONFIGPINS"))) const voidFun configurePI
 __attribute__((section (".mod_MOD_SPACE.NAVPAGE"))) const navPage showNavPage = (navPage)0x6DD5;
 __attribute__((section (".mod_MOD_SPACE.SETTINGSVALID"))) const voidFun settingsValidation = (voidFun)0x6005;
 __attribute__((section (".mod_MOD_SPACE.SPIMETHOD"))) const voidFun someSPImethod = (voidFun)0xA339;
-
+__attribute__((section (".mod_MOD_SPACE.MEMCPY"))) const memcpyFun memcpy_ = (memcpyFun)0x198D;
 __attribute__((section (".mod_MOD_SPACE.SPRINTF"))) const sprintfFun sprintfCall = (sprintfFun)0x19F9;
 __attribute__((section (".mod_MOD_SPACE.STRCAT"))) const strcatFun strcatCall = (strcatFun)0x1C65;
 

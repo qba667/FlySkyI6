@@ -107,10 +107,12 @@ SECTIONS
     *(.screenBuffer);
   } > m_data
   
-  .MOD_CONFIG2 0x20000D7A :
+  .MOD_CONFIG2 0x20000BC4 :
   {
-    *(.mod_modConfigAsModel20);
+    *(.mod_modConfigAsModel17);
   }  > m_data
+
+  /*  20000E0C */
 
   .AUX_MEM 0x20000F4A :
   {
@@ -127,7 +129,7 @@ SECTIONS
 	*(.mod_altinitPressureRaw);
 	*(.mod_auxMem*)
     KEEP(*(.AUX_MEM))
-  } > m_data
+  } > data
   
   
   .mod_FLASH_25C8 0x25C8 :
@@ -143,7 +145,9 @@ SECTIONS
 	*(.mod_armed);
 	*(.mod_formatNumberFractial);
 	*(.mod_formatNumber);
-	*(.mod_formatGPS);		
+	*(.mod_formatGPS);	
+	*(.mod_timerMaxValues);		
+	*(.mod_timerLabels);
 	*(.mod_FLASH_25C8*);
   }
   .mod_SIGNATURE_2780 0x2780 :
@@ -175,6 +179,7 @@ SECTIONS
   
   .mod_TIMER_EXTENSION 0x5174 : {
 	*(.mod_TIMER_EXTENSION);
+	*(.mod_checkTimerActive*);
   }
   
   .mod_sensorConst 0x5260 : /*5260 - 0x52F0 */
@@ -197,6 +202,11 @@ SECTIONS
   .reserved_afterSwB_adac 0x5354 :{
     *(.reserved_afterSwB_adac);
   }
+  
+  .mod_TX_VOLTAGE_ADDRES 0x6344 : {
+	*(.mod_TX_VOLTAGE_ADDRES);
+  }
+   
   /* changed in assembly - call to 0x65C8*/
   .mod_FREE_FLASH_65A8_768 0x65A8 : 
   {
@@ -227,16 +237,32 @@ SECTIONS
      KEEP(*(.reserved_after_free_space_in_display)) 
   }
   
+  .mod_mainScreenIndexAddress 0xC9A0 : {
+	*(.mod_mainScreenIndexAddress);
+  }
+  
+  .mod_timerValueAddress 0xC9A4 : {
+	*(.mod_timerValueAddress);
+  }
+  
+  .mod_timerBufferAddress 0xC9A8 : {
+	*(.mod_timerBufferAddress);
+  }
+
+  
   .mod_MOD_EEPROM 0xC9B0 :
   {
-	*(.mod_loadModEeprom);
+  	*(.mod_loadModEeprom);
 	*(.mod_saveModEeprom);
+	*(.mod_modelConfig);
+	*(.mod_customAlarmsPlay);
   }
 
   .reserved_after_eeprom 0xCA50 :
   {
 	*(.reserved_after_eeprom);
   }
+  
   
   .mod_freeSpaceAFHDSLogo 0xD50C :
   {
@@ -249,17 +275,18 @@ SECTIONS
 	
  . = ALIGN(4);
  
-  .mod_MOD_ALARMS 0xE140 : 
-  {
-	*(.mod_customAlarmsCheck);
-	*(.mod_customAlarmsPlay);
-  }
-  /*Free space until 0xE400*/
-
   .mod_MOD_CHANNELS_11_14 0xE400 :
   {
 	*(.mod_channels1114);
   }
+  
+  .mod_MOD_ALARMS 0xE140 : 
+  {
+	*(.mod_customAlarmsCheck);
+	*(.mod_timerConfig);
+  }
+  /*Free space until 0xE400*/
+
   /* few bytes free */
   .mod_MOD_SWB 0xE570 :
   {
@@ -317,7 +344,6 @@ SECTIONS
   .mod_TIMER_SPACE 0xF8E0 :
   {
     *(.mod_printTimer*);
-    *(.mod_checkTimerActive*);
   }
   .mod_formatSensorValue 0xFA00 :
   {
@@ -329,11 +355,12 @@ SECTIONS
   {
    	 *(.mod_alarmConfig);
   }
-
+/*
   .mod_TimerConfigPage 0xFDE8 :
   {
    	 *(.mod_timerConfig);
   }
+  */
   . = ALIGN(1);
   .mod_extraMenu 0xFF90 : /*FFA0 - FFFF*/ 
   {

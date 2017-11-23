@@ -92,6 +92,11 @@ void saveModSettings(){
 	someSPImethod();
 }
 
+modelConfStruct* getModelModConfig(){
+	uint8_t modelIndex = ((*(uint8_t *)(CURRENT_MODEL_INDEX)));
+	modelConfStruct* ptr = &modConfig2.modelConfig[modelIndex];
+	return ptr;
+}
 
 const uint8_t* getSensorName(int sensor){
 	if ( sensor >= IBUS_MEAS_TYPE_INTV && sensor <= IBUS_MEAS_TYPE_UNKNOWN )
@@ -155,16 +160,14 @@ uint32_t isTimerActive(){
 	const uint32_t one_hundred = 100;
 	int32_t one_thousand = one_hundred * 10;
 	int32_t ten_thousands = one_thousand * 10;
-	
-	uint8_t channel = modConfig.timerCH;
+	struct modelConfStruct *configPtr = getModelModConfig();
+	uint8_t channel = configPtr->timerCH;
 	if(timerValue > 0 && (channel & (1<<7))) return 1; //HOLD mode
 	channel = channel & 0xf;
 	//if(channel > (1 <<4)) return 0;
-	uint16_t value	= modConfig.timerStart;
 	//if(value > one_thousand*2) return 0; // > 2000
-	
 	int32_t chValue = *(((int32_t *)CHANNEL_VALUE)+(channel-1));
-	int32_t configVal = ((int32_t)value - one_thousand) * 20 - ten_thousands;
+	int32_t configVal = ((int32_t)configPtr->timerStart - one_thousand) * 20 - ten_thousands;
 	
 	return chValue > configVal;
 }
@@ -181,15 +184,13 @@ void auxChannels2(){
 	uint32_t* namePtr = (uint32_t*)0x200000B8;
 	char* name2Ptr = (char*) 0xF638;
 	char* tmp = 0;
-	//0x200002AD
-	uint8_t modelIndex = ((*(uint8_t *)(CURRENT_MODEL_INDEX)));
-	modelConfStruct model = modConfig2.modelConfig[modelIndex];
-
+	struct modelConfStruct *configPtr = getModelModConfig();
+	
 	uint8_t auxChannels[4];
-	auxChannels[0] = model.ch11_12 >> 4;
-	auxChannels[1] = model.ch11_12 &  0xF;
-	auxChannels[2] = model.ch13_14 >> 4;
-	auxChannels[3] = model.ch13_14 &  0xF;
+	auxChannels[0] = configPtr->ch11_12 >> 4;
+	auxChannels[1] = configPtr->ch11_12 &  0xF;
+	auxChannels[2] = configPtr->ch13_14 >> 4;
+	auxChannels[3] = configPtr->ch13_14 &  0xF;
 
 	char buffer[32];
 
@@ -204,10 +205,11 @@ void auxChannels2(){
 		buffer[7] = '1';
 
 		for(uint8_t i=0; i < sizeof(auxChannels); i++){
+			int posY = 16 + i*8;
+			
 			buffer[8] = '1' + i;
 			buffer[9] = 0;
-			displayTextAt(buffer, 8, 16 + i*8, 0);
-
+			displayTextAt(buffer, 8, posY, 0);
 			if(auxChannels[i] <= 6){
 				tmp = (char*)(*(namePtr + auxChannels[i]));
 			}
@@ -216,7 +218,7 @@ void auxChannels2(){
 			}
 
 			if(tmp!=0 && tmp[0]!=0){
-				displayTextAt(tmp, 88, 16 + i*8, 0);
+				displayTextAt(tmp, 88, posY, 0);
 			}
 		}
 		displayGFX((gfxInfo*) GFX_ARROW, 0, 16 + (row*8));
@@ -243,21 +245,20 @@ void auxChannels2(){
 		else break;
 	}
 	if(key == KEY_LONG_CANCEL){
-		modConfig2.modelConfig[modelIndex].ch11_12 = (auxChannels[0] << 4) | auxChannels[1];
-		modConfig2.modelConfig[modelIndex].ch13_14 = (auxChannels[2] << 4) | auxChannels[3];
+		configPtr->ch11_12 = (auxChannels[0] << 4) | auxChannels[1];
+		configPtr->ch13_14 = (auxChannels[2] << 4) | auxChannels[3];
 	}
 
 }
 void createPacketCh1114(){
 	int32_t channel11Address = 0x1FFFFE08;
-	uint8_t modelIndex = ((*(uint8_t *)(CURRENT_MODEL_INDEX)));
-	modelConfStruct model = modConfig2.modelConfig[modelIndex];
+	struct modelConfStruct *configPtr = getModelModConfig();
 
 	uint8_t auxChannels[4];
-	auxChannels[0] = model.ch11_12 >> 4;
-	auxChannels[1] = model.ch11_12 &  0xF;
-	auxChannels[2] = model.ch13_14 >> 4;
-	auxChannels[3] = model.ch13_14 &  0xF;
+	auxChannels[0] = configPtr->ch11_12 >> 4;
+	auxChannels[1] = configPtr->ch11_12 &  0xF;
+	auxChannels[2] = configPtr->ch13_14 >> 4;
+	auxChannels[3] = configPtr->ch13_14 &  0xF;
 
 	for(uint8_t i=0; i < sizeof(auxChannels); i++){
 		*((int32_t*)(channel11Address + 4*i)) = getAuxChannel(auxChannels[i]);
@@ -387,7 +388,8 @@ void displayMenu(){
 
 void BatteryType() {
 	uint32_t key = 0;
-	uint16_t batteryVolt = modConfig.batteryVoltage;
+	
+	uint16_t batteryVolt = modConfig2.batteryVoltage;
 	char buffer[32];
 		while (1) {
 			callSetupDMAandSend();
@@ -407,8 +409,7 @@ void BatteryType() {
 		}
 
 	if( key == KEY_LONG_CANCEL) {
-		modConfig.batteryVoltage = batteryVolt;
-		saveModSettings();
+		modConfig2.batteryVoltage = batteryVolt;
 	}
 }
 void play(int freq, int duration, int pause){
@@ -421,41 +422,44 @@ void play(int freq, int duration, int pause){
 #define BEEP_DEFAULT_FREQ (900)
 
 
- void ChackCustomAlarms(){
+ void CheckCustomAlarms(){
 	int32_t timer = ((*(int32_t *)(TIMER_SYS_TIM)));
 	int32_t lastAlarm = *((int32_t *)LAST_ALARM_TIMER);
 	int32_t lastTelemetryUpdate = *((int32_t *)TELEMETRY_UPDATE_TIMER);
 	uint8_t sensorID = 0;
 	uint8_t active = 0;
+	uint32_t duration = 100;
 	uint32_t defFreq = 100;
-	if(timer < 100 ) return;
+	uint32_t checkTimout = defFreq *10;
+	struct modelConfStruct *configPtr = getModelModConfig();
+	if(timer < duration ) return;
 	if(timer - lastAlarm >= 500){
-		if((uint32_t)modConfig.timerAlarm != 0 && timerValue > (uint32_t)modConfig.timerAlarm) {
+		if((uint32_t)configPtr->timerAlarm != 0 && timerValue > (uint32_t)configPtr->timerAlarm) {
 			*((int32_t *)LAST_ALARM_TIMER) = timer;
-			play(BEEP_DEFAULT_FREQ, 100, 50);
+			play(BEEP_DEFAULT_FREQ, duration, 50);
 		}
-		if(timer - lastTelemetryUpdate < 1000){
+		if(timer - lastTelemetryUpdate < checkTimout){
 			for(int i = 0; i < 3; i++){
 				active = 0;
-				sensorID = modConfig.alarm[i].sensorID;
+				sensorID = configPtr->alarm[i].sensorID;
 				if(sensorID == IBUS_MEAS_TYPE_UNKNOWN) continue;
 				int32_t sensorValue = getSensorValue(sensorID, 0, 0);
 				if(sensorID >= IBUS_MEAS_TYPE_GPS_LAT && sensorID <= IBUS_MEAS_TYPE_S8a && sensorValue < SENSORS_ARRAY_LENGTH){
 					sensorValue = longSensors[sensorValue];
 				}
-				if(modConfig.alarm[i].operator == OPERATOR_GT){
-					if(sensorValue > modConfig.alarm[i].value){
+				if(configPtr->alarm[i].operator == OPERATOR_GT){
+					if(sensorValue > configPtr->alarm[i].value){
 						active = 1;
 					}
 				}
-				if(modConfig.alarm[i].operator == OPERATOR_LT){
-					if(sensorValue < modConfig.alarm[i].value){
+				if(configPtr->alarm[i].operator == OPERATOR_LT){
+					if(sensorValue < configPtr->alarm[i].value){
 						active = 1;
 					}
 				}
 				if(active){
 					*((int32_t *)LAST_ALARM_TIMER) = timer;
-					play(BEEP_DEFAULT_FREQ + ((i+1)* defFreq), 100, 40);
+					play(BEEP_DEFAULT_FREQ + ((i+1)* defFreq), duration, 40);
 				}
 			}
 		}
@@ -509,33 +513,25 @@ void SwBConfig() {
 
 	if (key == KEY_LONG_CANCEL) {
 		modConfig2.swConfig = swConfig;
-		//saveModSettings();
 	}
 
 }
 
 void AlarmConfig(){
+	struct modelConfStruct *configPtr = getModelModConfig();
+	sensorAlarm alarmItem;
 	sensorAlarm alarms[3];
+	uint32_t size = sizeof(alarms);
 	uint32_t row = 0;
 	uint32_t column = 0;
 	uint32_t columnOffset = 0;
 	uint32_t key = 0;
 	uint16_t step = 1;
 	uint16_t y = 0;
-	sensorAlarm alarmItem;
 	char buffer[32];
-	uint32_t size = sizeof(sensorAlarm)*3;
+
+	memcpy_(alarms, configPtr->alarm, sizeof(alarms));
 	
-	for(int i = 0; i < size; i++){
-		*((char*)alarms + i) = *((char*)modConfig.alarm + i);
-	}
-	/*
-	for(int i = 0; i < 3; i++){
-		
-		alarms[i].operator = modConfig.alarm[i].operator;
-		alarms[i].sensorID = modConfig.alarm[i].sensorID;
-		alarms[i].value = modConfig.alarm[i].value;
-	}*/
 	do{
 		 while ( 1 )
 		 {
@@ -564,7 +560,11 @@ void AlarmConfig(){
 			 key = getKeyCode();
 			 if(key < 20) step =1;
 			 else step = 10;
-			 if(key == KEY_LONG_OK || key == KEY_SHORT_OK ){
+			 if(key == KEY_LONG_OK){
+				alarms[row].sensorID = IBUS_MEAS_TYPE_UNKNOWN;
+				alarms[row].value = 0;
+			 }
+			 else if(key == KEY_SHORT_OK ){
 				 column++;
 				 if(column >= 3) {
 					 column = 0;
@@ -608,43 +608,28 @@ void AlarmConfig(){
 	while ( key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
 
 	if( key == KEY_LONG_CANCEL) {
-		for(int i = 0; i < size; i++){
-			*((char*)modConfig.alarm + i) = *((char*)alarms + i);
-		}
-		/*
-		for(int i = 0; i < 3; i++){
-			modConfig.alarm[i].operator = alarms[i].operator;
-			modConfig.alarm[i].sensorID = alarms[i].sensorID;
-			modConfig.alarm[i].value = alarms[i].value;
-		}
-		*/
-		saveModSettings();
+		memcpy_(configPtr->alarm, alarms, sizeof(alarms));
 	}
 
 }
 
 
 void TimerConfig(){
+	//{ 10, 2200, 0xffff, 1 };
 	uint16_t data[4];
-	uint16_t max[4];
-	data[0] = (uint16_t) modConfig.timerCH & 0xF;
-	data[1] = (modConfig.timerStart);
-	data[2] = modConfig.timerAlarm;
-	data[3] = (modConfig.timerCH & (1<<7)) != 0; 
-	
-	max[0] = 10;
-	max[1] = 2200;
-	max[2] = 0xffff;
-	max[3] = 1;
 	uint32_t h = 0;
 	uint32_t m = 0;
 	uint32_t s = 0;
 	uint8_t navPos = 0;
 	uint32_t key = 0;
 	uint16_t step = 1;
-	
 	uint8_t labelPos = 9;
 	char buffer[32];
+	struct modelConfStruct *configPtr = getModelModConfig();
+	data[0] = (uint16_t) configPtr->timerCH & 0xF;
+	data[1] = configPtr->timerStart;
+	data[2] = configPtr->timerAlarm;
+	data[3] = (configPtr->timerCH & (1<<7)) != 0; 
 	do
 	 {
 	    while ( 1 )
@@ -658,13 +643,15 @@ void TimerConfig(){
 		  
 
 	      for(int i = 0; i < 4; i++){
+			  int yPos = 16 + i*8;
+			  displayTextAt((char*)timerLabels[i], labelPos, yPos,0);
 	    	  sprintfCall(buffer, (const char*) formatNumber, data[i]);
 	    	  if(i==2){
 	    		  h = divMod(data[i], 3600, &m);
 	    		  m = divMod(m, 60, &s);
 	    		  sprintfCall(buffer, (const char*) timerFormat, h,m,s);
 	    	  }
-	    	  displayTextAt(buffer, 64, 16 + i*8,0);
+	    	  displayTextAt(buffer, 64, yPos, 0);
 	      }
 	      displayGFX((gfxInfo*) GFX_ARROW, 1, 16 + navPos*8);
 
@@ -683,7 +670,7 @@ void TimerConfig(){
 	      }
 	      else if(key == KEY_SHORT_UP || key == KEY_LONG_UP){
 	    	  data[navPos] += step;
-	    	  if(data[navPos] >= max[navPos]) data[navPos] = max[navPos];
+	    	  if(data[navPos] >= timerMaxValues[navPos]) data[navPos] = timerMaxValues[navPos];
 	      }
 	      else if(key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
 	    	  if(data[navPos] > step) data[navPos] -= step;
@@ -691,21 +678,13 @@ void TimerConfig(){
 	      else  {
 	    	  break;
 	      }
-		  /*
-	      key = someBeepCheck();
-	      if ( key >= 2 )
-	      {
-	        beep(784, 15);
-	        beep(0, 15);
-	      }*/
 	    }
 	  }
 	  while ( key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
 	  if( key == KEY_LONG_CANCEL) {
-		modConfig.timerCH = (uint8_t) data[0] | (data[3] << 7);
-		modConfig.timerStart = data[1];
-		modConfig.timerAlarm = data[2];
-		saveModSettings();
+		configPtr->timerCH = (uint8_t) data[0] | (data[3] << 7);
+		configPtr->timerStart = data[1];
+		configPtr->timerAlarm = data[2];
 	  }
 }
 

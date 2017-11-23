@@ -297,6 +297,13 @@ const uint8_t __attribute__((section (".mod_units"))) units[] = {
 	/*11@31*/'m', 'A', 'h', 0x00,
 };
 
+const uint16_t __attribute__((section (".mod_timerMaxValues"))) timerMaxValues[] = { 10, 2200, 0xffff, 1 };
+const uint32_t __attribute__((section (".mod_timerLabels")))  timerLabels[] = { TEXT_CHANNEL, TEXT_VALUE, (uint32_t)&alarm, TEXT_HOLD  };
+
+uint32_t  __attribute__((section (".mod_TX_VOLTAGE_ADDRES"))) txVoltageAddress = (uint32_t)&modConfig2.batteryVoltage;
+uint32_t  __attribute__((section (".mod_mainScreenIndexAddress"))) mainScreenIndexAddress = (uint32_t)&mainScreenIndex;
+uint32_t  __attribute__((section (".mod_timerValueAddress"))) timerValueAddress = (uint32_t)&timerValue;
+uint32_t  __attribute__((section (".mod_timerBufferAddress"))) timerBufferAddress = (uint32_t)timerBuffer;
 
 
 __attribute__((section (".notImplemented_AUX_CHANNEL_PAGE"))) signed int  auxChannelsPage();

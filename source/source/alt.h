@@ -30,7 +30,7 @@
 #define AVG_TMP			19
 
 #define SENSORS_ARRAY_LENGTH 11
-
+/* 4 bytes*/
 typedef struct sensorAlarm
 {
 	uint8_t sensorID;
@@ -38,22 +38,32 @@ typedef struct sensorAlarm
 	uint16_t value;
 } sensorAlarm;
 
-//146 bytes by 19 models
+//24 + sensorAlarm (3 * 4 bytes) 12 bytes = 36 bytes
 typedef struct modelConfStruct
 {
 	uint8_t ch11_12;
 	uint8_t ch13_14;
 	uint16_t timerAlarm;
+	uint8_t timerCH;
+	uint16_t timerStart;
+	sensorAlarm alarm[3];
+	uint32_t initAlt;
+	uint16_t reserved1;
+	uint16_t reserved2;
+	uint16_t reserved3;
+	uint16_t reserved4;
+	uint16_t reserved5;
+	uint16_t reserved6;
+	uint8_t reserved7;
 } modelConfStruct;
-
+/*total 146*4 = 584 bytes*/
+/*used: 3+ 16* 36 = 579*/
+/*free: 5*/
 typedef struct globalConfigStruct
 {
 	uint16_t batteryVoltage;
 	uint8_t swConfig;
-	uint8_t timerCH;
-	uint16_t timerStart;
-	sensorAlarm alarm[3];
-	modelConfStruct modelConfig[19];
+	modelConfStruct modelConfig[16];
 
 } globalConfigStruct;
 
@@ -73,7 +83,7 @@ typedef union config
 	configStruct cfg;
 } config;
 
-globalConfigStruct __attribute__((section (".mod_modConfigAsModel20"))) modConfig2;
+globalConfigStruct __attribute__((section (".mod_modConfigAsModel17"))) modConfig2;
 uint8_t __attribute__((section (".mod_mainScreenIndex"))) mainScreenIndex = 0; //referenced from assembly
 configStruct __attribute__((section (".mod_modConfigEeprom"))) modConfig; 			//16bytes
 int32_t __attribute__((section (".mod_longSensors"))) longSensors[SENSORS_ARRAY_LENGTH]; 		//72bytes referenced from assembly
@@ -81,8 +91,12 @@ uint8_t __attribute__((section (".mod_timerBuffer"))) timerBuffer[10]; 		//10byt
 uint32_t __attribute__((section (".mod_timerValue"))) timerValue;
 uint32_t __attribute__((section (".mod_lastTimerUpdate"))) lastTimerUpdate;
 uint8_t __attribute__((section (".mod_ticks100ms"))) ticks100MS;
-
 uint8_t __attribute__((section (".mod_mavlinkGPSFrame"))) mavlinkGPSFrame[22]; 	//22bytes
+__attribute__((section (".mod_altconstVal"))) uint32_t constVal = 0;
+__attribute__((section (".mod_altinitPressure"))) uint32_t initPressure = 0;
+__attribute__((section (".mod_altinitPressureRaw"))) uint32_t initPressureRaw = 0;
+__attribute__((section (".mod_auxMem_test1"))) uint32_t allocationTest = 0;
+
 
 __attribute__((section (".mod_configurePins"))) void configurePINS2();
 
@@ -106,13 +120,13 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_createPacketCh1114"))) void createPacketCh1114();
  __attribute__((section (".mod_SW_B_config"))) void SwBConfig();
  __attribute__((section (".mod_alarmConfig"))) void AlarmConfig();
- __attribute__((section (".mod_customAlarmsCheck"))) void ChackCustomAlarms();
+ __attribute__((section (".mod_customAlarmsCheck"))) void CheckCustomAlarms();
  __attribute__((section (".mod_customAlarmsPlay"))) void play(int freq, int duration, int pause);
  __attribute__((section (".mod_swEHandling"))) void swEHandling();
  __attribute__((section (".mod_swBHandling"))) void swBasADC();
-__attribute__((section (".mod_loadModEeprom"))) void loadModSettings();
-__attribute__((section (".mod_saveModEeprom"))) void saveModSettings();
-__attribute__((section (".mod_yenyaSpace"))) void testMethod();
+ __attribute__((section (".mod_modelConfig"))) modelConfStruct* getModelModConfig();
+ __attribute__((section (".mod_loadModEeprom"))) void loadModSettings();
+ __attribute__((section (".mod_saveModEeprom"))) void saveModSettings(); __attribute__((section (".mod_yenyaSpace"))) void testMethod();
 
 
 __attribute__((section (".mod_displaySensors"))) void displaySensors();
@@ -120,12 +134,6 @@ __attribute__((section (".mod_getSensorName"))) const uint8_t* getSensorName(int
 __attribute__((section (".mod_formatSensorValue"))) void formatSensorValue(char* target, int sensorID, uint16_t sensorValue);
 __attribute__((section (".mod_divMod"))) uint32_t divMod(uint32_t val, uint32_t divisor, uint32_t* mod);
 __attribute__((section (".mod_parseCoord"))) void parseCoord(uint32_t *deg, uint32_t *min, uint32_t *sec, uint32_t *subSec, uint32_t coord);
-
-__attribute__((section (".mod_altconstVal"))) uint32_t constVal = 0;
-__attribute__((section (".mod_altinitPressure"))) uint32_t initPressure = 0;
-__attribute__((section (".mod_altinitPressureRaw"))) uint32_t initPressureRaw = 0;
-__attribute__((section (".mod_auxMem_test1"))) uint32_t allocationTest = 0;
-
 
 
 __attribute__((section (".altmulu16"))) uint32_t mulu16(uint32_t x, uint32_t y);
