@@ -53,7 +53,6 @@
 #include "alt.h"
 #include "ibustelemetry.h"
 
-
 /*
  *
 typedef uint32_t (*divFun)(uint32_t, uint32_t);
@@ -133,6 +132,7 @@ int main(void) {
   AlarmConfig();
   printTimer(0);
   auxChannels2();
+  __mul64((long long)1, (long long)2);
   //rxTest2();
   //initALT(100000);
   uint32_t reminder=0;

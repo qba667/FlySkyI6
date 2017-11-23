@@ -257,6 +257,7 @@ SECTIONS
 	*/
 	*(.mod_modelConfig);
 	*(.mod_customAlarmsPlay);
+	*(.mod_asm_aeabi_lmul);
   }
 
   .reserved_after_eeprom 0xCA50 :
