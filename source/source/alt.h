@@ -124,6 +124,8 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_alarmConfig"))) void AlarmConfig();
  __attribute__((section (".mod_customAlarmsCheck"))) void CheckCustomAlarms();
  __attribute__((section (".mod_customAlarmsPlay"))) void play(int freq, int duration, int pause);
+ __attribute__((section (".mod_nextSensorID"))) uint8_t nextSensorID(uint8_t sensorID);
+ __attribute__((section (".mod_prevSensorID"))) uint8_t prevSensorID(uint8_t sensorID);
  __attribute__((section (".mod_swEHandling"))) void swEHandling();
  __attribute__((section (".mod_swBHandling"))) void swBasADC();
  __attribute__((section (".mod_modelConfig"))) modelConfStruct* getModelModConfig();
