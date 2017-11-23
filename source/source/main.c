@@ -78,8 +78,8 @@ int main(void) {
   (*(uint32_t *)(MODEL_SETTINGS)) = 0x200002AE;
   unsigned char* buf = 0;
   getSensorName(2);
-  loadModSettings();
-  saveModSettings();
+  //loadModSettings();
+  //saveModSettings();
   getModelModConfig();
   printTimer();
   if( strLenCall((const char*)RADIO_MODES)){

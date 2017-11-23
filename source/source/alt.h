@@ -85,7 +85,7 @@ typedef union config
 
 globalConfigStruct __attribute__((section (".mod_modConfigAsModel17"))) modConfig2;
 uint8_t __attribute__((section (".mod_mainScreenIndex"))) mainScreenIndex = 0; //referenced from assembly
-configStruct __attribute__((section (".mod_modConfigEeprom"))) modConfig; 			//16bytes
+//configStruct __attribute__((section (".mod_modConfigEeprom"))) modConfig; 			//16bytes
 int32_t __attribute__((section (".mod_longSensors"))) longSensors[SENSORS_ARRAY_LENGTH]; 		//72bytes referenced from assembly
 uint8_t __attribute__((section (".mod_timerBuffer"))) timerBuffer[10]; 		//10bytes
 uint32_t __attribute__((section (".mod_timerValue"))) timerValue;
@@ -125,8 +125,11 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_swEHandling"))) void swEHandling();
  __attribute__((section (".mod_swBHandling"))) void swBasADC();
  __attribute__((section (".mod_modelConfig"))) modelConfStruct* getModelModConfig();
+ /*
  __attribute__((section (".mod_loadModEeprom"))) void loadModSettings();
- __attribute__((section (".mod_saveModEeprom"))) void saveModSettings(); __attribute__((section (".mod_yenyaSpace"))) void testMethod();
+ __attribute__((section (".mod_saveModEeprom"))) void saveModSettings(); 
+ */
+ __attribute__((section (".mod_yenyaSpace"))) void testMethod();
 
 
 __attribute__((section (".mod_displaySensors"))) void displaySensors();

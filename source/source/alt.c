@@ -81,7 +81,7 @@ void acData(uint8_t* rxBuffer){
 	}
 	while (index <= 28 );
 }
-
+/*
 void loadModSettings(){
 	settingsValidation();
 	readEeprom((uint8_t *)&modConfig, 0xBC0, sizeof(modConfig));
@@ -91,6 +91,7 @@ void saveModSettings(){
 	saveEeprom((uint8_t *)&modConfig, 0xBC0, sizeof(modConfig));
 	someSPImethod();
 }
+*/
 
 modelConfStruct* getModelModConfig(){
 	uint8_t modelIndex = ((*(uint8_t *)(CURRENT_MODEL_INDEX)));

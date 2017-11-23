@@ -117,7 +117,6 @@ SECTIONS
   .AUX_MEM 0x20000F4A :
   {
     *(.mod_mainScreenIndex)
-    *(.mod_modConfigEeprom);
     *(.mod_longSensors);
     *(.mod_mavlinkGPSFrame)
     *(.mod_timerBuffer);
@@ -252,8 +251,10 @@ SECTIONS
   
   .mod_MOD_EEPROM 0xC9B0 :
   {
+	/*
   	*(.mod_loadModEeprom);
 	*(.mod_saveModEeprom);
+	*/
 	*(.mod_modelConfig);
 	*(.mod_customAlarmsPlay);
   }
