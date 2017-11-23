@@ -259,6 +259,7 @@ SECTIONS
 	*(.mod_customAlarmsPlay);
 	*(.mod_nextSensorID);
 	*(.mod_prevSensorID);
+	*(.mod_asm_aeabi_lmul);
   }
 
   .reserved_after_eeprom 0xCA50 :

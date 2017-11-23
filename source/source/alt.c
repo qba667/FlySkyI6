@@ -16,6 +16,9 @@
 #define OPERATOR_LT 0
 #define OPERATOR_GT 1
 
+extern long long __mul64(long long a, long long b);
+
+
 void add2ByteSensor(uint8_t sensorID, uint8_t sensorIndex, uint16_t value){
 	char shortSensor[4];
 	shortSensor[0] = sensorID;
@@ -42,8 +45,12 @@ void acData(uint8_t* rxBuffer){
 		offset = -1;
 		sensorIndex = rxBuffer[index +1];
 		sensorData = (rxBuffer[index+6] << 24 | rxBuffer[index+5] << 16 | rxBuffer[index+4] << 8 | rxBuffer[index+3]);
-
-		if(rxBuffer[index]==IBUS_MEAS_TYPE_GPS_FULL){
+		if(rxBuffer[index]==IBUS_MEAS_TYPE_PRES){
+			offset = SENSORS_ARRAY_LENGTH - 1;
+			add2ByteSensor(IBUS_MEAS_TYPE_TEM, sensorIndex, (uint16_t)(sensorData >> 19));
+			sensorData = sensorData & 0x7FFFF;
+		}
+		else if(rxBuffer[index]==IBUS_MEAS_TYPE_GPS_FULL){
 			add2ByteSensor(IBUS_MEAS_TYPE_GPS_STATUS, sensorIndex, rxBuffer[index+4] << 8 | rxBuffer[index+3]);
 			tmp = index+5;
 			for(i=0; i <3; i++){
@@ -743,7 +750,7 @@ void formatSensorValue(char* target, int sensorID, uint16_t sensorValue) {
 		}
 	} else if (sensorID == IBUS_MEAS_TYPE_PRES) {
 		if (sensorValue < SENSORS_ARRAY_LENGTH) result = longSensors[sensorValue];
-
+		sensorInfo |= MUL_100;
 	} else if (sensorID >= IBUS_MEAS_TYPE_GPS_LAT && sensorID <= IBUS_MEAS_TYPE_S8a) {
 		sensorInfo = sensorDesc80[sensorID - IBUS_MEAS_TYPE_GPS_LAT];
 		if (sensorValue < SENSORS_ARRAY_LENGTH) {

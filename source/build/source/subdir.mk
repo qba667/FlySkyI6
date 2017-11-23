@@ -18,6 +18,9 @@ C_SRCS += \
 ../source/screen.c \
 ../source/uart.c 
 
+ASM_SRCS += \
+../source/lmul.asm 
+
 OBJS += \
 ./source/adc.o \
 ./source/alt.o \
@@ -27,6 +30,7 @@ OBJS += \
 ./source/flysky.o \
 ./source/font.o \
 ./source/lcd.o \
+./source/lmul.o \
 ./source/main.o \
 ./source/mod.o \
 ./source/print.o \
@@ -48,12 +52,21 @@ C_DEPS += \
 ./source/screen.d \
 ./source/uart.d 
 
+ASM_DEPS += \
+./source/lmul.d 
 
 # Each subdirectory must supply rules for building sources it contributes
 source/%.o: ../source/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross ARM C Compiler'
 	arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -Os $(PARAMS) -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D"CPU_MKL16Z64VLH4" -I../startup -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -c -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+	
+source/%.o: ../source/%.asm
+	@echo 'Building file: $<'
+	@echo 'Invoking: Cross ARM GNU Assembler'
+	arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -x assembler-with-cpp -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -c -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
