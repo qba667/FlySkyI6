@@ -88,7 +88,7 @@ Supported telemetry:
 | External Voltage | Longitude     | Noise            |
 | Avg Cell Voltage | Altitude      | RSSI             |
 | Battery current  | GPS Altitude  | Error rate       |
-| Remaining batt.  | s84           |                  |
+| Remaining batt.  | Max Altitude  |                  |
 | Throttle         | s85           |                  |
 | Heading          | s86           |                  |
 | Climb rate       | s87           |                  |

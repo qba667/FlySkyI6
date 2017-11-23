@@ -128,7 +128,7 @@ SECTIONS
 	*(.mod_altinitPressureRaw);
 	*(.mod_auxMem*)
     KEEP(*(.AUX_MEM))
-  } > data
+  } > m_data
   
   
   .mod_FLASH_25C8 0x25C8 :
@@ -257,6 +257,8 @@ SECTIONS
 	*/
 	*(.mod_modelConfig);
 	*(.mod_customAlarmsPlay);
+	*(.mod_nextSensorID);
+	*(.mod_prevSensorID);
 	*(.mod_asm_aeabi_lmul);
   }
 
