@@ -429,13 +429,17 @@ void play(int freq, int duration, int pause){
 
 #define BEEP_DEFAULT_FREQ (900)
 
+#define VARIO_BASE_FREQ		1200
+// gain can be 0..15, representing gains 1/8 (>> 3) to 2048 (<< 11)
+#define VARIO_GAIN_OFFSET	(1 << (VARIO_MAX_GAIN_BITS - 2))
+// #define VARIO_TEST_CH6_INSTEAD_OF_SENSOR	1
 
 void CheckCustomAlarms(){
 	int32_t timer = ((*(int32_t *)(TIMER_SYS_TIM)));
 	int32_t lastAlarm = *((int32_t *)LAST_ALARM_TIMER);
 	int32_t lastTelemetryUpdate = *((int32_t *)TELEMETRY_UPDATE_TIMER);
 	uint8_t sensorID = 0;
-	uint8_t active = 0;
+	uint8_t active = 0, wasAlarm = 0;
 	uint32_t duration = 100;
 	uint32_t defFreq = 100;
 	uint32_t checkTimout = defFreq *10;
@@ -445,6 +449,7 @@ void CheckCustomAlarms(){
 		if((uint32_t)configPtr->timerAlarm != 0 && timerValue > (uint32_t)configPtr->timerAlarm) {
 			*((int32_t *)LAST_ALARM_TIMER) = timer;
 			play(BEEP_DEFAULT_FREQ, duration, 50);
+			wasAlarm = 1;
 		}
 		if(timer - lastTelemetryUpdate < checkTimout){
 			for(int i = 0; i < 3; i++){
@@ -452,7 +457,7 @@ void CheckCustomAlarms(){
 				sensorID = configPtr->alarm[i].sensorID;
 				if(sensorID == IBUS_MEAS_TYPE_UNKNOWN) continue;
 				int32_t sensorValue = getSensorValue(sensorID, 0, 0);
-				if(sensorID >= IBUS_MEAS_TYPE_GPS_LAT && sensorID <= IBUS_MEAS_TYPE_S8a && sensorValue < SENSORS_ARRAY_LENGTH){
+				if(sensorID >= IBUS_MEAS_TYPE_GPS_LAT && sensorID <= IBUS_MEAS_TYPE_S8a && sensorValue < SENSORS_ARRAY_LENGTH && sensorValue >= 0){
 					sensorValue = longSensors[sensorValue];
 				}
 				if(configPtr->alarm[i].operator == OPERATOR_GT){
@@ -468,6 +473,62 @@ void CheckCustomAlarms(){
 				if(active){
 					*((int32_t *)LAST_ALARM_TIMER) = timer;
 					play(BEEP_DEFAULT_FREQ + ((i+1)* defFreq), duration, 40);
+					wasAlarm = 1;
+				}
+			}
+#if VARIO_TEST_CH6_INSTEAD_OF_SENSOR
+		}
+		if (1) { // ignore the lastTelemetryUpdate
+#endif
+
+			// Vario sound feedback
+			sensorID = configPtr->varioSensorID;
+
+			if (sensorID != IBUS_MEAS_TYPE_UNKNOWN
+				&& timer - varioPrevTime >= 2000
+				&& !wasAlarm) {
+
+#if VARIO_TEST_CH6_INSTEAD_OF_SENSOR
+				int32_t sensorValue = *(((int32_t *)CHANNEL_VALUE)+(5));
+#else
+
+				int32_t sensorValue = (int16_t)getSensorValue(sensorID, 0, 0);
+				if (sensorID >= IBUS_MEAS_TYPE_GPS_LAT && sensorID <= IBUS_MEAS_TYPE_S8a && sensorValue < SENSORS_ARRAY_LENGTH && sensorValue >= 0)
+					sensorValue = longSensors[sensorValue];
+#endif
+
+				varioPrevTime = timer;
+
+				// be silent when no change
+				if (varioPrevValue != sensorValue) {
+					int32_t freq;
+					int8_t gain = configPtr->varioGain;
+
+					freq = sensorValue - varioPrevValue;
+
+					// the range of negative values
+					// is only half of the positive range,
+					// so decrease the gain for them
+					if (freq < 0)
+						gain--;
+
+					if (gain > VARIO_GAIN_OFFSET) {
+						freq <<= gain - VARIO_GAIN_OFFSET;
+					} else {
+						freq >>= VARIO_GAIN_OFFSET - gain;
+					}
+					varioPrevValue = sensorValue;
+					freq += VARIO_BASE_FREQ;
+
+					play(VARIO_BASE_FREQ, 25, 50);
+
+					// keep it inside one octave up/down
+					if (freq < VARIO_BASE_FREQ/2)
+						freq = VARIO_BASE_FREQ/2;
+					else if (freq > 2*VARIO_BASE_FREQ)
+						freq = 2*VARIO_BASE_FREQ;
+
+					play(freq, 50, 50);
 				}
 			}
 		}
@@ -908,21 +969,63 @@ void displaySensors(){
 
 }
 
-void testMethod(){
-	char buffer[32];
-	allocationTest = 100;
+#define VARIO_MAX_GAIN 	((1 << VARIO_MAX_GAIN_BITS) - 1)
+
+void varioSensorSelect(){
 	uint32_t key = 0;
-	while ( 1 )
-	{
-		callSetupDMAandSend();
-		displayPageHeader((char*)alarm);
-		LCD_updateCALL();
-		key = getKeyCode();
-		if (key == KEY_LONG_CANCEL)
-		{
-			break;
-		}
+	struct modelConfStruct *model = getModelModConfig();
+	uint8_t sensorID = model->varioSensorID;
+	uint8_t sensorGain = model->varioGain;
+	char buffer[8];
+	uint8_t row = 0;
+
+	// wrong initial value?
+	if (sensorID != nextSensorID(prevSensorID(sensorID))) {
+		sensorID = model->varioSensorID = 0;
+		sensorGain = model->varioGain = 0;
 	}
+	if (sensorGain > VARIO_MAX_GAIN)
+		sensorGain = model->varioGain = VARIO_MAX_GAIN;
+
+	do {
+		callSetupDMAandSend();
+		displayPageHeader((char*)varioSensor);
+
+		displayTextAt((char*)varioSrc, 8, 24, 0);
+		displayTextAt((char*)getSensorName(sensorID), 80, 24, 0);
+
+		displayTextAt((char*)varioGain, 8, 36, 0);
+		sprintfCall(buffer, (const char*) formatNumber, sensorGain);
+		displayTextAt(buffer, 80, 36, 0);
+
+		displayGFX((gfxInfo*) GFX_ARROW, 64, row ? 36 : 24);
+
+		LCD_updateCALL();
+
+		key = getKeyCode();
+
+		if (key == KEY_LONG_CANCEL) { // Save it
+			model->varioSensorID = sensorID;
+			model->varioGain = sensorGain;
+		}
+
+		if (key == KEY_SHORT_OK)
+			row = row ? 0 : 1;
+
+		if (key == KEY_SHORT_UP || key == KEY_LONG_UP) {
+			if (row == 0)
+				sensorID = nextSensorID(sensorID);
+			else if (sensorGain < VARIO_MAX_GAIN)
+				sensorGain++;
+		}
+
+		if (key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
+			if (row == 0)
+				sensorID = prevSensorID(sensorID);
+			else if (sensorGain > 0)
+				sensorGain--;
+		}
+	} while (key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
 }
 
 

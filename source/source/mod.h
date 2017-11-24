@@ -192,9 +192,13 @@ const uint8_t __attribute__((section (".mod_alarm"))) alarm[] = {
 const uint8_t __attribute__((section (".mod_extraMenu"))) extraMenu[] = {
 		'E', 'x', 't', 'r', 'a',  0x00
 };
-const uint8_t __attribute__((section (".mod_altText"))) altSensor[] = {
-		'A', 'l', 't',  0x00,
-};
+const uint8_t __attribute__((section (".mod_varioStrings"))) varioSensor[] =
+		"Vario";
+const uint8_t __attribute__((section (".mod_varioStrings"))) varioSrc[] =
+		"Source";
+const uint8_t __attribute__((section (".mod_varioStrings"))) varioGain[] =
+		"Gain";
+
 const uint8_t __attribute__((section (".mod_txBat"))) txBat[] = {
 		'T', 'X', ' ', 'B', 'a', 't',  0x00
 };
@@ -205,7 +209,7 @@ const uint32_t __attribute__((section (".mod_modMenuList"))) menuList[] = {
 	SW_B_C, (uint32_t)(&SwBConfig+1),
 	(uint32_t)&txBat, (uint32_t)(&BatteryType+1),
 	AUX_CH_TEXT, (uint32_t)(&auxChannels2+1),
-	(uint32_t)&altSensor, (uint32_t)(&testMethod+1),
+	(uint32_t)&varioSensor, (uint32_t)(&varioSensorSelect+1),
 };
 
 
