@@ -1,0 +1,9 @@
+.section .mod_formatSensorValue2_ASM, "a"
+.syntax unified
+.thumb
+.cpu cortex-m0
+
+.thumb_func
+.global __call_formatSensorValue2_ASM
+__call_formatSensorValue2_ASM:
+    BL formatSensorValue

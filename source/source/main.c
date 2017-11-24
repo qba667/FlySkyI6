@@ -53,15 +53,23 @@
 #include "alt.h"
 #include "ibustelemetry.h"
 
-/*
- *
-typedef uint32_t (*divFun)(uint32_t, uint32_t);
-typedef int (*sprintfFun)(char* buffer, const char* format, ...);
 
-const sprintfFun sprintfCall = (sprintfFun) 0x19F8;
-*/
+
+extern void __call_configurePins_ASM();
+extern void __call_extraChannels_ASM();
+extern void __call_swE_ASM();
+extern void __call_swB_ASM();
+extern void __call_displaySensors1_ASM();
+extern void __call_displaySensors2_ASM();
+extern void __call_parseAcFrame_ASM();
+extern void __call_getSensorName_ASM();
+extern void __call_getSensorName2_ASM();
+extern void __call_printTimer_ASM();
+extern void __call_printTimer1_ASM();
+extern void __call_printTimer2_ASM();
+extern void __call_formatSensorValue_ASM();
+extern void __call_formatSensorValue2_ASM();
 char buffer[32];
-
 
 int main(void) {
   BOARD_InitPins();
@@ -96,6 +104,20 @@ int main(void) {
   BatteryType();
   SwBConfig();
   createPacketCh1114();
+  __call_configurePins_ASM();
+  __call_extraChannels_ASM();
+  __call_swE_ASM();
+  __call_swB_ASM();
+  __call_displaySensors1_ASM();
+  __call_displaySensors2_ASM();
+  __call_parseAcFrame_ASM();
+  __call_getSensorName_ASM();
+  __call_getSensorName2_ASM();
+  __call_printTimer_ASM();
+  __call_printTimer1_ASM();
+  __call_printTimer2_ASM();
+  __call_formatSensorValue_ASM();
+  __call_formatSensorValue2_ASM();
   configurePINS2();
   /*
   strLenCall((const char*)txBat);
@@ -114,8 +136,10 @@ int main(void) {
   if(timerBufferAddress==0){timerBufferAddress++;}
   if(timerValueAddress==0){timerValueAddress++;}
   if(mainScreenIndexAddress==0){mainScreenIndexAddress++;}
+  if(extraMenuAddress==0){extraMenuAddress++;}
+  if(extraMenuText==0){extraMenuText++;}
 
-  
+
   if(keepChecksum == 0){keepChecksum++;}
   //keep this one because of without usage signature block will be removed
   if(SIGNATURE[0] == 1){
@@ -133,6 +157,7 @@ int main(void) {
   printTimer(0);
   auxChannels2();
   __mul64((long long)1, (long long)2);
+  log2fix(1,1);
   //rxTest2();
   //initALT(100000);
   uint32_t reminder=0;

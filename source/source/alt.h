@@ -129,7 +129,7 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_modelConfig"))) modelConfStruct* getModelModConfig();
  /*
  __attribute__((section (".mod_loadModEeprom"))) void loadModSettings();
- __attribute__((section (".mod_saveModEeprom"))) void saveModSettings(); 
+ __attribute__((section (".mod_saveModEeprom"))) void saveModSettings();
  */
  __attribute__((section (".mod_yenyaSpace"))) void testMethod();
 
@@ -139,22 +139,22 @@ __attribute__((section (".mod_getSensorName"))) const uint8_t* getSensorName(int
 __attribute__((section (".mod_formatSensorValue"))) void formatSensorValue(char* target, int sensorID, uint16_t sensorValue);
 __attribute__((section (".mod_divMod"))) uint32_t divMod(uint32_t val, uint32_t divisor, uint32_t* mod);
 __attribute__((section (".mod_parseCoord"))) void parseCoord(uint32_t *deg, uint32_t *min, uint32_t *sec, uint32_t *subSec, uint32_t coord);
+__attribute__((section ("..mod_log2fix"))) int32_t log2fix(uint32_t x, size_t precision);
 
 
-__attribute__((section (".altmulu16"))) uint32_t mulu16(uint32_t x, uint32_t y);
 __attribute__((section (".altinit"))) void init(uint32_t pressure);
 __attribute__((section (".altgetALT"))) int16_t getALT(uint32_t pressure);
 __attribute__((section (".altlogfix"))) int32_t logfix(uint32_t x, size_t precision);
-__attribute__((section (".altlog2fix"))) int32_t log2fix(uint32_t x, size_t precision);
+
 
 __attribute__((section (".reserved_main"))) uint32_t keep1 = 0;
-__attribute__((section (".reserved_after_eeprom")))  uint32_t keep2 = 0;
-__attribute__((section (".reserved_after_ac_sensor")))  uint32_t keep3 = 0;
-__attribute__((section (".reserved_after_set_ch_val"))) uint32_t keep4 = 0;
-__attribute__((section (".reserved_afterSwB_adac"))) uint32_t keep5 = 0;
-__attribute__((section (".reserved_after_free_space_in_display"))) uint32_t keep6 = 0;
-__attribute__((section (".reserved_after_AFHDSLogo"))) uint32_t keep7 = 0;
-__attribute__((section (".reserved_after_free_space_in_display"))) uint16_t keepChecksum = 0;
+__attribute__((section (".reserved_after_code_C9B0_CA4F")))  uint32_t keep2 = 0;
+__attribute__((section (".reserved_after_code_5174_5353"))) uint32_t keep5 = 0;
+__attribute__((section (".reserved_after_code_65C8_68A7")))  uint32_t keep3 = 0;
+__attribute__((section (".reserved_after_code_E140_E754"))) uint32_t keep4 = 0;
+__attribute__((section (".reserved_after_code_in_display_method"))) uint32_t keep6 = 0;
+__attribute__((section (".reserved_after_code_D50C_D5F7"))) uint32_t keep7 = 0;
+__attribute__((section (".reserved_checksum"))) uint16_t keepChecksum = 0;
 
 
 

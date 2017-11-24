@@ -176,7 +176,7 @@ uint32_t isTimerActive(){
 	//if(value > one_thousand*2) return 0; // > 2000
 	int32_t chValue = *(((int32_t *)CHANNEL_VALUE)+(channel-1));
 	int32_t configVal = ((int32_t)configPtr->timerStart - one_thousand) * 20 - ten_thousands;
-	
+
 	return chValue > configVal;
 }
 #define SW_A 0u
@@ -193,7 +193,7 @@ void auxChannels2(){
 	char* name2Ptr = (char*) 0xF638;
 	char* tmp = 0;
 	struct modelConfStruct *configPtr = getModelModConfig();
-	
+
 	uint8_t auxChannels[4];
 	auxChannels[0] = configPtr->ch11_12 >> 4;
 	auxChannels[1] = configPtr->ch11_12 &  0xF;
@@ -214,7 +214,7 @@ void auxChannels2(){
 
 		for(uint8_t i=0; i < sizeof(auxChannels); i++){
 			int posY = 16 + i*8;
-			
+
 			buffer[8] = '1' + i;
 			buffer[9] = 0;
 			displayTextAt(buffer, 8, posY, 0);
@@ -396,7 +396,7 @@ void displayMenu(){
 
 void BatteryType() {
 	uint32_t key = 0;
-	
+
 	uint16_t batteryVolt = modConfig2.batteryVoltage;
 	char buffer[32];
 		while (1) {
@@ -555,7 +555,6 @@ void AlarmConfig(){
 	struct modelConfStruct *configPtr = getModelModConfig();
 	sensorAlarm alarmItem;
 	sensorAlarm alarms[3];
-	uint32_t size = sizeof(alarms);
 	uint32_t row = 0;
 	uint32_t column = 0;
 	uint32_t columnOffset = 0;
@@ -565,7 +564,7 @@ void AlarmConfig(){
 	char buffer[32];
 
 	memcpy_(alarms, configPtr->alarm, sizeof(alarms));
-	
+
 	do{
 		 while ( 1 )
 		 {
@@ -659,7 +658,7 @@ void TimerConfig(){
 	data[0] = (uint16_t) configPtr->timerCH & 0xF;
 	data[1] = configPtr->timerStart;
 	data[2] = configPtr->timerAlarm;
-	data[3] = (configPtr->timerCH & (1<<7)) != 0; 
+	data[3] = (configPtr->timerCH & (1<<7)) != 0;
 	do
 	 {
 	    while ( 1 )
@@ -670,7 +669,7 @@ void TimerConfig(){
 	      displayTextAt((char*)TEXT_VALUE, labelPos, 24,0);
 	      displayTextAt((char*)alarm, labelPos, 32,0);
 		  displayTextAt((char*)TEXT_HOLD, labelPos, 40,0);
-		  
+
 
 	      for(int i = 0; i < 4; i++){
 			  int yPos = 16 + i*8;
@@ -926,65 +925,43 @@ void testMethod(){
 	}
 }
 
-uint32_t mulu16(uint32_t x, uint32_t y)
+
+// This implementation is based on Clay. S. Turner's fast binary logarithm algorithm[1].
+//source https://github.com/dmoulding/log2fix/blob/master/log2fix.c
+
+int32_t log2fix (uint32_t x, size_t precision)
 {
-	uint32_t a = x >> 16;
-	uint32_t b = x & 0xFFFF;
-	uint32_t c = y >> 16;
-	uint32_t d = y & 0xFFFF;
-	return ((d * b) >> 16) + (d * a) + (c * b)  + ((c * a) << 16);
-}
+    int32_t b = 1U << (precision - 1);
+    int32_t y = 0;
 
+    if (precision < 1 || precision > 31) {
+        return INT32_MAX; // indicates an error
+    }
 
-int32_t log2fix(uint32_t x, size_t precision)
-{
-	int32_t b = 1U << (precision - 1);
-	int32_t y = 0;
+    if (x == 0) {
+        return INT32_MIN; // represents negative infinity
+    }
 
-	if (precision < 1 || precision > 31) return INT32_MAX; // indicates an error
-	if (x == 0)	return INT32_MIN; // represents negative infinity
+    while (x < 1U << precision) {
+        x <<= 1;
+        y -= 1U << precision;
+    }
 
-	while (x < 1U << precision) {
-		x <<= 1;
-		y -= 1U << precision;
-	}
+    while (x >= 2U << precision) {
+        x >>= 1;
+        y += 1U << precision;
+    }
 
-	while (x >= 2U << precision) {
-		x >>= 1;
-		y += 1U << precision;
-	}
-
-	uint32_t z = x;
-
-	for (size_t i = 0; i < precision; i++) {
-		z = z * z >> precision;
-		if (z >= 2U << precision) {
-			z >>= 1;
-			y += b;
-		}
-		b >>= 1;
-	}
-
-	return y;
-}
-
-int32_t logfix(uint32_t x, size_t precision)
-{
-	uint32_t tmp;
-	int32_t logResult = log2fix(x, precision);
-	uint8_t negative = 0;
-
-	if (logResult < 0) {
-		negative = 1;
-		logResult = -1;
-	}
-	tmp = mulu16(logResult, INV_LOG2_E_Q1DOT31);
-	tmp = (tmp >> 15);
-
-	if (negative) {
-		return (-1) * tmp;
-	}
-	return (int32_t)tmp;
+	uint64_t z = x;
+    for (size_t i = 0; i < precision; i++) {
+        z = __mul64(z,z) >> precision;
+        if (z >= 2U << precision) {
+            z >>= 1;
+            y += b;
+        }
+        b >>= 1;
+    }
+    return y;
 }
 
 void init(uint32_t pressure) {
@@ -996,6 +973,8 @@ void init(uint32_t pressure) {
 }
 
 int16_t getALT(uint32_t pressure) {
+	return 0;
+	/*
 	if(pressure == 0) return 0;
 
 	if (initPressure == 0) {
@@ -1031,6 +1010,6 @@ int16_t getALT(uint32_t pressure) {
 
 	if (negative) h = -h;
 	return h;
+	*/
 }
 #pragma GCC optimize ("O1")
-

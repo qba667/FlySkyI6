@@ -169,7 +169,7 @@ const uint8_t __attribute__((section (".mod_sensorsScreens"))) sensorsScreens[] 
 	IBUS_MEAS_TYPE_VERTICAL_SPEED,
 	IBUS_MEAS_TYPE_CLIMB_RATE,
 	IBUS_MEAS_TYPE_RPM,
-	
+
 	IBUS_MEAS_TYPE_ALT_MAX,
 	IBUS_MEAS_TYPE_S85,
 	IBUS_MEAS_TYPE_S86,
@@ -178,7 +178,7 @@ const uint8_t __attribute__((section (".mod_sensorsScreens"))) sensorsScreens[] 
 	IBUS_MEAS_TYPE_S89,
 	IBUS_MEAS_TYPE_S8a,
 	IBUS_MEAS_TYPE_UNKNOWN
-	
+
 };
 const uint8_t __attribute__((section (".mod_timerFormat"))) timerFormat[] = {
 		'%', '0', '2', 'u', ':', '%', '0', '2', 'u', ':', '%', '0', '2', 'u',  0x00
@@ -193,19 +193,19 @@ const uint8_t __attribute__((section (".mod_extraMenu"))) extraMenu[] = {
 		'E', 'x', 't', 'r', 'a',  0x00
 };
 const uint8_t __attribute__((section (".mod_altText"))) altSensor[] = {
-		'A', 'l', 't',  0x00,  
+		'A', 'l', 't',  0x00,
 };
 const uint8_t __attribute__((section (".mod_txBat"))) txBat[] = {
 		'T', 'X', ' ', 'B', 'a', 't',  0x00
 };
 //contains pointers to functions!!!
 const uint32_t __attribute__((section (".mod_modMenuList"))) menuList[] = {
-	TEXT_TIMMER, (uint32_t)(&TimerConfig+1), 
-	(uint32_t)&alarm, (uint32_t)(&AlarmConfig+1), 
-	SW_B_C, (uint32_t)(&SwBConfig+1), 
-	(uint32_t)&txBat, (uint32_t)(&BatteryType+1), 
+	TEXT_TIMMER, (uint32_t)(&TimerConfig+1),
+	(uint32_t)&alarm, (uint32_t)(&AlarmConfig+1),
+	SW_B_C, (uint32_t)(&SwBConfig+1),
+	(uint32_t)&txBat, (uint32_t)(&BatteryType+1),
 	AUX_CH_TEXT, (uint32_t)(&auxChannels2+1),
-	(uint32_t)&altSensor, (uint32_t)(&testMethod+1), 
+	(uint32_t)&altSensor, (uint32_t)(&testMethod+1),
 };
 
 
@@ -285,7 +285,7 @@ const uint8_t __attribute__((section (".mod_unitsOffsets"))) unitsOffsets[] = {
 
 const uint8_t __attribute__((section (".mod_units"))) units[] = {
 	/*1@0*/  'm', 0x00,						//m;
-	/*2@2*/  0x7f, 0x00,					//°
+	/*2@2*/  0x7f, 0x00,					//ï¿½
 	/*3@4*/ 'A', 0x00,						//A
 	/*4@6*/ '%', 0x00,						//%
 	/*5@8*/ 'V', 0x00,						//V
@@ -300,10 +300,12 @@ const uint8_t __attribute__((section (".mod_units"))) units[] = {
 const uint16_t __attribute__((section (".mod_timerMaxValues"))) timerMaxValues[] = { 10, 2200, 0xffff, 1 };
 const uint32_t __attribute__((section (".mod_timerLabels")))  timerLabels[] = { TEXT_CHANNEL, TEXT_VALUE, (uint32_t)&alarm, TEXT_HOLD  };
 
-uint32_t  __attribute__((section (".mod_TX_VOLTAGE_ADDRES"))) txVoltageAddress = (uint32_t)&modConfig2.batteryVoltage;
+uint32_t  __attribute__((section (".mod_tx_voltage_alarm_address"))) txVoltageAddress = (uint32_t)&modConfig2.batteryVoltage;
 uint32_t  __attribute__((section (".mod_mainScreenIndexAddress"))) mainScreenIndexAddress = (uint32_t)&mainScreenIndex;
 uint32_t  __attribute__((section (".mod_timerValueAddress"))) timerValueAddress = (uint32_t)&timerValue;
 uint32_t  __attribute__((section (".mod_timerBufferAddress"))) timerBufferAddress = (uint32_t)timerBuffer;
+uint32_t  __attribute__((section (".mod_extra_menu_ptr"))) extraMenuAddress = (uint32_t)(&displayMenu+1);
+uint32_t  __attribute__((section (".mod_extra_menu_str_ptr"))) extraMenuText = (uint32_t)extraMenu;
 
 
 __attribute__((section (".notImplemented_AUX_CHANNEL_PAGE"))) signed int  auxChannelsPage();
