@@ -430,7 +430,7 @@ void play(int freq, int duration, int pause){
 #define BEEP_DEFAULT_FREQ (900)
 
 
- void CheckCustomAlarms(){
+void CheckCustomAlarms(){
 	int32_t timer = ((*(int32_t *)(TIMER_SYS_TIM)));
 	int32_t lastAlarm = *((int32_t *)LAST_ALARM_TIMER);
 	int32_t lastTelemetryUpdate = *((int32_t *)TELEMETRY_UPDATE_TIMER);
@@ -473,7 +473,7 @@ void play(int freq, int duration, int pause){
 		}
 	}
 	CheckAlarmsCall();
- }
+}
 
 void SwBConfig() {
 	uint32_t key = 0;
