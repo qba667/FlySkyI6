@@ -127,6 +127,7 @@ SECTIONS
     *(.mod_altinitPressure);
     *(.mod_altinitPressureRaw);
     *(.mod_auxMem*)
+    *(.mod_varioMem);
     KEEP(*(.AUX_MEM))
   } > m_data
 
@@ -153,6 +154,7 @@ SECTIONS
   *(.mod_foramtCoord)
   *(.mod_units)
 	*(.mod_unitsOffsets)
+	*(.mod_varioStrings)
   }
   .mod_SIGNATURE_2780 0x2780 :
   {
@@ -253,9 +255,10 @@ SECTIONS
 
   /*Free space for code 288 bytes*/
   .mod_code_5174_5353 0x5174 : {
-    *(.mod_checkTimerActive);
-    *(.mod_swEHandling);
-    *(.mod_swBHandling);
+    *(.mod_varioSensorSelect);
+    *(.mod_log2fix);
+    *(.mod_configurePins);
+    *(.mod_createPacketCh1114);
   }
   .reserved_after_code_5174_5353 0x5354 : {
     *(.reserved_after_code_5174_5353);
@@ -297,7 +300,9 @@ SECTIONS
 
   .mod_code_D50C_D5F7 0xD50C :
   {
-	*(.mod_yenyaSpace*);
+    *(.mod_checkTimerActive);
+    *(.mod_swBHandling);
+    *(.mod_swEHandling);
   }
   .reserved_after_code_D50C_D5F7 0xD5F8 :
   {
@@ -308,14 +313,11 @@ SECTIONS
 
   .mod_code_E140_E754 0xE140 :
   {
-	*(.mod_customAlarmsCheck);
-	*(.mod_timerConfig);
-	*(.mod_log2fix);
-  *(.mod_channels1114);
-  *(.mod_SW_B_config);
-  *(.mod_getSWState);
-  *(.mod_configurePins);
-  *(.mod_createPacketCh1114);
+    *(.mod_customAlarmsCheck);
+    *(.mod_timerConfig);
+    *(.mod_channels1114);
+    *(.mod_SW_B_config);
+    *(.mod_getSWState);
   }
   .reserved_after_code_E140_E754 0xE754 :{
    	 *(.reserved_after_code_E140_E754);

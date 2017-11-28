@@ -38,6 +38,7 @@ typedef struct sensorAlarm
 	uint16_t value;
 } sensorAlarm;
 
+#define VARIO_MAX_GAIN_BITS	4	// do not need the whole byte
 //24 + sensorAlarm (3 * 4 bytes) 12 bytes = 36 bytes
 typedef struct modelConfStruct
 {
@@ -48,13 +49,10 @@ typedef struct modelConfStruct
 	uint16_t timerStart;
 	sensorAlarm alarm[3];
 	uint32_t initAlt;
-	uint16_t reserved1;
-	uint16_t reserved2;
-	uint16_t reserved3;
-	uint16_t reserved4;
-	uint16_t reserved5;
-	uint16_t reserved6;
-	uint8_t reserved7;
+	uint8_t varioSensorID;
+	uint8_t varioGain : VARIO_MAX_GAIN_BITS;
+	uint8_t reserved_bits : (8 - VARIO_MAX_GAIN_BITS);
+	uint8_t reserved[11];
 } modelConfStruct;
 /*total 146*4 = 584 bytes*/
 /*used: 3+ 16* 36 = 579*/
@@ -131,7 +129,7 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_loadModEeprom"))) void loadModSettings();
  __attribute__((section (".mod_saveModEeprom"))) void saveModSettings();
  */
- __attribute__((section (".mod_yenyaSpace"))) void testMethod();
+ __attribute__((section (".mod_varioSensorSelect"))) void varioSensorSelect();
 
 
 __attribute__((section (".mod_displaySensors"))) void displaySensors();
@@ -141,6 +139,8 @@ __attribute__((section (".mod_divMod"))) uint32_t divMod(uint32_t val, uint32_t 
 __attribute__((section (".mod_parseCoord"))) void parseCoord(uint32_t *deg, uint32_t *min, uint32_t *sec, uint32_t *subSec, uint32_t coord);
 __attribute__((section ("..mod_log2fix"))) int32_t log2fix(uint32_t x, size_t precision);
 
+__attribute__((section (".mod_varioMem"))) int32_t varioPrevValue = 0;
+__attribute__((section (".mod_varioMem"))) int32_t varioPrevTime = 0;
 
 __attribute__((section (".altinit"))) void init(uint32_t pressure);
 __attribute__((section (".altgetALT"))) int16_t getALT(uint32_t pressure);
