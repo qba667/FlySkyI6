@@ -134,7 +134,7 @@ SECTIONS
 
   /*still some space available*/
   /*16 bytes*/
-
+  . = ALIGN(1);
   .mod_25C8_277F 0x25C8 :
   {
 	*(.mod_sensors00);
@@ -150,10 +150,11 @@ SECTIONS
 	*(.mod_formatGPS);
 	*(.mod_timerMaxValues);
 	*(.mod_timerLabels);
-  *(.mod_foramtCoord)
-  *(.mod_units)
-	*(.mod_unitsOffsets)
-	*(.mod_varioStrings)
+  *(.mod_foramtCoord);
+  *(.mod_units);
+	*(.mod_unitsOffsets);
+	*(.mod_varioStrings);
+  *(.mod_timerNull);
   }
   .mod_SIGNATURE_2780 0x2780 :
   {
@@ -243,6 +244,9 @@ SECTIONS
   .mod_extra_menu_ptr 0xD4CC : {
     *(.mod_extra_menu_ptr);
   }
+  .mod_version 0xEEB5 : {
+    *(.mod_version);
+  }
 
   /*never change - referenced from assembly*/
   .mod_radioModes 0x3194 :
@@ -252,8 +256,6 @@ SECTIONS
 
   /*Free space for code 288 bytes*/
   .mod_code_5174_5353 0x5174 : {
-    *(.mod_timerOff);
-    *(.mod_timerNull);
     *(.mod_varioSensorSelect);
     *(.mod_log2fix);
     *(.mod_configurePins);

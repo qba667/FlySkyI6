@@ -139,12 +139,12 @@ int main(void) {
   if(extraMenuAddress==0){extraMenuAddress++;}
   if(extraMenuText==0){extraMenuText++;}
 
-
   if(keepChecksum == 0){keepChecksum++;}
   //keep this one because of without usage signature block will be removed
   if(SIGNATURE[0] == 1){
   }
   formatSensorValue((char *)SIGNATURE, 0,0);
+  formatSensorValue((char *)mod_version, 0,0);
   //divFun dev = (divFun)0x1E5E;
   //char* format = "%d";
   //sprintfCall(buffer, format, 0);

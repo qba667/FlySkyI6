@@ -12,7 +12,7 @@
 #include "ibustelemetry.h"
 #include "alt.h"
 #define SENSORS_PER_PAGE	8
-#define SENSORS_PAGES		4
+#define SENSORS_PAGES		5
 
 #define PRESSURE_OFFSET UINT32_C(136)
 #define ODO1_OFFSET	UINT32_C(144)
@@ -116,22 +116,22 @@ __attribute__((section (".mod_radioModes"))) const uint8_t RADIO_MODES[] =
 	"SBUS/PPM"	// The last one without \0
 ;
 
-const uint8_t __attribute__((section (".mod_armed"))) ARMED[] = {0x41, 0x72, 0x6d, 0x65, 0x64}; //Armed
+const uint8_t __attribute__((section (".mod_armed"))) ARMED[] = "Armed";
 
 const uint8_t __attribute__((section (".mod_flyModesOffset"))) flyModesOffset[] = {
 	0, 5, 10, 16, 21, 28, 35, 39, 46, 52
 };
 const uint8_t __attribute__((section (".mod_flyModes"))) FLY_MODES[] = {
-	/*0@00*/ 0x53, 0x74, 0x61, 0x62, 0x00,						//stab
-	/*1@05*/ 0x41, 0x63, 0x72, 0x6F, 0x00, 						//acro
-	/*2@10*/ 0x41, 0x48, 0x6F, 0x6C, 0x64, 0x00, 				//AHold
-	/*3@16*/ 0x41, 0x75, 0x74, 0x6F, 0x00, 						//Auto
-	/*4@21*/ 0x47, 0x75, 0x69, 0x64, 0x65, 0x64, 0x00, 			//Guided
-	/*5@28*/ 0x4C, 0x6F, 0x69, 0x74, 0x65, 0x72, 0x00, 			//Loiter
-	/*6@35*/ 0x52, 0x54, 0x4C, 0x00,							//RTL
-	/*7@39*/ 0x43, 0x69, 0x72, 0x63, 0x6C, 0x65, 0x00, 			//Circle
-	/*8@46*/ 0x50, 0x48, 0x6F, 0x6C, 0x64, 0x00, 				//PHold
-	/*9@52*/ 0x4C, 0x61, 0x6E, 0x64, 0x00, 						//Land
+	/*0@00*/ "Stab\0"
+	/*1@05*/ "Acro\0"
+	/*2@10*/ "AHold\0"
+	/*3@16*/ "Auto\0"
+	/*4@21*/ "Guided\0"
+	/*5@28*/ "Loiter\0"
+	/*6@35*/ "RTL\0"
+	/*7@39*/ "Circle\0"
+	/*8@46*/ "PHold\0"
+	/*9@52*/ "Land"
 };
 
 const uint8_t __attribute__((section (".mod_sensorsScreens"))) sensorsScreens[] = {
@@ -181,28 +181,23 @@ const uint8_t __attribute__((section (".mod_sensorsScreens"))) sensorsScreens[] 
 	IBUS_MEAS_TYPE_UNKNOWN
 
 };
-const uint8_t __attribute__((section (".mod_timerFormat"))) timerFormat[] = {
-		'%', '0', '2', 'u', ':', '%', '0', '2', 'u', ':', '%', '0', '2', 'u',  0x00
+const uint8_t __attribute__((section (".mod_timerFormat"))) timerFormat[] =
+	"%02u:%02u:%02u";
+const uint8_t __attribute__((section (".mod_timerNull"))) timerNull[] =
+	"00:00:00";
+const uint8_t __attribute__((section (".mod_alarm"))) alarm[] =
+	"Alarm";
+const uint8_t __attribute__((section (".mod_extraMenu"))) extraMenu[] =
+	"Extra";
+#define GAIN_OFFSET 6
+const uint8_t __attribute__((section (".mod_varioStrings"))) varioSensor[] = {
+		"Vario\0"
+		"Gain"
 };
-const uint8_t __attribute__((section (".mod_timerNull"))) timerNull[] = {
-		'0', '0', ':', '0', '0', ':', '0', '0', 0x00
-};
-const uint8_t __attribute__((section (".mod_alarm"))) alarm[] = {
-		'A', 'l', 'a', 'r', 'm',  0x00
-};
-const uint8_t __attribute__((section (".mod_extraMenu"))) extraMenu[] = {
-		'E', 'x', 't', 'r', 'a',  0x00
-};
-const uint8_t __attribute__((section (".mod_varioStrings"))) varioSensor[] =
-		"Vario";
-const uint8_t __attribute__((section (".mod_varioStrings"))) varioSrc[] =
-		"Source";
-const uint8_t __attribute__((section (".mod_varioStrings"))) varioGain[] =
-		"Gain";
 
-const uint8_t __attribute__((section (".mod_txBat"))) txBat[] = {
-		'T', 'X', ' ', 'B', 'a', 't',  0x00
-};
+const uint8_t __attribute__((section (".mod_txBat"))) txBat[] =
+	"TX Bat";
+
 //contains pointers to functions!!!
 const uint32_t __attribute__((section (".mod_modMenuList"))) menuList[] = {
 	TEXT_TIMMER, (uint32_t)(&TimerConfig+1),
@@ -273,9 +268,9 @@ const uint8_t __attribute__((section (".mod_sensDescFA"))) sensorDescFA[] = {
 };
 
 const uint8_t __attribute__((section (".mod_foramtCoord"))) formatCoord[] = { '%', 'u', '.', '%', '0', '6', 'u', 0x7f, 0x00};
-const uint8_t __attribute__((section (".mod_formatGPS"))) formatGPS[] = {0x25, 0x75, 0x20, 0x25, 0x30, 0x32, 0x75, 0x00};// "%u %02u";
-const uint8_t __attribute__((section (".mod_formatNumber"))) formatNumber[] = {0x25, 0x75, 0x00}; //"%u";
-const uint8_t __attribute__((section (".mod_formatNumberFractial"))) formatNumberFractial[] = {0x25, 0x75, 0x2e, 0x25, 0x30, 0x32, 0x75, 0x00};// "%u.%02u";
+const uint8_t __attribute__((section (".mod_formatGPS"))) formatGPS[] = "%u %02u";
+const uint8_t __attribute__((section (".mod_formatNumber"))) formatNumber[] = "%u";
+const uint8_t __attribute__((section (".mod_formatNumberFractial"))) formatNumberFractial[] = "%u.%02u";
 
 const uint8_t __attribute__((section (".mod_signature"))) SIGNATURE[] = {
 		0xCC, 0x51 , 0x72, 0xC8, 0xA0, 0x7E, 0x01, 0x92, 0xF0, 0xE7, 0x00, 0x00, 0x0A, 0x00, 0x01, 0x00
@@ -304,6 +299,7 @@ const uint8_t __attribute__((section (".mod_units"))) units[] = {
 
 const uint16_t __attribute__((section (".mod_timerMaxValues"))) timerMaxValues[] = { 10, 2200, 0xffff, 1 };
 const uint32_t __attribute__((section (".mod_timerLabels")))  timerLabels[] = { TEXT_CHANNEL, TEXT_VALUE, (uint32_t)&alarm, TEXT_HOLD  };
+const uint8_t  __attribute__((section (".mod_version"))) mod_version[] = "1.7.1";
 
 uint32_t  __attribute__((section (".mod_tx_voltage_alarm_address"))) txVoltageAddress = (uint32_t)&modConfig2.batteryVoltage;
 uint32_t  __attribute__((section (".mod_mainScreenIndexAddress"))) mainScreenIndexAddress = (uint32_t)&mainScreenIndex;
@@ -311,6 +307,7 @@ uint32_t  __attribute__((section (".mod_timerValueAddress"))) timerValueAddress 
 uint32_t  __attribute__((section (".mod_timerBufferAddress"))) timerBufferAddress = (uint32_t)timerBuffer;
 uint32_t  __attribute__((section (".mod_extra_menu_ptr"))) extraMenuAddress = (uint32_t)(&displayMenu+1);
 uint32_t  __attribute__((section (".mod_extra_menu_str_ptr"))) extraMenuText = (uint32_t)extraMenu;
+
 
 
 __attribute__((section (".notImplemented_AUX_CHANNEL_PAGE"))) signed int  auxChannelsPage();
