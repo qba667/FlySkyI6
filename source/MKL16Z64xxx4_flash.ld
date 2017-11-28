@@ -145,7 +145,6 @@ SECTIONS
 	*(.mod_unknownSensor);
 	*(.mod_flyModesOffset);
 	*(.mod_flyModes);
-	*(.mod_armed);
 	*(.mod_formatNumberFractial);
 	*(.mod_formatNumber);
 	*(.mod_formatGPS);
@@ -170,9 +169,8 @@ SECTIONS
  	*(.mod_sensDesc80)
  	*(.mod_sensDescFA)
   *(.mod_sensorsScreens);
-  *(.mod_timerOff);
-  *(.mod_timerNull);
   *(.mod_timerFormat);
+  *(.mod_armed);
   }
   .reserved_main 0x2800:
   {
@@ -239,7 +237,6 @@ SECTIONS
     *(.mod_tx_voltage_alarm_address);
   }
 
-
   .mod_extra_menu_str_ptr 0xD4C8 : {
     *(.mod_extra_menu_str_ptr);
   }
@@ -255,6 +252,8 @@ SECTIONS
 
   /*Free space for code 288 bytes*/
   .mod_code_5174_5353 0x5174 : {
+    *(.mod_timerOff);
+    *(.mod_timerNull);
     *(.mod_varioSensorSelect);
     *(.mod_log2fix);
     *(.mod_configurePins);

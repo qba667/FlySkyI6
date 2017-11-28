@@ -991,7 +991,7 @@ void varioSensorSelect(){
 		callSetupDMAandSend();
 		displayPageHeader((char*)varioSensor);
 
-		displayTextAt((char*)varioSrc, 8, 24, 0);
+		displayTextAt((char*)SOURCE_STRING, 8, 24, 0);
 		displayTextAt((char*)getSensorName(sensorID), 80, 24, 0);
 
 		displayTextAt((char*)varioGain, 8, 36, 0);
