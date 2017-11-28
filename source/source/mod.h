@@ -40,80 +40,81 @@
 #define UNIT_MAH	11
 
 
-const uint8_t __attribute__((section (".mod_sensors00"))) SENSOR_00[] = {
-/*00@0*/		'I', 'n', 't', 'V', '\0',
-/*01@5*/		'T', 'e', 'm', 'p', '\0',
-/*02@10*/		'M', 'o', 't', '\0','\0',
-/*03@15*/		'E', 'x', 't', 'V', '\0',
-/*04@20*/		'C', 'e', 'l', 'l', '\0',
-/*05@25*/		'C', 'u', 'r', '\0','\0',
-/*06@30*/		'F', 'u', 'e', 'l', '\0',
-/*07@35*/		'R', 'P', 'M', '\0','\0',
-/*08@40*/		'H', 'd', 'g', '\0','\0',
-/*09@45*/		'R', 'o', 'C', '\0','\0',	//Climb... ->RoC
-/*10@50*/		'C', 'o', 'G', '\0','\0',
-/*11@55*/		'G', 'P', 'S', '\0','\0',
-/*12@60*/		'A', 'c', 'c', 'X', '\0',
-/*13@65*/		'A', 'c', 'c', 'Y', '\0',
-/*14@70*/		'A', 'c', 'c', 'Z', '\0',
-/*15@75*/		'R', 'o', 'l', 'l', '\0',
-/*16@80*/		'P', 'i', 't', '.', '\0',
-/*17@85*/		'Y', 'a', 'w','\0', '\0',
-/*18@90*/		'V', 'S', 'p', 'e', '\0',
-/*19@95*/		'G', 'S', 'p', 'e', '\0',
-/*20@100*/		'D', 'i', 's', 't', '\0',
-/*21@105*/		'A', 'r', 'm', '.', '\0',
-/*22@110*/		'M', 'o', 'd', 'e', '\0',
+__attribute__((section (".mod_sensors00"))) const uint8_t SENSOR_00[] =
+/* 5-byte NULL-terminated strings. The last one has implicit NULL added
+/*00@0*/	"IntV\0"
+/*01@5*/	"Temp\0"
+/*02@10*/	"Mot\0\0"
+/*03@15*/	"ExtV\0"
+/*04@20*/	"Cell\0"
+/*05@25*/	"Curr\0"
+/*06@30*/	"Fuel\0"
+/*07@35*/	"RPM\0\0"
+/*08@40*/	"Head\0"
+/*09@45*/	"RoC\0\0"
+/*10@50*/	"CoG\0\0"
+/*11@55*/	"GPS\0\0"
+/*12@60*/	"AccX\0"
+/*13@65*/	"AccY\0"
+/*14@70*/	"AccZ\0"
+/*15@75*/	"Roll\0"
+/*16@80*/	"Pit.\0"
+/*17@85*/	"Yaw\0\0"
+/*18@90*/	"VSpe\0"
+/*19@95*/	"GSpe\0"
+/*20@100*/	"Dist\0"
+/*21@105*/	"Arm.\0"
+/*22@110*/	"Mode"	// The last one without \0
+;
 
 
-};
-const uint8_t __attribute__((section (".mod_sensors41"))) SENSOR_41[] = {
-/*41@0*/		'P', 'r', 'e', 's', 's', '.', 0x00, 0x00
-};
+__attribute__((section (".mod_sensors41"))) const uint8_t SENSOR_41[] =
+/*41@0*/	"Press.\0"; // another \0 added by compiler
+;
 
-const uint8_t __attribute__((section (".mod_sensors7d"))) SENSORS_7D[] = {
-/*7c@0*/		'O', 'd','o', '1', '\0',			//Odo1....
-/*7d@5*/		'O', 'd','o', '2', '\0',			//Odo2....
-/*7e@10*/		'S', 'p','e', ' ', '\0',			// Spe....
-/*7f@15*/		'T', 'x', ' ', 'V', '\0',			//Tx V....
-};
+__attribute__((section (".mod_sensors7d"))) const uint8_t SENSORS_7D[] =
+/*7c@0*/	"Odo1\0"
+/*7d@5*/	"Odo2\0"
+/*7e@10*/	"Spe \0"
+/*7f@15*/	"Tx V" // The last one without \0
+;
 
-const uint8_t __attribute__((section (".mod_sensors80"))) SENSORS_80[] = {
-			'L', 'a', 't', 0x0, 0x0, /*0x80*/
-			'L', 'o', 'n', 0x0, 0x0, /*0x81*/
-			'G', 'A', 'l', 't', 0x0, /*0x82*/
-			'A', 'l', 't', 0x0, 0x0, /*0x83*/
-			'M', 'x', 'A', 'l', 0x0, /*0x84*/
-			'S', '8', '5', 0x0, 0x0, /*0x85*/
-			'S', '8', '6', 0x0, 0x0, /*0x86*/
-			'S', '8', '7', 0x0, 0x0, /*0x87*/
-			'S', '8', '8', 0x0, 0x0, /*0x88*/
-			'S', '8', '9', 0x0, 0x0, /*0x89*/
-			'S', '9', '0', 0x0, 0x0, /*0x8a*/
-};
+__attribute__((section (".mod_sensors80"))) const uint8_t SENSORS_80[] =
+		"Lat\0\0" /*0x80*/
+		"Lon\0\0" /*0x81*/
+		"GAlt\0"  /*0x82*/
+		"Alt\0\0" /*0x83*/
+		"MxAl\0"  /*0x84*/
+		"S85\0\0" /*0x85*/
+		"S86\0\0" /*0x86*/
+		"S87\0\0" /*0x87*/
+		"S88\0\0" /*0x88*/
+		"S89\0\0" /*0x89*/
+		"S90\0"   /*0x8a; the last one without \0*/
+;
 
 
-const uint8_t __attribute__((section (".mod_sensorsFA"))) SENSORS_FA[] = {
-			'S', 'N', 'R', 0x0, 0x0,
-			'N', 'o', 'i', '.', 0x0,
-			'R', 'S', 'S', 'I', 0x0,
-			'S', ' ', 'F', 'D', 0x0,
-			'E', 'r', 'r', '.', 0x0,
-			'N', 'o', 'n', 'e', 0x0,
-};
+__attribute__((section (".mod_sensorsFA"))) const uint8_t SENSORS_FA[] =
+		"SNR\0\0"
+		"Noi.\0"
+		"RSSI\0"
+		"S FD\0"
+		"Err.\0"
+		"None"	// The last one without \0
+;
 
-const uint8_t __attribute__((section (".mod_unknownSensor"))) UNKNOWN_SENSOR[] = {
-			'U', 'n', 'k', 'n', 'o', 'w', 'n', 0x0,
-};
+__attribute__((section (".mod_unknownSensor"))) const uint8_t UNKNOWN_SENSOR[]
+	= "Unknown";
+
 /////////////////////////////////////////
 //never change - referenced from assembly
 /////////////////////////////////////////
-const uint8_t __attribute__((section (".mod_radioModes"))) RADIO_MODES[] = {
-	'I', 'B', 'U', 'S', '/', 'P', 'W', 'M', 0x00,						//IBUS/PWM.
-	'I', 'B', 'U', 'S', '/', 'P', 'P', 'M', 0x00,						//IBUS/PPM.
-	'S', 'B', 'U', 'S', '/', 'P', 'W', 'M', 0x00,						//SBUS/PWM
-	'S', 'B', 'U', 'S', '/', 'P', 'P', 'M', 0x00,						//SBUS/PPM
-};
+__attribute__((section (".mod_radioModes"))) const uint8_t RADIO_MODES[] =
+	"IBUS/PWM\0"
+	"IBUS/PPM\0"
+	"SBUS/PWM\0"
+	"SBUS/PPM"	// The last one without \0
+;
 
 const uint8_t __attribute__((section (".mod_armed"))) ARMED[] = {0x41, 0x72, 0x6d, 0x65, 0x64}; //Armed
 
