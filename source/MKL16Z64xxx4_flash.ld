@@ -123,11 +123,9 @@ SECTIONS
     *(.mod_timerValue);
     *(.mod_ticks100ms);
     *(.mod_lastTimerUpdate);
-    *(.mod_altconstVal);
-    *(.mod_altinitPressure);
-    *(.mod_altinitPressureRaw);
-    *(.mod_auxMem*)
+    *(.mod_altSensorMemory);
     *(.mod_varioMem);
+    *(.mod_altSensorMemory);
     KEEP(*(.AUX_MEM))
   } > m_data
 
@@ -172,10 +170,15 @@ SECTIONS
   *(.mod_sensorsScreens);
   *(.mod_timerFormat);
   *(.mod_armed);
+  *(.mod_defASL);
   }
   .reserved_main 0x2800:
   {
     KEEP(*(.reserved_main))
+  }
+
+  .mod_beep_silent 0x9C3C : {
+    *(.mod_beep_silent);
   }
 
   /*calls from FW to C code*/
@@ -257,7 +260,6 @@ SECTIONS
   /*Free space for code 288 bytes*/
   .mod_code_5174_5353 0x5174 : {
     *(.mod_varioSensorSelect);
-    *(.mod_log2fix);
     *(.mod_configurePins);
     *(.mod_createPacketCh1114);
   }
@@ -270,6 +272,7 @@ SECTIONS
     *(.mod_parseAC);
     *(.mod_acHelper);
     *(.mod_displaySensors);
+    *(.mod_aslLabels);
   }
   .reserved_after_code_65C8_68A7 0x68A8 : {
     *(.reserved_after_code_65C8_68A7);
@@ -353,16 +356,14 @@ SECTIONS
    *(.mod_alarmConfig);
    *(.mod_timerConfig);
    *(.mod_modMenuListFun);
+   *(.mod_log2fix);
+   *(.mod_getALT);
+   *(.mod_asl);
   }
   . = ALIGN(1);
-  .mod_extraMenu 0xFFB0 : {
-    *(.mod_modMenuList);
-    *(.mod_txBat);
-    *(.mod_altText);
-    *(.mod_alarm);
+  .mod_extraMenu 0xFFA8 : {
     *(.mod_extraMenu);
   }
-
   .reserved_checksum 0xFFFD :{
    	 *(.reserved_checksum*);
   }

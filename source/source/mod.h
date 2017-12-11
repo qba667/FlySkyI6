@@ -24,6 +24,7 @@
 #define SIGNED__	1 << 6
 #define UNSIGNED	0 << 6
 #define MUL_001		0 << 4
+#define MUL_010		1 << 4
 #define MUL_100		2 << 4
 
 #define UNIT_NONE 	0
@@ -38,7 +39,8 @@
 #define UNIT_KMH	9
 #define UNIT_CM_S	10
 #define UNIT_MAH	11
-
+#define TEMP_TEXT_OFFSET 5
+#define ALT_TEXT_OFFSET 15
 
 __attribute__((section (".mod_sensors00"))) const uint8_t SENSOR_00[] =
 /* 5-byte NULL-terminated strings. The last one has implicit NULL added
@@ -185,27 +187,34 @@ const uint8_t __attribute__((section (".mod_timerFormat"))) timerFormat[] =
 	"%02u:%02u:%02u";
 const uint8_t __attribute__((section (".mod_timerNull"))) timerNull[] =
 	"00:00:00";
-const uint8_t __attribute__((section (".mod_alarm"))) alarm[] =
-	"Alarm";
-const uint8_t __attribute__((section (".mod_extraMenu"))) extraMenu[] =
-	"Extra";
+
+
 #define GAIN_OFFSET 6
 const uint8_t __attribute__((section (".mod_varioStrings"))) varioSensor[] = {
 		"Vario\0"
 		"Gain"
 };
+#define EXTRA_MENU_OFFSET 6
+#define EXTRA_MENU_TXBAT 6
+#define EXTRA_MENU_ALARM 13
+#define EXTRA_MENU_ASL 19
 
-const uint8_t __attribute__((section (".mod_txBat"))) txBat[] =
-	"TX Bat";
+const uint8_t __attribute__((section (".mod_extraMenu"))) extraMenu[] = {
+		"Extra\0"
+		"Tx Bat\0"
+		"Alarm\0"
+		"ASL"
+};
 
 //contains pointers to functions!!!
-const uint32_t __attribute__((section (".mod_modMenuList"))) menuList[] = {
+const uint32_t __attribute__((section (".mod_extraMenu"))) menuList[] = {
 	TEXT_TIMMER, (uint32_t)(&TimerConfig+1),
-	(uint32_t)&alarm, (uint32_t)(&AlarmConfig+1),
+	(uint32_t)(extraMenu+EXTRA_MENU_ALARM), (uint32_t)(&AlarmConfig+1),
 	SW_B_C, (uint32_t)(&SwBConfig+1),
-	(uint32_t)&txBat, (uint32_t)(&BatteryType+1),
+	(uint32_t)(extraMenu+EXTRA_MENU_TXBAT), (uint32_t)(&BatteryType+1),
 	AUX_CH_TEXT, (uint32_t)(&auxChannels2+1),
 	(uint32_t)&varioSensor, (uint32_t)(&varioSensorSelect+1),
+	(uint32_t)(extraMenu+EXTRA_MENU_ASL), (uint32_t)(&ASLConfig+1),
 };
 
 
@@ -219,7 +228,7 @@ UUUU UNIT
 
 const uint8_t __attribute__((section (".mod_sensDesc00"))) sensorDesc00[] = {
 /*00*/	STD_SENSOR|UNSIGNED|MUL_100|UNIT_V,		//IntV
-/*01*/	STD_SENSOR|SIGNED__|MUL_001|UNIT_DEG, 	//Temp
+/*01*/	STD_SENSOR|SIGNED__|MUL_010|UNIT_DEG, 	//Temp
 /*02*/	STD_SENSOR|UNSIGNED|MUL_001|UNIT_NONE, 	//Mot
 /*03*/	STD_SENSOR|UNSIGNED|MUL_100|UNIT_V,		//ExtV
 /*04*/	STD_SENSOR|UNSIGNED|MUL_100|UNIT_V,		//Cell
@@ -250,12 +259,12 @@ const uint8_t __attribute__((section (".mod_sensDesc80"))) sensorDesc80[] = {
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_M,		//Alt -> GPS alt
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_M,		//ALT
 		STD_SENSOR|SIGNED__|MUL_100|UNIT_M,	//Max Alt
-		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s85
-		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s86
-		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s87
-		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s88
-		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s89
-		STD_SENSOR|SIGNED__|MUL_100|UNIT_NONE,	//s89
+		STD_SENSOR|UNSIGNED|MUL_001|UNIT_NONE,	//s85
+		STD_SENSOR|UNSIGNED|MUL_001|UNIT_NONE,	//s86
+		STD_SENSOR|UNSIGNED|MUL_001|UNIT_NONE,	//s87
+		STD_SENSOR|UNSIGNED|MUL_001|UNIT_NONE,	//s88
+		STD_SENSOR|UNSIGNED|MUL_001|UNIT_NONE,	//s89
+		STD_SENSOR|UNSIGNED|MUL_001|UNIT_NONE,	//s89
 };
 
 const uint8_t __attribute__((section (".mod_sensDescFA"))) sensorDescFA[] = {
@@ -297,8 +306,14 @@ const uint8_t __attribute__((section (".mod_units"))) units[] = {
 	/*11@31*/'m', 'A', 'h', 0x00,
 };
 
+
+const uint32_t __attribute__((section (".mod_defASL"))) defASL = ((250 + 400) << 19)|101325;
 const uint16_t __attribute__((section (".mod_timerMaxValues"))) timerMaxValues[] = { 10, 2200, 0xffff, 1 };
-const uint32_t __attribute__((section (".mod_timerLabels")))  timerLabels[] = { TEXT_CHANNEL, TEXT_VALUE, (uint32_t)&alarm, TEXT_HOLD  };
+const uint32_t __attribute__((section (".mod_timerLabels"))) timerLabels[] = { TEXT_CHANNEL, TEXT_VALUE, (uint32_t)(extraMenu+EXTRA_MENU_OFFSET*3), TEXT_HOLD };
+const uint32_t __attribute__((section (".mod_aslLabels"))) aslLabels[] = { (uint32_t)SENSOR_41, (uint32_t)(SENSOR_00 + TEMP_TEXT_OFFSET), (uint32_t)(SENSORS_80 +ALT_TEXT_OFFSET)};
+
+
+
 const uint8_t  __attribute__((section (".mod_version"))) mod_version[] = "1.7.1";
 
 uint32_t  __attribute__((section (".mod_tx_voltage_alarm_address"))) txVoltageAddress = (uint32_t)&modConfig2.batteryVoltage;

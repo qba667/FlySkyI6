@@ -53,7 +53,7 @@
 #include "alt.h"
 #include "ibustelemetry.h"
 
-
+//#define SILENT
 
 extern void __call_configurePins_ASM();
 extern void __call_extraChannels_ASM();
@@ -90,15 +90,12 @@ int main(void) {
   getModelModConfig();
   printTimer();
   if( strLenCall((const char*)RADIO_MODES)){
-	  init(10000);
-	   getALT(10000);
+	   getALT(10000, 600);
 	   acData(buf);
   }
+  ASLConfig();
   acData(buf);
   getAuxChannel(0);
-
-	getALT(10000);
-
   displayMenu();
   TimerConfig();
   BatteryType();
@@ -119,10 +116,6 @@ int main(void) {
   __call_formatSensorValue_ASM();
   __call_formatSensorValue2_ASM();
   configurePINS2();
-  /*
-  strLenCall((const char*)txBat);
-
-*/
   CheckCustomAlarms();
   //keep few regions
   if(keep1==0){keep1++;}
@@ -143,6 +136,11 @@ int main(void) {
   //keep this one because of without usage signature block will be removed
   if(SIGNATURE[0] == 1){
   }
+
+  #ifdef SILENT
+  beepSilent();
+  #endif
+
   formatSensorValue((char *)SIGNATURE, 0,0);
   formatSensorValue((char *)mod_version, 0,0);
   //divFun dev = (divFun)0x1E5E;
@@ -156,8 +154,8 @@ int main(void) {
   AlarmConfig();
   printTimer(0);
   auxChannels2();
-  __mul64((long long)1, (long long)2);
-  log2fix(1,1);
+  //__mul64((long long)1, (long long)2);
+  //log2fix(1,1);
   //rxTest2();
   //initALT(100000);
   uint32_t reminder=0;

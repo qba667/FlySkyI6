@@ -39,6 +39,7 @@
 #define TEXT_OFF	0xCA87
 #define TEXT_TIMMER	0xDCB7
 #define TEXT_HOLD 0xCAB3
+#define FORMAT_TEMP 0x5530
 
 #define KEY_SHORT_UP 9
 #define KEY_SHORT_DOWN  8
@@ -76,6 +77,7 @@ typedef size_t (*strLenFun)(const char * str);
 typedef char* (*strcatFun)(char * str, const char* source);
 typedef void * (*memSetFun)(void *str, int c, size_t n);
 typedef uint32_t (*divFun)(uint32_t a, uint32_t b);
+typedef uint32_t (*divBy10Fun)(uint32_t a);
 typedef int (*intVoidFun)(void);
 typedef int (*eepromFun)(uint8_t * target, int16_t eepromOffset, int length);
 typedef int (*gfxFun)(gfxInfo* gfx, int x, int y);
@@ -104,6 +106,8 @@ __attribute__((section (".mod_MOD_SPACE.STRCAT"))) const strcatFun strcatCall = 
 __attribute__((section (".mod_MOD_SPACE.STRLEN"))) const strLenFun strLenCall = (strLenFun)0x1CB1;
 __attribute__((section (".mod_MOD_SPACE.MEMSET"))) const memSetFun memsetCall = (memSetFun)0x3201;
 __attribute__((section (".mod_MOD_SPACE.SEND"))) const voidFun sendPacketWithSysTick = (voidFun)0x9EFD;
+
+__attribute__((section (".mod_MOD_SPACE.DIVBY10")))const divBy10Fun divBy10 = (divBy10Fun)0x2165;
 __attribute__((section (".mod_MOD_SPACE.DIVMOD"))) const divFun uidivmod = (divFun)0x1E5F;
 __attribute__((section (".mod_MOD_SPACE.DIV"))) const divFun div_ = (divFun)0x1E7B;
 __attribute__((section (".mod_MOD_SPACE.GETKEY"))) const intVoidFun getKeyCode = (intVoidFun)0x2535;

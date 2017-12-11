@@ -29,12 +29,11 @@ void add2ByteSensor(uint8_t sensorID, uint8_t sensorIndex, uint16_t value){
 }
 
 #pragma GCC optimize ("Os")
-/*
- * getALT(sensorData & 0x7FFFF)
- * */
+
 void acData(uint8_t* rxBuffer){
 	uint32_t sensorData = 0;
 	uint8_t sensorIndex = 0;
+	uint16_t shortSensor = 0;
 	int index = 1;
 	int i = 0;
 	int tmp = 0;
@@ -47,8 +46,14 @@ void acData(uint8_t* rxBuffer){
 		sensorData = (rxBuffer[index+6] << 24 | rxBuffer[index+5] << 16 | rxBuffer[index+4] << 8 | rxBuffer[index+3]);
 		if(rxBuffer[index]==IBUS_MEAS_TYPE_PRES){
 			offset = SENSORS_ARRAY_LENGTH - 1;
-			add2ByteSensor(IBUS_MEAS_TYPE_TEM, sensorIndex, (uint16_t)(sensorData >> 19));
+			shortSensor = (uint16_t)(sensorData >> 19);
+			add2ByteSensor(IBUS_MEAS_TYPE_TEM, sensorIndex, shortSensor);
 			sensorData = sensorData & 0x7FFFF;
+			tmp = getALT(sensorData, shortSensor);
+			i = IBUS_MEAS_TYPE_ALT - IBUS_MEAS_TYPE_GPS_LAT;
+			longSensors[i] = tmp;
+			add2ByteSensor(IBUS_MEAS_TYPE_ALT, sensorIndex, i);
+
 		}
 		else if(rxBuffer[index]==IBUS_MEAS_TYPE_GPS_FULL){
 			add2ByteSensor(IBUS_MEAS_TYPE_GPS_STATUS, sensorIndex, rxBuffer[index+4] << 8 | rxBuffer[index+3]);
@@ -391,7 +396,7 @@ int getSWState(uint32_t swIndex){
 
 /*Belongs to .mod_modMenu 0xFFA0 */
 void displayMenu(){
-	showNavPage((const char*) extraMenu, 6, (manuEntry*)menuList);
+	showNavPage((const char*) extraMenu, 7, (manuEntry*)menuList);
 }
 
 void BatteryType() {
@@ -402,8 +407,8 @@ void BatteryType() {
 		while (1) {
 			callSetupDMAandSend();
 			if(batteryVolt > 900) batteryVolt = 0;
-			displayPageHeader((char*)&txBat);
-			displayTextAt((char*)&alarm, 8, 24,0);
+			displayPageHeader((char*)(extraMenu+EXTRA_MENU_TXBAT));
+			displayTextAt((char*)(extraMenu+EXTRA_MENU_ALARM), 8, 24,0);
 			formatSensorValue(buffer, IBUS_MEAS_TYPE_INTV, batteryVolt);
 			displayTextAt((char*)buffer, 8, 32,0);
 			LCD_updateCALL();
@@ -425,6 +430,9 @@ void play(int freq, int duration, int pause){
 		beep(freq,duration);
 		if(pause > 0) beep(0,pause);
 	}
+}
+void beepSilent(){
+
 }
 
 #define BEEP_DEFAULT_FREQ (900)
@@ -612,6 +620,49 @@ uint8_t prevSensorID(uint8_t sensorID)
 	return sensorID;
 }
 
+void ASLConfig(){
+	uint32_t key = 0;
+	uint8_t navPos = 0;
+	int y = 0;
+	uint32_t values[2];
+	char buffer[32];
+	getInitPressure(values, &values[1]);
+	do {
+		callSetupDMAandSend();
+		//displayPageHeader((char*)(extraMenu+EXTRA_MENU_ASL)); //ASL
+		//values[0] = aslConfig >> 19;
+		//values[1] = aslConfig & 0x7FFFF;
+		initPressure = values[0];
+		initTemperature = ibusTempToK((int16_t)values[1]);
+		for(uint8_t index = 0; index< 3; index++){
+			y = 16+index*8;
+			displayTextAt((char*)aslLabels[index], 8, y, 0);
+			if(index == 0) sprintfCall(buffer, (const char*) formatNumber, values[0]);
+			if(index == 1) formatSensorValue(buffer, IBUS_MEAS_TYPE_TEM, (uint16_t) (values[1]-400));
+			if(index == 2) formatSensorValue(buffer, IBUS_MEAS_TYPE_ALT, IBUS_MEAS_TYPE_ALT - IBUS_MEAS_TYPE_GPS_LAT);
+			displayTextAt((char*)buffer, 64, y, 0);
+		}
+
+		displayGFX((gfxInfo*) GFX_ARROW, 56, navPos ? 24 : 16);
+		LCD_updateCALL();
+		key = getKeyCode();
+
+		if(key == KEY_SHORT_UP || key == KEY_LONG_UP) values[navPos] +=10;
+		else if(key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) values[navPos] -=10;
+		else if(key == KEY_SHORT_OK) navPos = !navPos;
+		else if(key == KEY_LONG_OK) {
+			values[0] = defASL & 0x7FFFF;
+			values[1] = defASL >> 19;
+		}
+		} while ( key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
+
+		if(key == KEY_LONG_CANCEL){
+			struct modelConfStruct *configPtr = getModelModConfig();
+			configPtr->initAlt = values[0] | (values[1] << 19);
+		}
+}
+
+
 void AlarmConfig(){
 	struct modelConfStruct *configPtr = getModelModConfig();
 	sensorAlarm alarmItem;
@@ -630,7 +681,7 @@ void AlarmConfig(){
 		 while ( 1 )
 		 {
 			 callSetupDMAandSend();
-			 displayPageHeader((char*)alarm);
+			 displayPageHeader((char*)(extraMenu+(EXTRA_MENU_OFFSET*2)));
 			 for(int i = 0; i < 3; i++){
 				y = 16+i*8;
 				alarmItem = alarms[i];
@@ -728,8 +779,8 @@ void TimerConfig(){
 	      displayPageHeader((char*)TEXT_TIMMER);
 	      displayTextAt((char*)TEXT_CHANNEL, labelPos, 16,0);
 	      displayTextAt((char*)TEXT_VALUE, labelPos, 24,0);
-	      displayTextAt((char*)alarm, labelPos, 32,0);
-		  displayTextAt((char*)TEXT_HOLD, labelPos, 40,0);
+	      displayTextAt((char*)(extraMenu+EXTRA_MENU_ALARM), labelPos, 32,0);
+		  	displayTextAt((char*)TEXT_HOLD, labelPos, 40,0);
 
 
 	      for(int i = 0; i < 4; i++){
@@ -778,17 +829,6 @@ void TimerConfig(){
 	  }
 }
 
-void parseCoord(uint32_t *deg, uint32_t *min, uint32_t *sec, uint32_t *subSec, uint32_t coord)
-{
-	/*uint32_t tmp = 0;
-	*deg = divMod(coord, 10000000, &tmp);
-	coord = tmp * 60;
-	*min = divMod(coord, 10000000, &tmp);
-	coord = tmp * 60;
-	*sec = divMod(coord, 10000000, &tmp);*/
-}
-
-
 
 void formatSensorValue(char* target, int sensorID, uint16_t sensorValue) {
 	const char* format = (const char*) formatNumber;
@@ -829,6 +869,11 @@ void formatSensorValue(char* target, int sensorID, uint16_t sensorValue) {
 	if ((sensorInfo & MUL_100) == MUL_100) {
 		format = (const char*) formatNumberFractial;
 		result = divMod(result, 100, &result2);
+	}
+	if ((sensorInfo & MUL_010) == MUL_010) {
+		format = (const char*) formatNumberFractial;
+		result = divMod(result, 10, &result2);
+		result2 = result2*10;
 	}
 
 	if ((sensorInfo & CUS_SENSOR) != CUS_SENSOR) {
@@ -878,7 +923,7 @@ void formatSensorValue(char* target, int sensorID, uint16_t sensorValue) {
 
 void configurePINS2(){
 	configurePINs();
-#ifndef NO_SWE
+#ifdef SWE
 	PORT_SetPinMux(PORTD, 2u, kPORT_MuxAsGpio);
 	GPIOD->PDDR &= ~(1U << 2); //input
 #endif
@@ -1028,91 +1073,99 @@ void varioSensorSelect(){
 	} while (key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
 }
 
+int32_t log2fix(uint32_t x){
+	int32_t b = 1U << (precision - 1);
+	int32_t y = 0;
+	while (x < 1U << precision) {
+			x <<= 1;
+			y -= 1U << precision;
+	}
 
-// This implementation is based on Clay. S. Turner's fast binary logarithm algorithm[1].
-//source https://github.com/dmoulding/log2fix/blob/master/log2fix.c
-
-int32_t log2fix (uint32_t x, size_t precision)
-{
-    int32_t b = 1U << (precision - 1);
-    int32_t y = 0;
-
-    if (precision < 1 || precision > 31) {
-        return INT32_MAX; // indicates an error
-    }
-
-    if (x == 0) {
-        return INT32_MIN; // represents negative infinity
-    }
-
-    while (x < 1U << precision) {
-        x <<= 1;
-        y -= 1U << precision;
-    }
-
-    while (x >= 2U << precision) {
-        x >>= 1;
-        y += 1U << precision;
-    }
+	while (x >= 2U << precision) {
+			x >>= 1;
+			y += 1U << precision;
+	}
 
 	uint64_t z = x;
-    for (size_t i = 0; i < precision; i++) {
-        z = __mul64(z,z) >> precision;
-        if (z >= 2U << precision) {
-            z >>= 1;
-            y += b;
-        }
-        b >>= 1;
+	for (size_t i = 0; i < precision; i++) {
+			z = __mul64(z, z) >> precision;
+			if (z >= 2U << precision) {
+					z >>= 1;
+					y += b;
+			}
+			b >>= 1;
+	}
+	return y;
+}
+
+uint16_t ibusTempToK(int16_t tempertureIbus){
+	return (uint16_t)(tempertureIbus - 400) + 2731;
+}
+
+
+void getInitPressure(uint32_t* pressure, int32_t* temperature){
+	struct modelConfStruct *configPtr = getModelModConfig();
+	*pressure = configPtr->initAlt & 0x7FFFF;
+	*temperature = configPtr->initAlt >> 19;
+}
+int getALT(uint32_t pressurePa, uint16_t tempertureIbus){
+    uint16_t temperatureK = ibusTempToK(tempertureIbus);
+    if (initPressure <= 0) {
+			getInitPressure(&initPressure, &initTemperature);
+			initTemperature = ibusTempToK(initTemperature);
     }
-    return y;
-}
+    int temperature = (initTemperature + temperatureK) >> 1; //div 2
+    bool tempNegative = temperature < 0;
+    if (tempNegative)  temperature = temperature *-1;
+		/*
+		int index = 55;
+		int i = IBUS_MEAS_TYPE_S85 - IBUS_MEAS_TYPE_GPS_LAT;
+		longSensors[i] = (uint32_t)temperature;
+		add2ByteSensor(IBUS_MEAS_TYPE_S85, index, i);
+		i++;
+		*/
+    uint64_t helper = R_DIV_G_MUL_10_Q15;
+    helper = __mul64(helper, (uint64_t)temperature);
+    helper = helper >> precision;
 
-void init(uint32_t pressure) {
-	//constVal = mul(/*R_div_g*/ R_div_g_19_13, /*Tmp_24C*/ Tmp_24C_19_13, PRECISION);
-	//constVal = R_div_G_MUL_AVG_TEMP_19_13;
-	constVal = R_div_G_MUL_AVG_TEMP_19_13_8_C;
-	initPressure = FIXED(pressure);
-	initPressureRaw = pressure;
-}
+		//div seems to take integers and return integers?!
+		//so can not shift by precision because it will result in negative number
 
-int16_t getALT(uint32_t pressure) {
-	return 0;
-	/*
-	if(pressure == 0) return 0;
+		uint32_t po_to_p = (uint32_t)(initPressure << (precision-1));
+		/*
+		longSensors[i] = po_to_p;
+		add2ByteSensor(IBUS_MEAS_TYPE_S86, index, i);
+		*/
+		po_to_p = div_(po_to_p, pressurePa);
+		//shift missing bit
+		po_to_p = po_to_p << 1;
+		/*
+		i++;
+		longSensors[i] = po_to_p;
+		add2ByteSensor(IBUS_MEAS_TYPE_S87, index, i);
+		*/
+		//return po_to_p;
+    //if (po_to_p == 0) return 0;
+		//po_to_p = 31130;
 
-	if (initPressure == 0) {
-		init(pressure);
-	}
-
-	uint32_t tmp = FIXED(pressure);
-	uint8_t negative = 0;
-	if (initPressureRaw > pressure) {
-		//val is already shifted by PRECISION
-		tmp =  div_(initPressure,pressure);
-		//tmp = (int32_t)(((int64_t)initPressure << PRECISION) / ((int64_t)tmp));
-	}
-	else {
-		tmp = div_(tmp, initPressureRaw);
-		//tmp = (int32_t)(((int64_t)tmp << PRECISION) / ((int64_t)initPressure));
-		negative = 1;
-	}
-	tmp = logfix(tmp, PRECISION);
-	uint32_t res = mulu16(tmp, constVal);
-
-	//real CD3260DD
-	//this result CD32
-	if (PRECISION < 16) {
-		res = res << (16 - PRECISION);
-	}
-	else if (PRECISION > 16) {
-	//	res =  res >> (PRECISION - 16);
-	}
-	//rounding
-	//res = res + ((res & 1 << (PRECISION - 1)) << 1);
-	int16_t h = res >> PRECISION;
-
-	if (negative) h = -h;
-	return h;
-	*/
+		uint64_t t =  __mul64(log2fix(po_to_p), INV_LOG2_E_Q1DOT31);
+		int32_t ln = t >> 31;
+		/*
+		i++;
+		longSensors[i] =(uint32_t)ln;
+		add2ByteSensor(IBUS_MEAS_TYPE_S88, index, i);
+		*/
+    bool neg = ln < 0;
+    if (neg) ln = ln * -1;
+    helper = __mul64(helper, (uint64_t)ln);
+    helper = helper >> precision;
+    int result = (int)helper;
+		/*
+		i++;
+		longSensors[i] =(uint32_t)result;
+		add2ByteSensor(IBUS_MEAS_TYPE_S89, index, i);
+		*/
+    if (neg ^ tempNegative) result = result * -1;
+    return result;
 }
 #pragma GCC optimize ("O1")

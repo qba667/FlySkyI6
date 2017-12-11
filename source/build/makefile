@@ -52,17 +52,17 @@ fs-i6.bin \
 SECONDARY_SIZE += \
 fs-i6.siz \
 
-SECONDARY_FLASH_NO_SWE += \
-fs-i6-noswe.bin \
+SECONDARY_FLASH_SWE += \
+fs-i6-swe.bin \
 
-SECONDARY_SIZE_NO_SWE += \
-fs-i6-noswe.siz \
+SECONDARY_SIZE_SWE += \
+fs-i6-swe.siz \
 
 PARAMS = 
 
 # All Target
 all: fs-i6.elf secondary-outputs 
-all-noswe: fs-i6-noswe.elf secondary-outputs-noswe
+all-swe: fs-i6-swe.elf secondary-outputs-swe
 # Tool invocations
 
 fs-i6.elf: $(OBJS) $(USER_OBJS)
@@ -71,11 +71,11 @@ fs-i6.elf: $(OBJS) $(USER_OBJS)
 	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "../MKL16Z64xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"fs-i6.map" --specs=nano.specs -specs=nosys.specs -Xlinker -z -Xlinker muldefs -o "fs-i6.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
-fs-i6-noswe.elf: PARAMS = -DNO_SWE
-fs-i6-noswe.elf: $(OBJS) $(USER_OBJS) 
+fs-i6-swe.elf: PARAMS = -DSWE
+fs-i6-swe.elf: $(OBJS) $(USER_OBJS) 
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -Os $(PARAMS) -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "../MKL16Z64xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"fs-i6-noswe.map" --specs=nano.specs -specs=nosys.specs -Xlinker -z -Xlinker muldefs -o "fs-i6-noswe.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -Os $(PARAMS) -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "../MKL16Z64xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"fs-i6-swe.map" --specs=nano.specs -specs=nosys.specs -Xlinker -z -Xlinker muldefs -o "fs-i6-swe.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 fs-i6.bin: fs-i6.elf
@@ -86,12 +86,12 @@ fs-i6.bin: fs-i6.elf
 	python3 flysky3.py fs-i6.bin fs-i6
 	@echo 'Finished building: $@'
 	@echo ' '
-fs-i6-noswe.bin: fs-i6-noswe.elf
+fs-i6-swe.bin: fs-i6-swe.elf
 	@echo 'Invoking: Cross ARM GNU Create Flash Image'
-	arm-none-eabi-objcopy --update-section .interrupts=org.bin "fs-i6-noswe.elf"
-	arm-none-eabi-objcopy -j .interrupts -j .mod_* -O binary "fs-i6-noswe.elf"  "fs-i6-noswe.bin"
+	arm-none-eabi-objcopy --update-section .interrupts=org.bin "fs-i6-swe.elf"
+	arm-none-eabi-objcopy -j .interrupts -j .mod_* -O binary "fs-i6-swe.elf"  "fs-i6-swe.bin"
 	#python flysky2.py fs-i6.bin fs-i6
-	python3 flysky3.py fs-i6-noswe.bin fs-i6-noswe
+	python3 flysky3.py fs-i6-swe.bin fs-i6-swe
 	@echo 'Finished building: $@'
 	@echo ' '
 	
@@ -102,19 +102,19 @@ fs-i6.siz: fs-i6.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 	
-fs-i6-noswe.siz: fs-i6-noswe.elf
+fs-i6-swe.siz: fs-i6-swe.elf
 	@echo 'Invoking: Cross ARM GNU Print Size'
-	arm-none-eabi-size --format=berkeley "fs-i6-noswe.elf"
-	arm-none-eabi-size --format=sysv "fs-i6-noswe.elf" -x
+	arm-none-eabi-size --format=berkeley "fs-i6-swe.elf"
+	arm-none-eabi-size --format=sysv "fs-i6-swe.elf" -x
 	@echo 'Finished building: $@'
 	@echo ' '
 # Other Targets
 clean:
-	-$(RM) $(SECONDARY_SIZE)$(C++_DEPS)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(CC_DEPS)$(SECONDARY_FLASH)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS)$(S_UPPER_DEPS)$(SECONDARY_SIZE_NO_SWE)$(SECONDARY_SIZE_NO_SWE) fs-i6.elf fs-i6-noswe.elf
+	-$(RM) $(SECONDARY_SIZE)$(C++_DEPS)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(CC_DEPS)$(SECONDARY_FLASH)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS)$(S_UPPER_DEPS)$(SECONDARY_SIZE_SWE)$(SECONDARY_SIZE_SWE) fs-i6.elf fs-i6-swe.elf
 	-@echo ' '
 
 secondary-outputs: $(SECONDARY_FLASH) $(SECONDARY_SIZE)
-secondary-outputs-noswe: $(SECONDARY_FLASH_NO_SWE) $(SECONDARY_SIZE_NO_SWE)
+secondary-outputs-swe: $(SECONDARY_FLASH_SWE) $(SECONDARY_SIZE_SWE)
 .PHONY: all clean dependents
 .SECONDARY:
 
