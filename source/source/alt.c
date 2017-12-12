@@ -111,6 +111,30 @@ modelConfStruct* getModelModConfig(){
 	return ptr;
 }
 
+int mix(int value, int8_t min, int8_t max, int8_t subtrim){
+	uint8_t input_range_fixed_q20 = 105;
+	int16_t lim_p = max * 100;
+	int16_t lim_n = min * 100;
+	int16_t ofs = subtrim * 100;
+	uint8_t neg = 0; //get from config
+
+	if (value) {
+		int16_t tmp = (value > 0) ? (lim_p - ofs) : (-lim_n + ofs);
+		value = (int32_t)value * tmp;
+		if (value < 0) {
+			value *= -1;
+			neg = !neg;
+		}
+		value = (int)(__mul64((uint64_t)value, (uint64_t)input_range_fixed_q20) >> 20);
+		if (neg) value *= -1;
+		ofs += value;
+	}
+	if (ofs > lim_p) ofs = lim_p;
+	if (ofs < lim_n) ofs = lim_n;
+	return ofs;
+}
+
+
 const uint8_t* getSensorName(int sensor){
 	if ( sensor >= IBUS_MEAS_TYPE_INTV && sensor <= IBUS_MEAS_TYPE_UNKNOWN )
 	{

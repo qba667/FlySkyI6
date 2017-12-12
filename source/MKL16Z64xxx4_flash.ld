@@ -107,7 +107,7 @@ SECTIONS
     *(.screenBuffer);
   } > m_data
 
-  .MOD_CONFIG2 0x20000BC4 :
+  .MOD_CONFIG2 0x20000B32 :
   {
     *(.mod_modConfigAsModel17);
   }  > m_data
@@ -262,6 +262,7 @@ SECTIONS
     *(.mod_varioSensorSelect);
     *(.mod_configurePins);
     *(.mod_createPacketCh1114);
+
   }
   .reserved_after_code_5174_5353 0x5354 : {
     *(.reserved_after_code_5174_5353);
