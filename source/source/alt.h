@@ -45,6 +45,7 @@ typedef struct sensorAlarm
 #define OLD_MODEL_COUNT 20
 #define OLD_CONFIGSIZE 146
 #define NEW_MODEL_MEM MODEL_SETTINGS + TOTAL_MODELS * OLD_CONFIGSIZE
+#define MIX_CONFIG_SIZE_BYTES 24
 //to use this in linker we need to run linker on ld file
 //https://stackoverflow.com/questions/28837199/can-i-use-preprocessor-directives-in-ld-file
 //for now just calcualte
@@ -150,6 +151,9 @@ __attribute__((section (".mod_getALT"))) uint16_t ibusTempToK(int16_t temperture
 __attribute__((section (".mod_getALT"))) void getInitPressure(uint32_t* pressure, int32_t* temperature);
 __attribute__((section (".mod_getALT"))) int getALT(uint32_t pressurePa, uint16_t tempertureIbus);
 __attribute__((section (".find_space_mix"))) int mix(int value, int8_t min, int8_t max, int8_t subtrim);
+__attribute__((section (".find_space_mix"))) void mixConfig();
+__attribute__((section (".find_space_mix"))) void createPacketCh7_14();
+
 
 __attribute__((section (".reserved_main"))) uint32_t keep1 = 0;
 __attribute__((section (".reserved_after_code_C9B0_CA4F")))  uint32_t keep2 = 0;
