@@ -40,28 +40,62 @@ typedef struct sensorAlarm
 
 #define VARIO_MAX_GAIN_BITS	4	// do not need the whole byte
 //24 + sensorAlarm (3 * 4 bytes) 12 bytes = 36 bytes
+
+#define TOTAL_MODELS 15
+#define OLD_MODEL_COUNT 20
+#define OLD_CONFIGSIZE 146
+#define NEW_MODEL_MEM MODEL_SETTINGS + TOTAL_MODELS * OLD_CONFIGSIZE
+#define MIX_CONFIG_SIZE_BYTES 24
+//to use this in linker we need to run linker on ld file
+//https://stackoverflow.com/questions/28837199/can-i-use-preprocessor-directives-in-ld-file
+//for now just calcualte
+//MODEL_SETTINGS 0x200002A4
+//0x200002A4 + 15* 146 = 0x20000B32
+
+
+typedef struct mixConfStruct{
+	int8_t min;
+	int8_t max;
+	int8_t subtrim;
+} mixConfStruct;
 typedef struct modelConfStruct
 {
-	uint8_t ch11_12;
-	uint8_t ch13_14;
-	uint16_t timerAlarm;
-	uint8_t timerCH;
-	uint16_t timerStart;
-	sensorAlarm alarm[3];
-	uint32_t initAlt;
-	uint8_t varioSensorID;
-	uint8_t varioGain : VARIO_MAX_GAIN_BITS;
-	uint8_t reserved_bits : (8 - VARIO_MAX_GAIN_BITS);
-	uint8_t reserved[11];
-} modelConfStruct;
+	uint8_t ch11_12;											//	1
+	uint8_t ch13_14;											//	1
+	uint16_t timerAlarm;										//	2
+	uint8_t timerCH;											//	1
+	uint16_t timerStart;										//	2
+	sensorAlarm alarm[3];										//	3*4 = 12
+	uint32_t initAlt;											// 	4
+	uint8_t varioSensorID;										// 1
+	uint8_t varioGain : VARIO_MAX_GAIN_BITS;					// 1	
+	uint8_t reserved_bits : (8 - VARIO_MAX_GAIN_BITS);			// 1	
+	mixConfStruct mix[8];										// 8*3 = 24	
+	uint8_t reserved[8];										// 8
+} modelConfStruct;												// 58
+
+
+//Change allocation to 15
+//TOTAL 58 * 15 = 870
+//Version magic 2 bytes, battery 2 bytes, sw config 1 byte
+//Total 875
+//5 *146 = 876	
+
 /*total 146*4 = 584 bytes*/
-/*used: 3+ 16* 36 = 579*/
+/*used: 3+ 16* 55 = 803*/
+/*needed 6 -> 876 -803
 /*free: 5*/
+//clear method
+//mem set to 0
+//mix default -100, 100, 0
+
+
 typedef struct globalConfigStruct
 {
 	uint16_t batteryVoltage;
 	uint8_t swConfig;
-	modelConfStruct modelConfig[16];
+	modelConfStruct modelConfig[TOTAL_MODELS];
+	uint16_t verionMagic;
 } globalConfigStruct;
 
 
@@ -116,6 +150,10 @@ __attribute__((section (".mod_log2fix"))) int32_t log2fix(uint32_t x);
 __attribute__((section (".mod_getALT"))) uint16_t ibusTempToK(int16_t tempertureIbus);
 __attribute__((section (".mod_getALT"))) void getInitPressure(uint32_t* pressure, int32_t* temperature);
 __attribute__((section (".mod_getALT"))) int getALT(uint32_t pressurePa, uint16_t tempertureIbus);
+__attribute__((section (".find_space_mix"))) int mix(int value, int8_t min, int8_t max, int8_t subtrim);
+__attribute__((section (".find_space_mix"))) void mixConfig();
+__attribute__((section (".find_space_mix"))) void createPacketCh7_14();
+
 
 __attribute__((section (".reserved_main"))) uint32_t keep1 = 0;
 __attribute__((section (".reserved_after_code_C9B0_CA4F")))  uint32_t keep2 = 0;

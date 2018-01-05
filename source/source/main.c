@@ -154,6 +154,7 @@ int main(void) {
   AlarmConfig();
   printTimer(0);
   auxChannels2();
+  mix(10000, -100, 100, 0);
   //__mul64((long long)1, (long long)2);
   //log2fix(1,1);
   //rxTest2();

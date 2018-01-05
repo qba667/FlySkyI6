@@ -111,6 +111,105 @@ modelConfStruct* getModelModConfig(){
 	return ptr;
 }
 
+void mixConfig() {
+	uint32_t key = 0;
+	struct modelConfStruct *configPtr = getModelModConfig();
+	int8_t config[MIX_CONFIG_SIZE_BYTES];
+	memcpy_(config, configPtr->mix, MIX_CONFIG_SIZE_BYTES);
+	char buffer[8];
+	uint8_t row = 0;
+	uint8_t col = 0;
+	uint8_t rowPos = 0;
+	do {
+		callSetupDMAandSend();
+		//displayPageHeader((char*)0xDBEC);
+		for (uint8_t rowIndex= 0; rowIndex < 8; rowIndex++) {
+			rowPos = rowIndex << 3;
+			buffer[0] = '7' + rowIndex;
+			buffer[1] = 0;
+			displayTextAt(buffer, 8, rowPos, 0);
+			for (uint8_t colIndex = 0; colIndex < 3; colIndex++) {
+				sprintfCall(buffer, (const char*)0x5564, config[3 * rowIndex + colIndex]);
+				displayTextAt(buffer, mixPos[colIndex] + 8, buffer, 0);
+			}
+			displayGFX((gfxInfo*)GFX_ARROW, mixPos[col], row << 3);
+		}
+		LCD_updateCALL();
+		key = getKeyCode();
+
+		if (key == KEY_SHORT_OK)
+		{
+			col++;
+			if (col >= 3) {
+				col = 0;
+				row++;
+			}
+			if (row >= 3) row = 0;
+		}
+
+		if (key == KEY_SHORT_UP || key == KEY_LONG_UP) {
+			config[3 * row + col]++;
+		}
+		if (key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
+			config[3 * row + col]--;
+		}
+	} while (key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
+
+	if (key == KEY_LONG_CANCEL) {
+		memcpy_(configPtr->mix, config, MIX_CONFIG_SIZE_BYTES);
+	}
+}
+void createPacketCh7_14(){
+	int32_t channel7Address = 0x1FFFFDF8;
+	struct modelConfStruct *configPtr = getModelModConfig();
+	uint16_t ch11_14 = *((uint16_t*)&(configPtr->ch11_12));
+	uint8_t lsb = 0;
+	//skip 7,8,9,10
+	channel7Address += 16; 
+	for(uint8_t i=0; i < 4; i++){
+		//*((int32_t*)channel11Address) = getAuxChannel((ch11_14 >> lsb) & ~(~0 << (msb-lsb+1)));
+		*((int32_t*)channel7Address) = getAuxChannel((ch11_14 >> lsb) & ~(~0 << 4));
+		lsb +=4;
+		channel7Address += 4;
+	}
+	
+	//
+	
+	//uint8_t auxChannels[4];
+	//auxChannels[0] = configPtr->ch11_12 >> 4;
+	//auxChannels[1] = configPtr->ch11_12 &  0xF;
+	//auxChannels[2] = configPtr->ch13_14 >> 4;
+	//auxChannels[3] = configPtr->ch13_14 &  0xF;
+	//for(uint8_t i=0; i < sizeof(auxChannels); i++){
+	//	*((int32_t*)(channel11Address + 4*i)) = getAuxChannel(auxChannels[i]);
+	//}
+}
+
+
+int mix(int value, int8_t min, int8_t max, int8_t subtrim){
+	uint8_t input_range_fixed_q20 = 105;
+	int16_t lim_p = max * 100;
+	int16_t lim_n = min * 100;
+	int16_t ofs = subtrim * 100;
+	uint8_t neg = 0; //get from config
+
+	if (value) {
+		int16_t tmp = (value > 0) ? (lim_p - ofs) : (-lim_n + ofs);
+		value = (int32_t)value * tmp;
+		if (value < 0) {
+			value *= -1;
+			neg = !neg;
+		}
+		value = (int)(__mul64((uint64_t)value, (uint64_t)input_range_fixed_q20) >> 20);
+		if (neg) value *= -1;
+		ofs += value;
+	}
+	if (ofs > lim_p) ofs = lim_p;
+	if (ofs < lim_n) ofs = lim_n;
+	return ofs;
+}
+
+
 const uint8_t* getSensorName(int sensor){
 	if ( sensor >= IBUS_MEAS_TYPE_INTV && sensor <= IBUS_MEAS_TYPE_UNKNOWN )
 	{
@@ -184,6 +283,8 @@ uint32_t isTimerActive(){
 
 	return chValue > configVal;
 }
+
+
 #define SW_A 0u
 #define SW_B 1u
 #define SW_C 2u
@@ -276,7 +377,6 @@ void createPacketCh1114(){
 	for(uint8_t i=0; i < sizeof(auxChannels); i++){
 		*((int32_t*)(channel11Address + 4*i)) = getAuxChannel(auxChannels[i]);
 	}
-
 }
 int getAuxChannel(uint32_t request){
 	int sw1 = 0;
