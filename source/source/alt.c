@@ -681,7 +681,7 @@ void AlarmConfig(){
 		 while ( 1 )
 		 {
 			 callSetupDMAandSend();
-			 displayPageHeader((char*)(extraMenu+(EXTRA_MENU_OFFSET*2)));
+			 displayPageHeader((char*)extraMenu+EXTRA_MENU_ALARM);
 			 for(int i = 0; i < 3; i++){
 				y = 16+i*8;
 				alarmItem = alarms[i];

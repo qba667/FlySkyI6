@@ -194,7 +194,6 @@ const uint8_t __attribute__((section (".mod_varioStrings"))) varioSensor[] = {
 		"Vario\0"
 		"Gain"
 };
-#define EXTRA_MENU_OFFSET 6
 #define EXTRA_MENU_TXBAT 6
 #define EXTRA_MENU_ALARM 13
 #define EXTRA_MENU_ASL 19
@@ -309,7 +308,7 @@ const uint8_t __attribute__((section (".mod_units"))) units[] = {
 
 const uint32_t __attribute__((section (".mod_defASL"))) defASL = ((250 + 400) << 19)|101325;
 const uint16_t __attribute__((section (".mod_timerMaxValues"))) timerMaxValues[] = { 10, 2200, 0xffff, 1 };
-const uint32_t __attribute__((section (".mod_timerLabels"))) timerLabels[] = { TEXT_CHANNEL, TEXT_VALUE, (uint32_t)(extraMenu+EXTRA_MENU_OFFSET*3), TEXT_HOLD };
+const uint32_t __attribute__((section (".mod_timerLabels"))) timerLabels[] = { TEXT_CHANNEL, TEXT_VALUE, (uint32_t)(extraMenu+EXTRA_MENU_ALARM), TEXT_HOLD };
 const uint32_t __attribute__((section (".mod_aslLabels"))) aslLabels[] = { (uint32_t)SENSOR_41, (uint32_t)(SENSOR_00 + TEMP_TEXT_OFFSET), (uint32_t)(SENSORS_80 +ALT_TEXT_OFFSET)};
 
 
