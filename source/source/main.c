@@ -69,6 +69,9 @@ extern void __call_printTimer1_ASM();
 extern void __call_printTimer2_ASM();
 extern void __call_formatSensorValue_ASM();
 extern void __call_formatSensorValue2_ASM();
+extern void __call_loadSettings_ASM();
+extern void __call_CreatePacket1_ASM();
+extern void __call_CreatePacket2_ASM();
 char buffer[32];
 
 int main(void) {
@@ -89,11 +92,10 @@ int main(void) {
   //saveModSettings();
   getModelModConfig();
   printTimer();
-  if( strLenCall((const char*)RADIO_MODES)){
-	   getALT(10000, 600);
-	   acData(buf);
-  }
+  #ifdef TGY_CAT01
+  getALT(10000, 600);
   ASLConfig();
+  #endif
   acData(buf);
   getAuxChannel(0);
   displayMenu();
@@ -101,6 +103,8 @@ int main(void) {
   BatteryType();
   SwBConfig();
   createPacketCh1114();
+  mixConfig();
+  mix(10000, 100,100,0);
   __call_configurePins_ASM();
   __call_extraChannels_ASM();
   __call_swE_ASM();
@@ -115,6 +119,9 @@ int main(void) {
   __call_printTimer2_ASM();
   __call_formatSensorValue_ASM();
   __call_formatSensorValue2_ASM();
+  __call_loadSettings_ASM();
+  __call_CreatePacket1_ASM();
+  __call_CreatePacket2_ASM();
   configurePINS2();
   CheckCustomAlarms();
   //keep few regions
@@ -125,6 +132,7 @@ int main(void) {
   if(keep5==0){keep5++;}
   if(keep6==0){keep6++;}
   if(keep7==0){keep7++;}
+  if(keep8==0){keep8++;}
   if(txVoltageAddress==0){txVoltageAddress++;}
   if(timerBufferAddress==0){timerBufferAddress++;}
   if(timerValueAddress==0){timerValueAddress++;}
@@ -149,6 +157,7 @@ int main(void) {
   swBasADC();
   swEHandling();
   //uint32_t resutl = dev(100U, 10U);
+  loadSettings();
   displaySensors();
   auxChannelsPage();
   AlarmConfig();

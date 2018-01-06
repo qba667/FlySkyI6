@@ -33,7 +33,11 @@ ASM_SRCS += \
 ../source/printTimer1.asm \
 ../source/printTimer2.asm \
 ../source/formatSensorValue.asm \
-../source/formatSensorValue2.asm
+../source/formatSensorValue2.asm \
+../source/loadSettings.asm \
+../source/callCreatePacket1.asm \
+../source/callCreatePacket2.asm
+
 
 OBJS += \
 ./source/adc.o \
@@ -63,8 +67,10 @@ OBJS += \
 ./source/printTimer1.o \
 ./source/printTimer2.o \
 ./source/formatSensorValue.o \
-./source/formatSensorValue2.o
-
+./source/formatSensorValue2.o \
+./source/loadSettings.o \
+./source/callCreatePacket1.o \
+./source/callCreatePacket2.o
 
 C_DEPS += \
 ./source/adc.d \
@@ -96,7 +102,10 @@ ASM_DEPS += \
 ./source/printTimer1.d \
 ./source/printTimer2.d \
 ./source/formatSensorValue.d \
-./source/formatSensorValue2.d 
+./source/formatSensorValue2.d \
+./source/loadSettings.d \
+./source/callCreatePacket1.d \
+./source/callCreatePacket2.d 
 
 # Each subdirectory must supply rules for building sources it contributes
 source/%.o: ../source/%.c

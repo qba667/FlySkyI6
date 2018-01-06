@@ -171,6 +171,7 @@ SECTIONS
   *(.mod_timerFormat);
   *(.mod_armed);
   *(.mod_defASL);
+  *(.mixPos);
   }
   .reserved_main 0x2800:
   {
@@ -185,9 +186,18 @@ SECTIONS
   .mod_configurePins_ASM 0xC0D2 : {
     *(.mod_configurePins_ASM);
   }
-  .mod_extraChannels_ASM 0xAC34 : {
+
+  /*
+  FREE SPACE AC34 AC57
+  */
+
+  .mod_extraChannels_ASM 0xAB5C : {
     *(.mod_extraChannels_ASM);
   }
+  .reserved_after_code_extraChannels_ASM 0xAB9F : {
+    *(.reserved_after_code_extraChannels_ASM);
+  }
+
   .mod_swB_ASM 0x2896 : {
     *(.mod_swB_ASM);
   }
@@ -209,6 +219,9 @@ SECTIONS
   .mod_getSensorName2_ASM 0x376A : {
     *(.mod_getSensorName2_ASM);
   }
+  .mod_loadSettings_ASM 0xC070 : {
+    *(.mod_loadSettings_ASM);
+  }
   .mod_printTimer_ASM 0xC1DE : {
     *(.mod_printTimer_ASM);
   }
@@ -225,6 +238,13 @@ SECTIONS
     *(.mod_formatSensorValue2_ASM);
   }
 
+
+  .mod_callCreatePacket1_ASM 0xA8D2 : {
+    *(.mod_callCreatePacket1_ASM);
+  }
+  .mod_callCreatePacket2_ASM 0xA8E8 : {
+    *(.mod_callCreatePacket2_ASM);
+  }
 
   /*variables referenced from assembly*/
 
@@ -261,8 +281,6 @@ SECTIONS
   .mod_code_5174_5353 0x5174 : {
     *(.mod_varioSensorSelect);
     *(.mod_configurePins);
-    *(.mod_createPacketCh1114);
-
   }
   .reserved_after_code_5174_5353 0x5354 : {
     *(.reserved_after_code_5174_5353);
@@ -274,6 +292,7 @@ SECTIONS
     *(.mod_acHelper);
     *(.mod_displaySensors);
     *(.mod_aslLabels);
+    *(.mod_loadSettingsExt);
   }
   .reserved_after_code_65C8_68A7 0x68A8 : {
     *(.reserved_after_code_65C8_68A7);
@@ -296,22 +315,26 @@ SECTIONS
 	*(.mod_nextSensorID);
 	*(.mod_prevSensorID);
 	*(.mod_asm_aeabi_lmul);
+
   }
 
   .reserved_after_code_C9B0_CA4F 0xCA50 :
   {
 	*(.reserved_after_code_C9B0_CA4F);
   }
-
-  .mod_code_D50C_D5F7 0xD50C :
+  .mod_code_D510_D5EF 0xD50C :
   {
-    *(.mod_checkTimerActive);
-    *(.mod_swBHandling);
-    *(.mod_swEHandling);
+   *(.mod_swBHandling);
   }
-  .reserved_after_code_D50C_D5F7 0xD5F8 :
+  .mod_code_D560_D5EF 0xD560 :
   {
-	*(.reserved_after_code_D50C_D5F7);
+  *(.mod_swEHandling);
+  *(.mod_checkTimerActive);
+  }
+
+  .reserved_after_code_D50C_D5EF 0xD5F0 :
+  {
+	*(.reserved_after_code_D510_D5EF);
   }
 
  . = ALIGN(4);
@@ -320,46 +343,35 @@ SECTIONS
   {
     *(.mod_customAlarmsCheck);
     *(.mod_timerConfig);
-    *(.mod_channels1114);
     *(.mod_SW_B_config);
     *(.mod_getSWState);
+    *(.mod_extractConfig);
+    *(.mod_createPacketCh1114);
+    *(.mod_auxChannelsText);
   }
+
   .reserved_after_code_E140_E754 0xE754 :{
    	 *(.reserved_after_code_E140_E754);
   }
 
 
-  .TestCODE 0xB600 : /*moved while implementing sensors move it back to s_ALT*/
+  .mod_code_F4D0_FF8F 0xF4D0:
   {
-  *(.altinit);
-  *(.altgetALT);
-  *(.altlogfix);
-  *(.altlog2fix);
-    KEEP(*(.TestCODE))
-
-  } > m_text
-  /*changes made on assembly level*/
-  .notImplemented_AUX_CHANNEL_PAGE 0xF4D0 :
-  {
- 	 *(.notImplemented_AUX_CHANNEL_PAGE*);
-  }
-
-  /*references to getAuxChannel from assembly do not move!*/
-  .mod_code_F66C_FF8F 0xF66C :
-  {
+   *(.mod_channels1114*);
  	 *(.mod_getAuxChannel);
    *(.mod_getSensorName);
    *(.mod_batteryConfig);
    *(.mod_printTimer);
    *(.mod_formatSensorValue);
    *(.mod_divMod);
-   *(.mod_parseCoord);
    *(.mod_alarmConfig);
    *(.mod_timerConfig);
    *(.mod_modMenuListFun);
    *(.mod_log2fix);
    *(.mod_getALT);
    *(.mod_asl);
+   *(.mod_mix);
+
   }
   . = ALIGN(1);
   .mod_extraMenu 0xFFA8 : {

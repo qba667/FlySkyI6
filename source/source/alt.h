@@ -29,6 +29,11 @@
 
 #define AVG_TMP			19
 
+	#define MAX_INDEX 14
+#ifdef SWE
+	#define MAX_INDEX 15
+#endif
+
 #define SENSORS_ARRAY_LENGTH 11
 /* 4 bytes*/
 typedef struct sensorAlarm
@@ -46,6 +51,8 @@ typedef struct sensorAlarm
 #define OLD_CONFIGSIZE 146
 #define NEW_MODEL_MEM MODEL_SETTINGS + TOTAL_MODELS * OLD_CONFIGSIZE
 #define MIX_CONFIG_SIZE_BYTES 24
+
+#define VERSION_MAGIC 0x171
 //to use this in linker we need to run linker on ld file
 //https://stackoverflow.com/questions/28837199/can-i-use-preprocessor-directives-in-ld-file
 //for now just calcualte
@@ -55,9 +62,11 @@ typedef struct sensorAlarm
 
 typedef struct mixConfStruct{
 	int8_t min;
-	int8_t max;
 	int8_t subtrim;
+	int8_t max;
 } mixConfStruct;
+
+
 typedef struct modelConfStruct
 {
 	uint8_t ch11_12;											//	1
@@ -68,18 +77,18 @@ typedef struct modelConfStruct
 	sensorAlarm alarm[3];										//	3*4 = 12
 	uint32_t initAlt;											// 	4
 	uint8_t varioSensorID;										// 1
-	uint8_t varioGain : VARIO_MAX_GAIN_BITS;					// 1	
-	uint8_t reserved_bits : (8 - VARIO_MAX_GAIN_BITS);			// 1	
-	mixConfStruct mix[8];										// 8*3 = 24	
+	uint8_t varioGain : VARIO_MAX_GAIN_BITS;					// 1
+	uint8_t reserved_bits : (8 - VARIO_MAX_GAIN_BITS);			// 1
+	mixConfStruct mix[8];										// 8*3 = 24
 	uint8_t reserved[8];										// 8
 } modelConfStruct;												// 58
-
+//7 + 12 + 4 +2 +24 +8 =
 
 //Change allocation to 15
 //TOTAL 58 * 15 = 870
 //Version magic 2 bytes, battery 2 bytes, sw config 1 byte
 //Total 875
-//5 *146 = 876	
+//5 *146 = 876
 
 /*total 146*4 = 584 bytes*/
 /*used: 3+ 16* 55 = 803*/
@@ -94,8 +103,8 @@ typedef struct globalConfigStruct
 {
 	uint16_t batteryVoltage;
 	uint8_t swConfig;
+	uint16_t versionMagic;
 	modelConfStruct modelConfig[TOTAL_MODELS];
-	uint16_t verionMagic;
 } globalConfigStruct;
 
 
@@ -107,8 +116,12 @@ __attribute__((section (".mod_timerValue"))) uint32_t  timerValue;
 __attribute__((section (".mod_lastTimerUpdate"))) uint32_t  lastTimerUpdate;
 __attribute__((section (".mod_ticks100ms"))) uint8_t  ticks100MS;
 __attribute__((section (".mod_mavlinkGPSFrame"))) uint8_t mavlinkGPSFrame[22]; 	//22bytes
+
+#ifdef TGY_CAT01
 __attribute__((section (".mod_altSensorMemory"))) uint32_t initPressure = 0;
 __attribute__((section (".mod_altSensorMemory"))) int32_t initTemperature = 0;
+#endif
+
 __attribute__((section (".mod_varioMem"))) int32_t varioPrevValue = 0;
 __attribute__((section (".mod_varioMem"))) int32_t varioPrevTime = 0;
 
@@ -123,13 +136,23 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_checkTimerActive"))) uint32_t isTimerActive();
  __attribute__((section (".mod_timerConfig"))) void TimerConfig();
  __attribute__((section (".mod_batteryConfig"))) void BatteryType();
+
+
+#ifdef TGY_CAT01
   __attribute__((section (".mod_asl"))) void ASLConfig();
+#endif
 
  __attribute__((section (".mod_nextSensorID"))) uint8_t prevSensorID(uint8_t sensorID);
  __attribute__((section (".mod_prevSensorID")))  uint8_t nextSensorID(uint8_t sensorID);
 
  __attribute__((section (".mod_channels1114"))) void auxChannels2();
+
+  __attribute__((section (".mod_extractConfig"))) void extractConfigCh7_14(uint8_t* result);
+	__attribute__((section (".mod_extractConfig"))) void saveAuxCh5_14(uint8_t* current);
+
+
  __attribute__((section (".mod_createPacketCh1114"))) void createPacketCh1114();
+  __attribute__((section (".mod_createPacketCh1114"))) void extractConfig(uint8_t val, uint8_t* result);
  __attribute__((section (".mod_SW_B_config"))) void SwBConfig();
  __attribute__((section (".mod_alarmConfig"))) void AlarmConfig();
  __attribute__((section (".mod_customAlarmsCheck"))) void CheckCustomAlarms();
@@ -141,18 +164,21 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_loadModEeprom"))) void loadModSettings();
  __attribute__((section (".mod_saveModEeprom"))) void saveModSettings();
  */
+
+__attribute__((section (".mod_loadSettingsExt"))) void loadSettings();
 __attribute__((section (".mod_varioSensorSelect"))) void varioSensorSelect();
 __attribute__((section (".mod_displaySensors"))) void displaySensors();
 __attribute__((section (".mod_getSensorName"))) const uint8_t* getSensorName(int sensor);
 __attribute__((section (".mod_formatSensorValue"))) void formatSensorValue(char* target, int sensorID, uint16_t sensorValue);
 __attribute__((section (".mod_divMod"))) uint32_t divMod(uint32_t val, uint32_t divisor, uint32_t* mod);
+#ifdef TGY_CAT01
 __attribute__((section (".mod_log2fix"))) int32_t log2fix(uint32_t x);
 __attribute__((section (".mod_getALT"))) uint16_t ibusTempToK(int16_t tempertureIbus);
 __attribute__((section (".mod_getALT"))) void getInitPressure(uint32_t* pressure, int32_t* temperature);
 __attribute__((section (".mod_getALT"))) int getALT(uint32_t pressurePa, uint16_t tempertureIbus);
-__attribute__((section (".find_space_mix"))) int mix(int value, int8_t min, int8_t max, int8_t subtrim);
-__attribute__((section (".find_space_mix"))) void mixConfig();
-__attribute__((section (".find_space_mix"))) void createPacketCh7_14();
+#endif
+__attribute__((section (".mod_mix"))) int mix(int value, int8_t min, int8_t max, int8_t subtrim);
+__attribute__((section (".mod_mix"))) void mixConfig();
 
 
 __attribute__((section (".reserved_main"))) uint32_t keep1 = 0;
@@ -161,8 +187,11 @@ __attribute__((section (".reserved_after_code_5174_5353"))) uint32_t keep5 = 0;
 __attribute__((section (".reserved_after_code_65C8_68A7")))  uint32_t keep3 = 0;
 __attribute__((section (".reserved_after_code_E140_E754"))) uint32_t keep4 = 0;
 __attribute__((section (".reserved_after_code_in_display_method"))) uint32_t keep6 = 0;
-__attribute__((section (".reserved_after_code_D50C_D5F7"))) uint32_t keep7 = 0;
+__attribute__((section (".reserved_after_code_D510_D5EF"))) uint32_t keep7 = 0;
+__attribute__((section (".reserved_after_code_extraChannels_ASM"))) uint32_t keep8 = 0;
+
 __attribute__((section (".reserved_checksum"))) uint16_t keepChecksum = 0;
+
 
 
 

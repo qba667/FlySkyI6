@@ -26,6 +26,7 @@
 #define CURRENT_MODEL_INDEX 0x200002AD
 #define ARROW_GFX_INFO 0xCBF8
 #define SW_B_C 0xf63e
+
 #define AUX_CH_TEXT 0xcc5a
 #define SOURCE_STRING 0xCAEE
 #define MEM_20000000 0x20000000
@@ -39,6 +40,7 @@
 #define TEXT_OFF	0xCA87
 #define TEXT_TIMMER	0xDCB7
 #define TEXT_HOLD 0xCAB3
+#define TEXT_MIX 0xCA93
 #define FORMAT_TEMP 0x5530
 
 #define KEY_SHORT_UP 9
@@ -71,6 +73,7 @@ typedef struct manuEntry{
 
 
 typedef void* (*memcpyFun)(void *dest, const void *source, size_t n);
+typedef void* (*memcpyFun2)(void *source, void *target, uint32_t n);
 typedef int (*sprintfFun)(char* buffer, const char* format, ...);
 typedef void (*voidFun)(void);
 typedef size_t (*strLenFun)(const char * str);
@@ -93,20 +96,26 @@ typedef void (*beepFun)(int freq, int duration);
 typedef void (*crcFun)(char* data, int length);
 typedef void (*formatNumFun)(int number, char* buffer, int digits);
 
+typedef void (*memSetFun2)(void* targetAddress, unsigned int count, uint8_t valueToSet);
 
 
+__attribute__((section (".mod_MOD_SPACE.LOADSETTINGS"))) const voidFun loadSettingsFromEeprom = (voidFun)0x6005;
 __attribute__((section (".mod_MOD_SPACE.CONFIGPINS"))) const voidFun configurePINs = (voidFun)0x2C01;
 __attribute__((section (".mod_MOD_SPACE.NAVPAGE"))) const navPage showNavPage = (navPage)0x6DD5;
 __attribute__((section (".mod_MOD_SPACE.SETTINGSVALID"))) const voidFun settingsValidation = (voidFun)0x6005;
 __attribute__((section (".mod_MOD_SPACE.SPIMETHOD"))) const voidFun someSPImethod = (voidFun)0xA339;
-__attribute__((section (".mod_MOD_SPACE.MEMCPY"))) const memcpyFun memcpy_ = (memcpyFun)0x198D;
+__attribute__((section (".mod_MOD_SPACE.MEMCPY"))) const memcpyFun strcpy_ = (memcpyFun)0x198D;
+__attribute__((section (".mod_MOD_SPACE.MEMCPY2"))) const memcpyFun2 memcpy_ = (memcpyFun2)0x1CF5;
+
+
+
 __attribute__((section (".mod_MOD_SPACE.SPRINTF"))) const sprintfFun sprintfCall = (sprintfFun)0x19F9;
 __attribute__((section (".mod_MOD_SPACE.STRCAT"))) const strcatFun strcatCall = (strcatFun)0x1C65;
-
+__attribute__((section (".mod_MOD_SPACE.MEM_SET"))) const memSetFun2 memsetCall = (memSetFun2)0x1E0D;
 __attribute__((section (".mod_MOD_SPACE.STRLEN"))) const strLenFun strLenCall = (strLenFun)0x1CB1;
-__attribute__((section (".mod_MOD_SPACE.MEMSET"))) const memSetFun memsetCall = (memSetFun)0x3201;
+//__attribute__((section (".mod_MOD_SPACE.MEMSET"))) const memSetFun memsetCall = (memSetFun)0x3201;
 __attribute__((section (".mod_MOD_SPACE.SEND"))) const voidFun sendPacketWithSysTick = (voidFun)0x9EFD;
-
+__attribute__((section (".mod_MOD_SPACE.SEND"))) const voidFun saveModelSettingsCall = (voidFun)0xABA9;
 __attribute__((section (".mod_MOD_SPACE.DIVBY10")))const divBy10Fun divBy10 = (divBy10Fun)0x2165;
 __attribute__((section (".mod_MOD_SPACE.DIVMOD"))) const divFun uidivmod = (divFun)0x1E5F;
 __attribute__((section (".mod_MOD_SPACE.DIV"))) const divFun div_ = (divFun)0x1E7B;

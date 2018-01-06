@@ -49,11 +49,12 @@ void acData(uint8_t* rxBuffer){
 			shortSensor = (uint16_t)(sensorData >> 19);
 			add2ByteSensor(IBUS_MEAS_TYPE_TEM, sensorIndex, shortSensor);
 			sensorData = sensorData & 0x7FFFF;
+#ifdef TGY_CAT01
 			tmp = getALT(sensorData, shortSensor);
 			i = IBUS_MEAS_TYPE_ALT - IBUS_MEAS_TYPE_GPS_LAT;
 			longSensors[i] = tmp;
 			add2ByteSensor(IBUS_MEAS_TYPE_ALT, sensorIndex, i);
-
+#endif
 		}
 		else if(rxBuffer[index]==IBUS_MEAS_TYPE_GPS_FULL){
 			add2ByteSensor(IBUS_MEAS_TYPE_GPS_STATUS, sensorIndex, rxBuffer[index+4] << 8 | rxBuffer[index+3]);
@@ -111,80 +112,76 @@ modelConfStruct* getModelModConfig(){
 	return ptr;
 }
 
+#define ITEMS_PER_ROW 3
+#define MAX_ROWS 8
 void mixConfig() {
 	uint32_t key = 0;
-	struct modelConfStruct *configPtr = getModelModConfig();
-	int8_t config[MIX_CONFIG_SIZE_BYTES];
-	memcpy_(config, configPtr->mix, MIX_CONFIG_SIZE_BYTES);
-	char buffer[8];
 	uint8_t row = 0;
 	uint8_t col = 0;
 	uint8_t rowPos = 0;
+	uint8_t channel = 0;
+	int8_t config[MIX_CONFIG_SIZE_BYTES];
+	uint8_t index = 0;
+	int8_t value = 0;
+	struct modelConfStruct *configPtr = getModelModConfig();
+	memcpy_(config, configPtr->mix, sizeof(configPtr->mix));
+
+	char buffer[16];
+	char *bufferPtr;
 	do {
 		callSetupDMAandSend();
 		//displayPageHeader((char*)0xDBEC);
-		for (uint8_t rowIndex= 0; rowIndex < 8; rowIndex++) {
+		channel = 7;
+		for (uint8_t rowIndex= 0; rowIndex < MAX_ROWS; rowIndex++, channel++) {
 			rowPos = rowIndex << 3;
-			buffer[0] = '7' + rowIndex;
-			buffer[1] = 0;
-			displayTextAt(buffer, 8, rowPos, 0);
-			for (uint8_t colIndex = 0; colIndex < 3; colIndex++) {
-				sprintfCall(buffer, (const char*)0x5564, config[3 * rowIndex + colIndex]);
-				displayTextAt(buffer, mixPos[colIndex] + 8, buffer, 0);
+			/*buffer[0] = channel < 10 ?  ' ' : '1';
+			buffer[1] = '0' + (channel < 10 ?  channel : (channel - 10));
+			buffer[2] = 0;
+			displayTextAt(buffer, 0, rowPos, 0);
+			*/
+			for (uint8_t colIndex = 0; colIndex < ITEMS_PER_ROW; colIndex++) {
+				int16_t val = (int16_t)config[3 * rowIndex + colIndex];
+				bufferPtr = buffer;
+				if(val < 0){
+					val = val *-1;
+					buffer[0] = '-';
+					bufferPtr++;
+				}
+				sprintfCall(bufferPtr, (const char*)0x5564, val);
+				displayTextAt(buffer, mixPos[colIndex] + 8, rowPos, 0);
 			}
 			displayGFX((gfxInfo*)GFX_ARROW, mixPos[col], row << 3);
 		}
 		LCD_updateCALL();
 		key = getKeyCode();
+		index = 3 * row + col;
+		value = config[index];
 
 		if (key == KEY_SHORT_OK)
 		{
 			col++;
-			if (col >= 3) {
+			if (col >= ITEMS_PER_ROW) {
 				col = 0;
 				row++;
 			}
-			if (row >= 3) row = 0;
+			if (row >= MAX_ROWS) row = 0;
 		}
-
-		if (key == KEY_SHORT_UP || key == KEY_LONG_UP) {
-			config[3 * row + col]++;
+		else if (key == KEY_SHORT_UP || key == KEY_LONG_UP) {
+			if(value >= 127) continue;
+			if(col < 2 && value >= config[index+1])continue;
+			config[index] = ++value;
 		}
-		if (key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
-			config[3 * row + col]--;
+		else if (key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
+			if(value <= -127) continue;
+			if(col > 0 && value <= config[index-1]) continue;
+			config[index] = --value;
 		}
-	} while (key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
-
+	}
+	while (key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
 	if (key == KEY_LONG_CANCEL) {
-		memcpy_(configPtr->mix, config, MIX_CONFIG_SIZE_BYTES);
+		memcpy_(configPtr->mix, config, sizeof(configPtr->mix));
 	}
 }
-void createPacketCh7_14(){
-	int32_t channel7Address = 0x1FFFFDF8;
-	struct modelConfStruct *configPtr = getModelModConfig();
-	uint16_t ch11_14 = *((uint16_t*)&(configPtr->ch11_12));
-	uint8_t lsb = 0;
-	//skip 7,8,9,10
-	channel7Address += 16; 
-	for(uint8_t i=0; i < 4; i++){
-		//*((int32_t*)channel11Address) = getAuxChannel((ch11_14 >> lsb) & ~(~0 << (msb-lsb+1)));
-		*((int32_t*)channel7Address) = getAuxChannel((ch11_14 >> lsb) & ~(~0 << 4));
-		lsb +=4;
-		channel7Address += 4;
-	}
-	
-	//
-	
-	//uint8_t auxChannels[4];
-	//auxChannels[0] = configPtr->ch11_12 >> 4;
-	//auxChannels[1] = configPtr->ch11_12 &  0xF;
-	//auxChannels[2] = configPtr->ch13_14 >> 4;
-	//auxChannels[3] = configPtr->ch13_14 &  0xF;
-	//for(uint8_t i=0; i < sizeof(auxChannels); i++){
-	//	*((int32_t*)(channel11Address + 4*i)) = getAuxChannel(auxChannels[i]);
-	//}
-}
-
 
 int mix(int value, int8_t min, int8_t max, int8_t subtrim){
 	uint8_t input_range_fixed_q20 = 105;
@@ -280,7 +277,7 @@ uint32_t isTimerActive(){
 	//if(value > one_thousand*2) return 0; // > 2000
 	int32_t chValue = *(((int32_t *)CHANNEL_VALUE)+(channel-1));
 	int32_t configVal = ((int32_t)configPtr->timerStart - one_thousand) * 20 - ten_thousands;
-
+	if(channel == 0 || configVal <= 0) return 0;
 	return chValue > configVal;
 }
 
@@ -295,40 +292,45 @@ uint32_t isTimerActive(){
 void auxChannels2(){
 	uint8_t row = 0;
 	uint32_t key = 0;
+	uint8_t page = 0;
+	uint8_t auxValue = 0;
+	uint8_t index = 0;
+	uint8_t modelType = 0;
+	uint8_t heli = 0;
 	uint32_t* namePtr = (uint32_t*)0x200000B8;
-	char* name2Ptr = (char*) 0xF638;
 	char* tmp = 0;
-	struct modelConfStruct *configPtr = getModelModConfig();
-
-	uint8_t auxChannels[4];
-	auxChannels[0] = configPtr->ch11_12 >> 4;
-	auxChannels[1] = configPtr->ch11_12 &  0xF;
-	auxChannels[2] = configPtr->ch13_14 >> 4;
-	auxChannels[3] = configPtr->ch13_14 &  0xF;
+	uint8_t* settings = (uint8_t*)((*(uint32_t *)(USED_MODEL_PTR)));
+	uint8_t auxChannels[10];
+	modelType = settings[9];
+	heli = settings[55] & 8;
+	settings += 60;
+	auxChannels[0] = settings[0];
+	auxChannels[1] = settings[1];
+	extractConfigCh7_14(auxChannels +2);
 
 	char buffer[32];
-
-	while(1){
+	do{
 		callSetupDMAandSend();
 		displayPageHeader((char*)0xCC5A);
-		uint32_t ptr = 0x9650;
-		//copy channel
-		for(uint8_t i=0; i <7; i++){
-			buffer[i] = *((char*)(ptr + i));
-		}
-		buffer[7] = '1';
 
-		for(uint8_t i=0; i < sizeof(auxChannels); i++){
-			int posY = 16 + i*8;
-
-			buffer[8] = '1' + i;
-			buffer[9] = 0;
-			displayTextAt(buffer, 8, posY, 0);
-			if(auxChannels[i] <= 6){
-				tmp = (char*)(*(namePtr + auxChannels[i]));
+		for(uint8_t i=0; i < 6; i++){
+			index = (page * 6) + i;
+			uint8_t channel = 5 + index;
+			if(channel > 14) continue;
+			int posY = 16 + i *8;
+			displayTextAt((char*)0x9650, 8, posY, 0);
+			sprintfCall(buffer, (const char*) formatNumber, channel);
+			displayTextAt(buffer, 64, posY, 0);
+			auxValue = auxChannels[index];
+			if(auxValue <= 6){
+				tmp = (char*)(*(namePtr + auxValue));
 			}
-			else if(auxChannels[i] <= 15){
-				tmp = name2Ptr + (6 * (auxChannels[i] - 7));
+			else if(auxValue <= 15){
+				tmp = auxSW + (6 * (auxValue - 7));
+			}
+
+			if((channel == 6 && modelType >=2) || (channel == 5 && modelType && heli)){
+				tmp = (char*) 0xCA9F;
 			}
 
 			if(tmp!=0 && tmp[0]!=0){
@@ -336,46 +338,83 @@ void auxChannels2(){
 			}
 		}
 		displayGFX((gfxInfo*) GFX_ARROW, 0, 16 + (row*8));
-
 		LCD_updateCALL();
 		key = getKeyCode();
+		index = (page * 6) + row;
 		if(key == KEY_SHORT_OK) {
 			row++;
-			if(row >=4)row = 0;
+			if((page == 1 && row ==4) || row == 6){
+				if(++page == 2) page = 0;
+				row = 0;
+			}
 		}
 		else if(key == KEY_LONG_OK) {
-			auxChannels[row] = 0;
+			auxChannels[index] = 0;
 		}
 		else if(key == KEY_SHORT_UP || key == KEY_LONG_UP) {
-			if(auxChannels[row] < 15){
-				auxChannels[row]++;
+			if(auxChannels[index] < MAX_INDEX){
+				auxChannels[index]++;
 			}
 		}
 		else if(key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
-			if(auxChannels[row] > 0){
-				auxChannels[row]--;
+			if(auxChannels[index] > 0){
+				auxChannels[index]--;
 			}
 		}
-		else break;
 	}
+	while ( key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
+
 	if(key == KEY_LONG_CANCEL){
-		configPtr->ch11_12 = (auxChannels[0] << 4) | auxChannels[1];
-		configPtr->ch13_14 = (auxChannels[2] << 4) | auxChannels[3];
+		saveAuxCh5_14(auxChannels);
 	}
-
 }
-void createPacketCh1114(){
-	int32_t channel11Address = 0x1FFFFE08;
-	struct modelConfStruct *configPtr = getModelModConfig();
+void extractConfig(uint8_t val, uint8_t* result){
+	result[0] = val & 0xF;
+	result[1] = val >> 4;
+}
 
-	uint8_t auxChannels[4];
-	auxChannels[0] = configPtr->ch11_12 >> 4;
-	auxChannels[1] = configPtr->ch11_12 &  0xF;
-	auxChannels[2] = configPtr->ch13_14 >> 4;
-	auxChannels[3] = configPtr->ch13_14 &  0xF;
+void extractConfigCh7_14(uint8_t* result){
+	struct modelConfStruct *configPtr = getModelModConfig();
+	const uint8_t* settings = (uint8_t*)((*(uint32_t *)(USED_MODEL_PTR)));
+	extractConfig(settings[141], result);
+	extractConfig(settings[145], result+2);
+	extractConfig(configPtr->ch11_12, result+4);
+	extractConfig(configPtr->ch13_14, result+6);
+}
+void saveAuxCh5_14(uint8_t* current){
+	struct modelConfStruct *configPtr = getModelModConfig();
+	uint8_t* settings = (uint8_t*)((*(uint32_t *)(USED_MODEL_PTR)));
+	settings+=60;
+	settings[0] = current[0];
+	settings[1] = current[1];
+	settings+=81;
+	settings[0] = current[2] | (current[3] << 4);
+	settings[4] = current[4] | (current[5] << 4);
+	configPtr->ch11_12 = current[6] | (current[7] << 4);
+	configPtr->ch13_14 = current[8] | (current[9] << 4);
+}
+
+
+
+void createPacketCh1114(){
+	int32_t value = 0;
+	int32_t channel7Address = 0x1FFFFDF8;
+	struct modelConfStruct *configPtr = getModelModConfig();
+	struct mixConfStruct *mixPtr;
+	const uint8_t* settings = (uint8_t*)((*(uint32_t *)(USED_MODEL_PTR)));
+	settings += 141;
+	//int32_t channel11Address = 0x1FFFFE08;
+	//struct modelConfStruct *configPtr = getModelModConfig();
+	uint8_t auxChannels[8];
+	extractConfigCh7_14(auxChannels);
 
 	for(uint8_t i=0; i < sizeof(auxChannels); i++){
-		*((int32_t*)(channel11Address + 4*i)) = getAuxChannel(auxChannels[i]);
+		value = getAuxChannel(auxChannels[i]);
+		mixPtr = &(configPtr->mix[i]);
+		if(mixPtr->min != 0 || mixPtr->min != 0){
+				value = mix(value, mixPtr->min, mixPtr->max, mixPtr->subtrim);
+		}
+		*((int32_t*)(channel7Address + 4*i)) = value;
 	}
 }
 int getAuxChannel(uint32_t request){
@@ -399,7 +438,7 @@ int getAuxChannel(uint32_t request){
 		return  *(int32_t *)(PPM_IN_BUFFER_CH6 - request);
 	}
 	if(request == 11){ //error
-		sw1 = getSensorValue(254, 0,0);
+		sw1 = getSensorValue(IBUS_MEAS_TYPE_ERR, 0,0);
 		if(sw1 == 0x8000) sw1 = -10000;
 		else if(sw1 > 50) sw1 = -200* (sw1 - 50);
 		else sw1 = 200 * (50 - sw1);
@@ -417,15 +456,13 @@ int getAuxChannel(uint32_t request){
 			goto TwoPos;
 		}
 	}
-	else if(request == 10){ // A+D or E
-		/*
-		 uint32_t portD = ((*(uint32_t *)(0x400FF0D0)));
-		if ( !(portD & 0x4))  return 10000;
-		return -10000;
-		 */
-		sw1 = SW_A;
-		sw2 = SW_D;
-		goto TwoPos;
+	else if(request == 10){ // SNR
+		sw1 = getSensorValue(IBUS_MEAS_TYPE_SNR, 0,0);
+		if(sw1 == 0x8000) sw1 = -10000;
+		if(sw1 >= 40) sw1 = 10000;
+		else if(sw1 <= 20) sw1 = -500* (20 - sw1);
+		else sw1 = 500 * (sw1 - 20);
+		return sw1;
 	}
 	else if(request == 8){ // B+C
 		sw1 = SW_C;
@@ -496,7 +533,7 @@ int getSWState(uint32_t swIndex){
 
 /*Belongs to .mod_modMenu 0xFFA0 */
 void displayMenu(){
-	showNavPage((const char*) extraMenu, 7, (manuEntry*)menuList);
+	showNavPage((const char*) extraMenu, EXTRA_MENU_ITEMS, (manuEntry*)menuList);
 }
 
 void BatteryType() {
@@ -531,6 +568,7 @@ void play(int freq, int duration, int pause){
 		if(pause > 0) beep(0,pause);
 	}
 }
+
 void beepSilent(){
 
 }
@@ -719,7 +757,7 @@ uint8_t prevSensorID(uint8_t sensorID)
 
 	return sensorID;
 }
-
+#ifdef TGY_CAT01
 void ASLConfig(){
 	uint32_t key = 0;
 	uint8_t navPos = 0;
@@ -761,7 +799,7 @@ void ASLConfig(){
 			configPtr->initAlt = values[0] | (values[1] << 19);
 		}
 }
-
+#endif
 
 void AlarmConfig(){
 	struct modelConfStruct *configPtr = getModelModConfig();
@@ -1027,6 +1065,21 @@ void configurePINS2(){
 	PORT_SetPinMux(PORTD, 2u, kPORT_MuxAsGpio);
 	GPIOD->PDDR &= ~(1U << 2); //input
 #endif
+
+}
+
+void loadSettings(){
+	loadSettingsFromEeprom();
+	if(modConfig2.versionMagic != VERSION_MAGIC){
+		modConfig2.batteryVoltage = 480;
+		modConfig2.swConfig = 0;
+		modConfig2.versionMagic = VERSION_MAGIC;
+		for(uint8_t model =0; model < TOTAL_MODELS; model++){
+			//set first 50 bytes
+			memsetCall(&modConfig2.modelConfig[model], 50, 0);
+		}
+		saveModelSettingsCall();
+	}
 }
 
 //return non 0 when switch MAX value
@@ -1173,6 +1226,7 @@ void varioSensorSelect(){
 	} while (key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
 }
 
+#ifdef TGY_CAT01
 int32_t log2fix(uint32_t x){
 	int32_t b = 1U << (precision - 1);
 	int32_t y = 0;
@@ -1202,7 +1256,6 @@ uint16_t ibusTempToK(int16_t tempertureIbus){
 	return (uint16_t)(tempertureIbus - 400) + 2731;
 }
 
-
 void getInitPressure(uint32_t* pressure, int32_t* temperature){
 	struct modelConfStruct *configPtr = getModelModConfig();
 	*pressure = configPtr->initAlt & 0x7FFFF;
@@ -1217,13 +1270,7 @@ int getALT(uint32_t pressurePa, uint16_t tempertureIbus){
     int temperature = (initTemperature + temperatureK) >> 1; //div 2
     bool tempNegative = temperature < 0;
     if (tempNegative)  temperature = temperature *-1;
-		/*
-		int index = 55;
-		int i = IBUS_MEAS_TYPE_S85 - IBUS_MEAS_TYPE_GPS_LAT;
-		longSensors[i] = (uint32_t)temperature;
-		add2ByteSensor(IBUS_MEAS_TYPE_S85, index, i);
-		i++;
-		*/
+
     uint64_t helper = R_DIV_G_MUL_10_Q15;
     helper = __mul64(helper, (uint64_t)temperature);
     helper = helper >> precision;
@@ -1232,40 +1279,23 @@ int getALT(uint32_t pressurePa, uint16_t tempertureIbus){
 		//so can not shift by precision because it will result in negative number
 
 		uint32_t po_to_p = (uint32_t)(initPressure << (precision-1));
-		/*
-		longSensors[i] = po_to_p;
-		add2ByteSensor(IBUS_MEAS_TYPE_S86, index, i);
-		*/
+
 		po_to_p = div_(po_to_p, pressurePa);
 		//shift missing bit
 		po_to_p = po_to_p << 1;
-		/*
-		i++;
-		longSensors[i] = po_to_p;
-		add2ByteSensor(IBUS_MEAS_TYPE_S87, index, i);
-		*/
-		//return po_to_p;
-    //if (po_to_p == 0) return 0;
-		//po_to_p = 31130;
+
 
 		uint64_t t =  __mul64(log2fix(po_to_p), INV_LOG2_E_Q1DOT31);
 		int32_t ln = t >> 31;
-		/*
-		i++;
-		longSensors[i] =(uint32_t)ln;
-		add2ByteSensor(IBUS_MEAS_TYPE_S88, index, i);
-		*/
+
     bool neg = ln < 0;
     if (neg) ln = ln * -1;
     helper = __mul64(helper, (uint64_t)ln);
     helper = helper >> precision;
     int result = (int)helper;
-		/*
-		i++;
-		longSensors[i] =(uint32_t)result;
-		add2ByteSensor(IBUS_MEAS_TYPE_S89, index, i);
-		*/
+
     if (neg ^ tempNegative) result = result * -1;
     return result;
 }
+#endif
 #pragma GCC optimize ("O1")
