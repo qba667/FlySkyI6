@@ -286,6 +286,14 @@ SECTIONS
     *(.reserved_after_code_5174_5353);
   }
 
+  .mod_595C 0x595C : {
+      *(.mod_voltADJConfig);
+      *(.mod_voltSensors);
+  }
+  .reserved_after_code_595C 0x5B28 : {
+    *(.reserved_after_code_595C);
+  }
+
   .mod_code_65C8_68A7 0x65C8 :
   {
     *(.mod_parseAC);
@@ -315,7 +323,6 @@ SECTIONS
 	*(.mod_nextSensorID);
 	*(.mod_prevSensorID);
 	*(.mod_asm_aeabi_lmul);
-
   }
 
   .reserved_after_code_C9B0_CA4F 0xCA50 :
@@ -330,6 +337,7 @@ SECTIONS
   {
   *(.mod_swEHandling);
   *(.mod_checkTimerActive);
+
   }
 
   .reserved_after_code_D50C_D5EF 0xD5F0 :
@@ -348,10 +356,20 @@ SECTIONS
     *(.mod_extractConfig);
     *(.mod_createPacketCh1114);
     *(.mod_auxChannelsText);
+
+
+
   }
 
   .reserved_after_code_E140_E754 0xE754 :{
    	 *(.reserved_after_code_E140_E754);
+  }
+
+  .mod_voltTelemetry_ASM 0x57DA :{
+   	 *(.mod_voltTelemetry_ASM);
+  }
+  .reserved_after_voltTelemetry_ASM 0x57EE :{
+   	 *(.reserved_after_voltTelemetry_ASM);
   }
 
 
@@ -371,6 +389,7 @@ SECTIONS
    *(.mod_getALT);
    *(.mod_asl);
    *(.mod_mix);
+   *(.mod_voltADJ);
 
   }
   . = ALIGN(1);
