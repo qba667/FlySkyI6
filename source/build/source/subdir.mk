@@ -36,7 +36,8 @@ ASM_SRCS += \
 ../source/formatSensorValue2.asm \
 ../source/loadSettings.asm \
 ../source/callCreatePacket1.asm \
-../source/callCreatePacket2.asm
+../source/callCreatePacket2.asm \
+../source/voltTelemetry.asm
 
 
 OBJS += \
@@ -70,7 +71,8 @@ OBJS += \
 ./source/formatSensorValue2.o \
 ./source/loadSettings.o \
 ./source/callCreatePacket1.o \
-./source/callCreatePacket2.o
+./source/callCreatePacket2.o \
+./source/voltTelemetry.o
 
 C_DEPS += \
 ./source/adc.d \
@@ -105,7 +107,8 @@ ASM_DEPS += \
 ./source/formatSensorValue2.d \
 ./source/loadSettings.d \
 ./source/callCreatePacket1.d \
-./source/callCreatePacket2.d 
+./source/callCreatePacket2.d \
+./source/voltTelemetry.d
 
 # Each subdirectory must supply rules for building sources it contributes
 source/%.o: ../source/%.c

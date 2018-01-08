@@ -72,6 +72,7 @@ extern void __call_formatSensorValue2_ASM();
 extern void __call_loadSettings_ASM();
 extern void __call_CreatePacket1_ASM();
 extern void __call_CreatePacket2_ASM();
+extern void __call_voltTelemetry_ASM();
 char buffer[32];
 
 int main(void) {
@@ -122,8 +123,10 @@ int main(void) {
   __call_loadSettings_ASM();
   __call_CreatePacket1_ASM();
   __call_CreatePacket2_ASM();
+  __call_voltTelemetry_ASM();
   configurePINS2();
   CheckCustomAlarms();
+  adjustVoltageConfig();
   //keep few regions
   if(keep1==0){keep1++;}
   if(keep2==0){keep2++;}
@@ -133,6 +136,9 @@ int main(void) {
   if(keep6==0){keep6++;}
   if(keep7==0){keep7++;}
   if(keep8==0){keep8++;}
+  if(keep9==0){keep9++;}
+  if(keep10==0){keep10++;}
+
   if(txVoltageAddress==0){txVoltageAddress++;}
   if(timerBufferAddress==0){timerBufferAddress++;}
   if(timerValueAddress==0){timerValueAddress++;}
@@ -148,7 +154,7 @@ int main(void) {
   #ifdef SILENT
   beepSilent();
   #endif
-
+  adjustVoltage((char *)mod_version);
   formatSensorValue((char *)SIGNATURE, 0,0);
   formatSensorValue((char *)mod_version, 0,0);
   //divFun dev = (divFun)0x1E5E;

@@ -129,6 +129,8 @@ __attribute__((section (".mod_radioModes"))) const uint8_t RADIO_MODES[] =
 	"SBUS/PPM"	// The last one without \0
 ;
 
+
+const uint8_t __attribute__((section (".mod_voltSensors"))) voltageSensors[] = { IBUS_MEAS_TYPE_INTV, IBUS_MEAS_TYPE_EXTV} ;
 const uint8_t __attribute__((section (".mod_armed"))) ARMED[] = "Armed";
 
 const uint8_t __attribute__((section (".mod_flyModesOffset"))) flyModesOffset[] = {
@@ -211,9 +213,9 @@ const uint8_t __attribute__((section (".mod_varioStrings"))) varioSensor[] = {
 #define EXTRA_MENU_ALARM 13
 #define EXTRA_MENU_ASL 19
 
-#define EXTRA_MENU_ITEMS 6
+#define EXTRA_MENU_ITEMS 7
 #ifdef TGY_CAT01
-	#define EXTRA_MENU_ITEMS 7
+	#define EXTRA_MENU_ITEMS 8
 #endif
 
 
@@ -234,6 +236,7 @@ const uint32_t __attribute__((section (".mod_extraMenu"))) menuList[] = {
 	#ifdef TGY_CAT01
 	(uint32_t)(extraMenu+EXTRA_MENU_ASL), (uint32_t)(&ASLConfig+1),
 	#endif
+	(uint32_t)TEXT_ADJ, (uint32_t)(&adjustVoltageConfig+1),
 	(uint32_t)TEXT_MIX, (uint32_t)(&mixConfig+1),
 };
 
@@ -335,7 +338,7 @@ const uint32_t __attribute__((section (".mod_aslLabels"))) aslLabels[] = { (uint
 const uint8_t  __attribute__((section (".mixPos"))) mixPos[] = { 0, 48, 80 };
 
 
-const uint8_t  __attribute__((section (".mod_version"))) mod_version[] = "1.7.1";
+const uint8_t  __attribute__((section (".mod_version"))) mod_version[] = "1.7.3";
 
 uint32_t  __attribute__((section (".mod_tx_voltage_alarm_address"))) txVoltageAddress = (uint32_t)&modConfig2.batteryVoltage;
 uint32_t  __attribute__((section (".mod_mainScreenIndexAddress"))) mainScreenIndexAddress = (uint32_t)&mainScreenIndex;

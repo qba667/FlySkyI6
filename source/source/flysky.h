@@ -41,6 +41,7 @@
 #define TEXT_TIMMER	0xDCB7
 #define TEXT_HOLD 0xCAB3
 #define TEXT_MIX 0xCA93
+#define TEXT_ADJ 0xDBA1
 #define FORMAT_TEMP 0x5530
 
 #define KEY_SHORT_UP 9
@@ -80,6 +81,7 @@ typedef size_t (*strLenFun)(const char * str);
 typedef char* (*strcatFun)(char * str, const char* source);
 typedef void * (*memSetFun)(void *str, int c, size_t n);
 typedef uint32_t (*divFun)(uint32_t a, uint32_t b);
+typedef int32_t (*divSignedFun)(int32_t a, int32_t b);
 typedef uint32_t (*divBy10Fun)(uint32_t a);
 typedef int (*intVoidFun)(void);
 typedef int (*eepromFun)(uint8_t * target, int16_t eepromOffset, int length);
@@ -106,7 +108,7 @@ __attribute__((section (".mod_MOD_SPACE.SETTINGSVALID"))) const voidFun settings
 __attribute__((section (".mod_MOD_SPACE.SPIMETHOD"))) const voidFun someSPImethod = (voidFun)0xA339;
 __attribute__((section (".mod_MOD_SPACE.MEMCPY"))) const memcpyFun strcpy_ = (memcpyFun)0x198D;
 __attribute__((section (".mod_MOD_SPACE.MEMCPY2"))) const memcpyFun2 memcpy_ = (memcpyFun2)0x1CF5;
-
+__attribute__((section (".mod_MOD_SPACE.RESET"))) const voidFun restartUnit = (voidFun)0x9929;
 
 
 __attribute__((section (".mod_MOD_SPACE.SPRINTF"))) const sprintfFun sprintfCall = (sprintfFun)0x19F9;
@@ -119,6 +121,9 @@ __attribute__((section (".mod_MOD_SPACE.SEND"))) const voidFun saveModelSettings
 __attribute__((section (".mod_MOD_SPACE.DIVBY10")))const divBy10Fun divBy10 = (divBy10Fun)0x2165;
 __attribute__((section (".mod_MOD_SPACE.DIVMOD"))) const divFun uidivmod = (divFun)0x1E5F;
 __attribute__((section (".mod_MOD_SPACE.DIV"))) const divFun div_ = (divFun)0x1E7B;
+__attribute__((section (".mod_MOD_SPACE.DIV2"))) const divSignedFun div_1 = (divSignedFun)0xA179;
+
+
 __attribute__((section (".mod_MOD_SPACE.GETKEY"))) const intVoidFun getKeyCode = (intVoidFun)0x2535;
 __attribute__((section (".mod_MOD_SPACE.GETINPUT"))) const intVoidFun getInputStates = (intVoidFun)0x3569;
 __attribute__((section (".mod_MOD_SPACE.DMASEND"))) const voidFun callSetupDMAandSend = (voidFun)0x25B5;

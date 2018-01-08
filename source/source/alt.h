@@ -52,7 +52,7 @@ typedef struct sensorAlarm
 #define NEW_MODEL_MEM MODEL_SETTINGS + TOTAL_MODELS * OLD_CONFIGSIZE
 #define MIX_CONFIG_SIZE_BYTES 24
 
-#define VERSION_MAGIC 0x171
+#define VERSION_MAGIC 0x173
 //to use this in linker we need to run linker on ld file
 //https://stackoverflow.com/questions/28837199/can-i-use-preprocessor-directives-in-ld-file
 //for now just calcualte
@@ -80,7 +80,9 @@ typedef struct modelConfStruct
 	uint8_t varioGain : VARIO_MAX_GAIN_BITS;					// 1
 	uint8_t reserved_bits : (8 - VARIO_MAX_GAIN_BITS);			// 1
 	mixConfStruct mix[8];										// 8*3 = 24
-	uint8_t reserved[8];										// 8
+	uint16_t intVoltAdj;
+	uint16_t extVoltAdj;
+	uint8_t reserved[4];										// 8
 } modelConfStruct;												// 58
 //7 + 12 + 4 +2 +24 +8 =
 
@@ -146,7 +148,7 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_prevSensorID")))  uint8_t nextSensorID(uint8_t sensorID);
 
  __attribute__((section (".mod_channels1114"))) void auxChannels2();
-
+ __attribute__((section (".mod_voltADJConfig")))void adjustVoltageConfig();
   __attribute__((section (".mod_extractConfig"))) void extractConfigCh7_14(uint8_t* result);
 	__attribute__((section (".mod_extractConfig"))) void saveAuxCh5_14(uint8_t* current);
 
@@ -165,6 +167,7 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_saveModEeprom"))) void saveModSettings();
  */
 
+__attribute__((section (".mod_voltADJ"))) void adjustVoltage(uint8_t* sensorArray);
 __attribute__((section (".mod_loadSettingsExt"))) void loadSettings();
 __attribute__((section (".mod_varioSensorSelect"))) void varioSensorSelect();
 __attribute__((section (".mod_displaySensors"))) void displaySensors();
@@ -189,6 +192,11 @@ __attribute__((section (".reserved_after_code_E140_E754"))) uint32_t keep4 = 0;
 __attribute__((section (".reserved_after_code_in_display_method"))) uint32_t keep6 = 0;
 __attribute__((section (".reserved_after_code_D510_D5EF"))) uint32_t keep7 = 0;
 __attribute__((section (".reserved_after_code_extraChannels_ASM"))) uint32_t keep8 = 0;
+__attribute__((section (".reserved_after_voltTelemetry_ASM"))) uint32_t keep9 = 0;
+__attribute__((section (".reserved_after_code_595C"))) uint32_t keep10 = 0;
+
+
+
 
 __attribute__((section (".reserved_checksum"))) uint16_t keepChecksum = 0;
 

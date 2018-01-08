@@ -1070,16 +1070,24 @@ void configurePINS2(){
 
 void loadSettings(){
 	loadSettingsFromEeprom();
+	struct modelConfStruct *config;
 	if(modConfig2.versionMagic != VERSION_MAGIC){
 		modConfig2.batteryVoltage = 480;
 		modConfig2.swConfig = 0;
 		modConfig2.versionMagic = VERSION_MAGIC;
 		for(uint8_t model =0; model < TOTAL_MODELS; model++){
 			//set first 50 bytes
-			memsetCall(&modConfig2.modelConfig[model], 50, 0);
+			config = &modConfig2.modelConfig[model];
+			memsetCall(config, 50, 0);
+			config->varioSensorID = IBUS_MEAS_TYPE_UNKNOWN;
+			config->intVoltAdj = config->extVoltAdj = 10000;
+			for(uint8_t alarmIndex = 0; alarmIndex < 3; alarmIndex++)
+				config->alarm[alarmIndex].sensorID = IBUS_MEAS_TYPE_UNKNOWN;
 		}
 		saveModelSettingsCall();
+		restartUnit();
 	}
+
 }
 
 //return non 0 when switch MAX value
@@ -1177,14 +1185,6 @@ void varioSensorSelect(){
 	char buffer[8];
 	uint8_t row = 0;
 
-	// wrong initial value?
-	if (sensorID != nextSensorID(prevSensorID(sensorID))) {
-		sensorID = model->varioSensorID = 0;
-		sensorGain = model->varioGain = 0;
-	}
-	if (sensorGain > VARIO_MAX_GAIN)
-		sensorGain = model->varioGain = VARIO_MAX_GAIN;
-
 	do {
 		callSetupDMAandSend();
 		displayPageHeader((char*)varioSensor);
@@ -1224,6 +1224,63 @@ void varioSensorSelect(){
 				sensorGain--;
 		}
 	} while (key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
+}
+
+void adjustVoltage(uint8_t* sensorArray){
+	struct modelConfStruct *model = getModelModConfig();
+	uint16_t adjVal = 0;
+	if(sensorArray[0] == IBUS_MEAS_TYPE_INTV){
+		adjVal = model->intVoltAdj;
+	}
+	if(sensorArray[0] == IBUS_MEAS_TYPE_EXTV){
+		adjVal = model->extVoltAdj;
+	}
+	if(adjVal == 0 || adjVal == 10000u) return;
+ 	uint16_t value = sensorArray[3] << 8 | sensorArray[2];
+	value = div_1(value * 10000u, adjVal);
+	sensorArray[2] = value & 0xFF;
+	sensorArray[3] = (value & 0xFF00) >> 8;
+}
+
+void adjustVoltageConfig(){
+	uint32_t key = 0;
+	struct modelConfStruct *model = getModelModConfig();
+	uint16_t intVolt = model->intVoltAdj;
+	uint16_t extVolt = model->extVoltAdj;
+
+	uint16_t* adjValue = &(model->intVoltAdj);
+	uint8_t index = 0;
+	int32_t value = 0;
+	char buffer[32];
+
+	do {
+	callSetupDMAandSend();
+	displayPageHeader((char*)0xDBA1);
+	uint8_t sensor = 0;
+	uint8_t yPos = 0;
+	for(uint8_t sensorIndex = 0; sensorIndex < 2; sensorIndex++){
+		sensor = voltageSensors[sensorIndex];
+		yPos = sensorIndex? 36 : 24;
+		displayTextAt((char*)getSensorName(sensor), 16, yPos, 0);
+		value = (uint16_t)getSensorValue(sensor, 0,0);
+		if(value != 0x8000){
+			formatSensorValue(buffer, sensor, value);
+			displayTextAt((char*)buffer, 56, yPos,0);
+		}
+	}
+	displayGFX((gfxInfo*) GFX_ARROW, 8, index ? 36 : 24);
+	LCD_updateCALL();
+	key = getKeyCode();
+	if(key == KEY_SHORT_UP || key == KEY_LONG_UP) adjValue[index] -=10;
+	if(key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) adjValue[index] +=10;
+	else if(key == KEY_SHORT_OK) index = !index;
+	else if(key == KEY_LONG_OK) adjValue[index] = 10000;
+	} while ( key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
+
+	if(key != KEY_LONG_CANCEL){
+		model->intVoltAdj = intVolt;
+		model->extVoltAdj = extVolt;
+	}
 }
 
 #ifdef TGY_CAT01
