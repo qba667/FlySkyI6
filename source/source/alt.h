@@ -52,7 +52,7 @@ typedef struct sensorAlarm
 #define NEW_MODEL_MEM MODEL_SETTINGS + TOTAL_MODELS * OLD_CONFIGSIZE
 #define MIX_CONFIG_SIZE_BYTES 24
 
-#define VERSION_MAGIC 0x173
+#define VERSION_MAGIC 0x175
 //to use this in linker we need to run linker on ld file
 //https://stackoverflow.com/questions/28837199/can-i-use-preprocessor-directives-in-ld-file
 //for now just calcualte

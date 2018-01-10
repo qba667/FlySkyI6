@@ -1091,6 +1091,10 @@ void loadSettings(){
 			memsetCall(config, 50, 0);
 			config->varioSensorID = IBUS_MEAS_TYPE_UNKNOWN;
 			config->intVoltAdj = config->extVoltAdj = 10000;
+			for(uint8_t mixIndex = 0; mixIndex < 8; mixIndex++){
+					config->mix[mixIndex].min = -100;
+					config->mix[mixIndex].max = 100;
+			}
 			for(uint8_t alarmIndex = 0; alarmIndex < 3; alarmIndex++)
 				config->alarm[alarmIndex].sensorID = IBUS_MEAS_TYPE_UNKNOWN;
 		}
