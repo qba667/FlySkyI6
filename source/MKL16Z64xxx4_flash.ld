@@ -277,6 +277,46 @@ SECTIONS
   {
     *(.mod_radioModes);
   }
+  .mod_rxMenuSpeedDistStr 0xD2EE :
+  {
+    *(.mod_rxMenuSpeedDistStr);
+    *(.mod_rxMenuSpeedDistMethod);
+  }
+
+
+
+  /*Free space for code*/
+  .mod_code_AC34 0xAC34 : {
+  *(.mod_log2fix);
+  *(.mod_getALT);
+  }
+  .reserved_after_code_AC34  0xAE44 : {
+  *(.reserved_after_code_AC34);
+  }
+  .mod_code_9A60 0x9A60 :
+{
+  *(.mod_asl);
+}
+.reserved_after_code_9A60  0x9BC0 : {
+*(.reserved_after_code_9BC0);
+}
+
+.mod_code_9830 0x9830 :
+{
+
+}
+.reserved_after_code_9830  0x9928 : {
+*(.reserved_after_code_9830);
+}
+
+/*
+Seed distnace page menu
+ROM:0000D2A0 stru_D2A0       manuEntry <0xEE3D, 0xAC59> ; DATA XREF: SpeedDistancePage
+ROM:0000D2A8                 manuEntry <0xEE06, 0x9A61>
+ROM:0000D2B0                 manuEntry <0xED92, 0x9831>
+ROM:0000D2B8                 manuEntry <0xEDA2, 0x98AD>
+*/
+
 
   /*Free space for code 288 bytes*/
   .mod_code_5174_5353 0x5174 : {
@@ -288,11 +328,12 @@ SECTIONS
   .reserved_after_code_5174_5353 0x5354 : {
     *(.reserved_after_code_5174_5353);
   }
-
   .mod_595C 0x595C : {
       *(.mod_voltADJConfig);
       *(.mod_voltSensors);
+      *(.mod_acHelper);
       *(.mod_mapSNR);
+      *(.mod_aslLabels);
   }
   .reserved_after_code_595C 0x5B28 : {
     *(.reserved_after_code_595C);
@@ -301,9 +342,7 @@ SECTIONS
   .mod_code_65C8_68A7 0x65C8 :
   {
     *(.mod_parseAC);
-    *(.mod_acHelper);
     *(.mod_displaySensors);
-    *(.mod_aslLabels);
     *(.mod_loadSettingsExt);
   }
   .reserved_after_code_65C8_68A7 0x68A8 : {
@@ -360,15 +399,10 @@ SECTIONS
     *(.mod_extractConfig);
     *(.mod_createPacketCh1114);
     *(.mod_auxChannelsText);
-
-
-
   }
-
   .reserved_after_code_E140_E754 0xE754 :{
    	 *(.reserved_after_code_E140_E754);
   }
-
   .mod_voltTelemetry_ASM 0x57DA :{
    	 *(.mod_voltTelemetry_ASM);
   }
@@ -389,17 +423,11 @@ SECTIONS
    *(.mod_alarmConfig);
    *(.mod_timerConfig);
    *(.mod_modMenuListFun);
-   *(.mod_log2fix);
-   *(.mod_getALT);
-   *(.mod_asl);
    *(.mod_mix);
    *(.mod_voltADJ);
+   *(.mod_extraMenu);
+  }
 
-  }
-  . = ALIGN(1);
-  .mod_extraMenu 0xFFA8 : {
-    *(.mod_extraMenu);
-  }
   .reserved_checksum 0xFFFD :{
    	 *(.reserved_checksum*);
   }

@@ -120,10 +120,8 @@ __attribute__((section (".mod_ticks100ms"))) uint8_t  ticks100MS;
 __attribute__((section (".mod_mavlinkGPSFrame"))) uint8_t mavlinkGPSFrame[22]; 	//22bytes
 __attribute__((section (".mod_maxSNR"))) int32_t maxSNR;
 
-#ifdef TGY_CAT01
 __attribute__((section (".mod_altSensorMemory"))) uint32_t initPressure = 0;
 __attribute__((section (".mod_altSensorMemory"))) int32_t initTemperature = 0;
-#endif
 
 __attribute__((section (".mod_varioMem"))) int32_t varioPrevValue = 0;
 __attribute__((section (".mod_varioMem"))) int32_t varioPrevTime = 0;
@@ -141,9 +139,8 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_batteryConfig"))) void BatteryType();
 
 
-#ifdef TGY_CAT01
+
   __attribute__((section (".mod_asl"))) void ASLConfig();
-#endif
 
  __attribute__((section (".mod_nextSensorID"))) uint8_t prevSensorID(uint8_t sensorID);
  __attribute__((section (".mod_prevSensorID")))  uint8_t nextSensorID(uint8_t sensorID);
@@ -175,12 +172,11 @@ __attribute__((section (".mod_displaySensors"))) void displaySensors();
 __attribute__((section (".mod_getSensorName"))) const uint8_t* getSensorName(int sensor);
 __attribute__((section (".mod_formatSensorValue"))) void formatSensorValue(char* target, int sensorID, uint16_t sensorValue);
 __attribute__((section (".mod_divMod"))) uint32_t divMod(uint32_t val, uint32_t divisor, uint32_t* mod);
-#ifdef TGY_CAT01
 __attribute__((section (".mod_log2fix"))) int32_t log2fix(uint32_t x);
 __attribute__((section (".mod_getALT"))) uint16_t ibusTempToK(int16_t tempertureIbus);
 __attribute__((section (".mod_getALT"))) void getInitPressure(uint32_t* pressure, int32_t* temperature);
 __attribute__((section (".mod_getALT"))) int getALT(uint32_t pressurePa, uint16_t tempertureIbus);
-#endif
+
 __attribute__((section (".mod_mix"))) int mix(int value, int8_t min, int8_t max, int8_t subtrim);
 __attribute__((section (".mod_mix"))) void mixConfig();
 
@@ -195,6 +191,9 @@ __attribute__((section (".reserved_after_code_D510_D5EF"))) uint32_t keep7 = 0;
 __attribute__((section (".reserved_after_code_extraChannels_ASM"))) uint32_t keep8 = 0;
 __attribute__((section (".reserved_after_voltTelemetry_ASM"))) uint32_t keep9 = 0;
 __attribute__((section (".reserved_after_code_595C"))) uint32_t keep10 = 0;
+__attribute__((section (".reserved_after_code_AC34"))) uint32_t keep11 = 0;
+__attribute__((section (".reserved_after_code_9BC0"))) uint32_t keep12 = 0;
+__attribute__((section (".reserved_after_code_9830"))) uint32_t keep13 = 0;
 
 
 

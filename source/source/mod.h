@@ -238,11 +238,8 @@ const uint8_t __attribute__((section (".mod_varioStrings"))) varioSensor[] = {
 #define EXTRA_MENU_ALARM 13
 #define EXTRA_MENU_ASL 19
 
-#define EXTRA_MENU_ITEMS 7
-#ifdef TGY_CAT01
-	#define EXTRA_MENU_ITEMS 8
-#endif
 
+#define EXTRA_MENU_ITEMS 7
 
 const uint8_t __attribute__((section (".mod_extraMenu"))) extraMenu[] = {
 		"Extra\0"
@@ -258,11 +255,8 @@ const uint32_t __attribute__((section (".mod_extraMenu"))) menuList[] = {
 	(uint32_t)(auxSW + 6), (uint32_t)(&SwBConfig+1),
 	(uint32_t)(extraMenu+EXTRA_MENU_TXBAT), (uint32_t)(&BatteryType+1),
 	(uint32_t)&varioSensor, (uint32_t)(&varioSensorSelect+1),
-	#ifdef TGY_CAT01
 	(uint32_t)(extraMenu+EXTRA_MENU_ASL), (uint32_t)(&ASLConfig+1),
-	#endif
-	(uint32_t)TEXT_ADJ, (uint32_t)(&adjustVoltageConfig+1),
-	(uint32_t)TEXT_MIX, (uint32_t)(&mixConfig+1),
+	(uint32_t)TEXT_END_POINTS, (uint32_t)(&mixConfig+1),
 };
 
 
@@ -363,7 +357,7 @@ const uint32_t __attribute__((section (".mod_aslLabels"))) aslLabels[] = { (uint
 const uint8_t  __attribute__((section (".mixPos"))) mixPos[] = { 0, 48, 80 };
 
 
-const uint8_t  __attribute__((section (".mod_version"))) mod_version[] = "1.7.3";
+const uint8_t  __attribute__((section (".mod_version"))) mod_version[] = "1.7.5";
 
 uint32_t  __attribute__((section (".mod_tx_voltage_alarm_address"))) txVoltageAddress = (uint32_t)&modConfig2.batteryVoltage;
 uint32_t  __attribute__((section (".mod_mainScreenIndexAddress"))) mainScreenIndexAddress = (uint32_t)&mainScreenIndex;
@@ -371,7 +365,8 @@ uint32_t  __attribute__((section (".mod_timerValueAddress"))) timerValueAddress 
 uint32_t  __attribute__((section (".mod_timerBufferAddress"))) timerBufferAddress = (uint32_t)timerBuffer;
 uint32_t  __attribute__((section (".mod_extra_menu_ptr"))) extraMenuAddress = (uint32_t)(&displayMenu+1);
 uint32_t  __attribute__((section (".mod_extra_menu_str_ptr"))) extraMenuText = (uint32_t)extraMenu;
-
+uint32_t  __attribute__((section (".mod_rxMenuSpeedDistStr"))) voltAdjText = (uint32_t) TEXT_ADJ;
+uint32_t  __attribute__((section (".mod_rxMenuSpeedDistMethod"))) voltAdjAddr = (uint32_t)(&adjustVoltageConfig+1);
 
 __attribute__((section (".notImplemented_AUX_CHANNEL_PAGE"))) signed int  auxChannelsPage();
 

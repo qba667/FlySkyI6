@@ -39,6 +39,7 @@
 #define TEXT_CHANNEL 0x9650
 #define TEXT_OFF	0xCA87
 #define TEXT_TIMMER	0xDCB7
+#define TEXT_END_POINTS 0xCCE0
 #define TEXT_HOLD 0xCAB3
 #define TEXT_MIX 0xCA93
 #define TEXT_ADJ 0xDBA1

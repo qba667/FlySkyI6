@@ -49,12 +49,10 @@ void acData(uint8_t* rxBuffer){
 			shortSensor = (uint16_t)(sensorData >> 19);
 			add2ByteSensor(IBUS_MEAS_TYPE_TEM, sensorIndex, shortSensor);
 			sensorData = sensorData & 0x7FFFF;
-#ifdef TGY_CAT01
 			tmp = getALT(sensorData, shortSensor);
 			i = IBUS_MEAS_TYPE_ALT - IBUS_MEAS_TYPE_GPS_LAT;
 			longSensors[i] = tmp;
 			add2ByteSensor(IBUS_MEAS_TYPE_ALT, sensorIndex, i);
-#endif
 		}
 		else if(rxBuffer[index]==IBUS_MEAS_TYPE_GPS_FULL){
 			add2ByteSensor(IBUS_MEAS_TYPE_GPS_STATUS, sensorIndex, rxBuffer[index+4] << 8 | rxBuffer[index+3]);
@@ -133,10 +131,8 @@ void mixConfig() {
 
 	do {
 		callSetupDMAandSend();
-		displayPageHeader((char*)0xDBCB);
+		//displayPageHeader((char*)0xDBCB);
 		channel = 7;
-
-
 		for (uint8_t rowIndex= 0; rowIndex < MAX_ROWS; rowIndex++, channel++) {
 			rowPos = rowIndex << 3;
 			/*buffer[0] = channel < 10 ?  ' ' : '1';
@@ -772,7 +768,7 @@ uint8_t prevSensorID(uint8_t sensorID)
 
 	return sensorID;
 }
-#ifdef TGY_CAT01
+
 void ASLConfig(){
 	uint32_t key = 0;
 	uint8_t navPos = 0;
@@ -782,7 +778,7 @@ void ASLConfig(){
 	getInitPressure(values, &values[1]);
 	do {
 		callSetupDMAandSend();
-		//displayPageHeader((char*)(extraMenu+EXTRA_MENU_ASL)); //ASL
+		displayPageHeader((char*)(extraMenu+EXTRA_MENU_ASL)); //ASL
 		//values[0] = aslConfig >> 19;
 		//values[1] = aslConfig & 0x7FFFF;
 		initPressure = values[0];
@@ -814,7 +810,6 @@ void ASLConfig(){
 			configPtr->initAlt = values[0] | (values[1] << 19);
 		}
 }
-#endif
 
 void AlarmConfig(){
 	struct modelConfStruct *configPtr = getModelModConfig();
@@ -1298,7 +1293,16 @@ void adjustVoltageConfig(){
 	}
 }
 
-#ifdef TGY_CAT01
+void getInitPressure(uint32_t* pressure, int32_t* temperature){
+	struct modelConfStruct *configPtr = getModelModConfig();
+	*pressure = configPtr->initAlt & 0x7FFFF;
+	*temperature = configPtr->initAlt >> 19;
+}
+
+uint16_t ibusTempToK(int16_t tempertureIbus){
+	return (uint16_t)(tempertureIbus - 400) + 2731;
+}
+
 int32_t log2fix(uint32_t x){
 	int32_t b = 1U << (precision - 1);
 	int32_t y = 0;
@@ -1324,16 +1328,9 @@ int32_t log2fix(uint32_t x){
 	return y;
 }
 
-uint16_t ibusTempToK(int16_t tempertureIbus){
-	return (uint16_t)(tempertureIbus - 400) + 2731;
-}
 
-void getInitPressure(uint32_t* pressure, int32_t* temperature){
-	struct modelConfStruct *configPtr = getModelModConfig();
-	*pressure = configPtr->initAlt & 0x7FFFF;
-	*temperature = configPtr->initAlt >> 19;
-}
 int getALT(uint32_t pressurePa, uint16_t tempertureIbus){
+		if(pressurePa == 0) return 0;
     uint16_t temperatureK = ibusTempToK(tempertureIbus);
     if (initPressure <= 0) {
 			getInitPressure(&initPressure, &initTemperature);
@@ -1342,7 +1339,6 @@ int getALT(uint32_t pressurePa, uint16_t tempertureIbus){
     int temperature = (initTemperature + temperatureK) >> 1; //div 2
     bool tempNegative = temperature < 0;
     if (tempNegative)  temperature = temperature *-1;
-
     uint64_t helper = R_DIV_G_MUL_10_Q15;
     helper = __mul64(helper, (uint64_t)temperature);
     helper = helper >> precision;
@@ -1351,15 +1347,12 @@ int getALT(uint32_t pressurePa, uint16_t tempertureIbus){
 		//so can not shift by precision because it will result in negative number
 
 		uint32_t po_to_p = (uint32_t)(initPressure << (precision-1));
-
 		po_to_p = div_(po_to_p, pressurePa);
 		//shift missing bit
 		po_to_p = po_to_p << 1;
-
-
+		if(po_to_p == 0) return 0;
 		uint64_t t =  __mul64(log2fix(po_to_p), INV_LOG2_E_Q1DOT31);
 		int32_t ln = t >> 31;
-
     bool neg = ln < 0;
     if (neg) ln = ln * -1;
     helper = __mul64(helper, (uint64_t)ln);
@@ -1369,5 +1362,5 @@ int getALT(uint32_t pressurePa, uint16_t tempertureIbus){
     if (neg ^ tempNegative) result = result * -1;
     return result;
 }
-#endif
+
 #pragma GCC optimize ("O1")

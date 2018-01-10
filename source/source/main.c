@@ -138,6 +138,10 @@ int main(void) {
   if(keep8==0){keep8++;}
   if(keep9==0){keep9++;}
   if(keep10==0){keep10++;}
+  if(keep11==0){keep11++;}
+  if(keep12==0){keep12++;}
+  if(keep13==0){keep13++;}
+
 
   if(txVoltageAddress==0){txVoltageAddress++;}
   if(timerBufferAddress==0){timerBufferAddress++;}
@@ -145,6 +149,9 @@ int main(void) {
   if(mainScreenIndexAddress==0){mainScreenIndexAddress++;}
   if(extraMenuAddress==0){extraMenuAddress++;}
   if(extraMenuText==0){extraMenuText++;}
+  if(voltAdjText==0){voltAdjText++;}
+  if(voltAdjAddr==0){voltAdjAddr++;}
+
 
   if(keepChecksum == 0){keepChecksum++;}
   //keep this one because of without usage signature block will be removed
