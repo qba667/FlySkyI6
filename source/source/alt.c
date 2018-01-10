@@ -119,7 +119,7 @@ void mixConfig() {
 	uint8_t row = 0;
 	uint8_t col = 0;
 	uint8_t rowPos = 0;
-	uint8_t channel = 0;
+
 	int8_t config[MIX_CONFIG_SIZE_BYTES];
 	uint8_t index = 0;
 	int8_t value = 0;
@@ -128,10 +128,15 @@ void mixConfig() {
 
 	char buffer[16];
 	char *bufferPtr;
+
+	uint8_t channel = 0;
+
 	do {
 		callSetupDMAandSend();
-		//displayPageHeader((char*)0xDBEC);
+		displayPageHeader((char*)0xDBCB);
 		channel = 7;
+
+
 		for (uint8_t rowIndex= 0; rowIndex < MAX_ROWS; rowIndex++, channel++) {
 			rowPos = rowIndex << 3;
 			/*buffer[0] = channel < 10 ?  ' ' : '1';
@@ -152,6 +157,8 @@ void mixConfig() {
 			}
 			displayGFX((gfxInfo*)GFX_ARROW, mixPos[col], row << 3);
 		}
+
+
 		LCD_updateCALL();
 		key = getKeyCode();
 		index = 3 * row + col;
@@ -277,7 +284,7 @@ uint32_t isTimerActive(){
 	//if(value > one_thousand*2) return 0; // > 2000
 	int32_t chValue = *(((int32_t *)CHANNEL_VALUE)+(channel-1));
 	int32_t configVal = ((int32_t)configPtr->timerStart - one_thousand) * 20 - ten_thousands;
-	if(channel == 0 || configVal <= 0) return 0;
+	if(channel == 0) return 0;
 	return chValue > configVal;
 }
 

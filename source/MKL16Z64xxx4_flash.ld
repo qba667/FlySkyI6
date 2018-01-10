@@ -125,6 +125,7 @@ SECTIONS
     *(.mod_lastTimerUpdate);
     *(.mod_altSensorMemory);
     *(.mod_varioMem);
+    *(.mod_maxSNR);
     *(.mod_altSensorMemory);
     KEEP(*(.AUX_MEM))
   } > m_data
@@ -281,6 +282,8 @@ SECTIONS
   .mod_code_5174_5353 0x5174 : {
     *(.mod_varioSensorSelect);
     *(.mod_configurePins);
+    *(.mod_SNR);
+
   }
   .reserved_after_code_5174_5353 0x5354 : {
     *(.reserved_after_code_5174_5353);
@@ -289,6 +292,7 @@ SECTIONS
   .mod_595C 0x595C : {
       *(.mod_voltADJConfig);
       *(.mod_voltSensors);
+      *(.mod_mapSNR);
   }
   .reserved_after_code_595C 0x5B28 : {
     *(.reserved_after_code_595C);
