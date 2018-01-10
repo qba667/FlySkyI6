@@ -118,6 +118,7 @@ __attribute__((section (".mod_timerValue"))) uint32_t  timerValue;
 __attribute__((section (".mod_lastTimerUpdate"))) uint32_t  lastTimerUpdate;
 __attribute__((section (".mod_ticks100ms"))) uint8_t  ticks100MS;
 __attribute__((section (".mod_mavlinkGPSFrame"))) uint8_t mavlinkGPSFrame[22]; 	//22bytes
+__attribute__((section (".mod_maxSNR"))) int32_t maxSNR;
 
 #ifdef TGY_CAT01
 __attribute__((section (".mod_altSensorMemory"))) uint32_t initPressure = 0;
@@ -126,7 +127,7 @@ __attribute__((section (".mod_altSensorMemory"))) int32_t initTemperature = 0;
 
 __attribute__((section (".mod_varioMem"))) int32_t varioPrevValue = 0;
 __attribute__((section (".mod_varioMem"))) int32_t varioPrevTime = 0;
-
+__attribute__((section (".mod_mapSNR "))) int mapSNR();
 __attribute__((section (".mod_beep_silent "))) void beepSilent();
 __attribute__((section (".mod_configurePins"))) void configurePINS2();
 __attribute__((section (".mod_getAuxChannel"))) int getAuxChannel(uint32_t request);

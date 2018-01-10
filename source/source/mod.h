@@ -128,7 +128,32 @@ __attribute__((section (".mod_radioModes"))) const uint8_t RADIO_MODES[] =
 	"SBUS/PWM\0"
 	"SBUS/PPM"	// The last one without \0
 ;
+//power gain << 10
+//from 0 dB -20dB
 
+const uint16_t __attribute__((section (".mod_SNR"))) snrMulti[] = {
+		1024,
+		813,
+		646,
+		513,
+		407,
+		323,
+		257,
+		204,
+		162,
+		128,
+		102,
+		81,
+		64,
+		51,
+		40,
+		32,
+		25,
+		20,
+		16,
+		12,
+		10,
+} ;
 
 const uint8_t __attribute__((section (".mod_voltSensors"))) voltageSensors[] = { IBUS_MEAS_TYPE_INTV, IBUS_MEAS_TYPE_EXTV} ;
 const uint8_t __attribute__((section (".mod_armed"))) ARMED[] = "Armed";

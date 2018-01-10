@@ -417,6 +417,19 @@ void createPacketCh1114(){
 		*((int32_t*)(channel7Address + 4*i)) = value;
 	}
 }
+
+int mapSNR(){
+	int snr = getSensorValue(IBUS_MEAS_TYPE_SNR, 0,0);
+	if(snr == 0x8000) return -10000;
+	if(snr >= maxSNR) {
+		maxSNR = snr;
+		return 10000;
+	}
+	snr = maxSNR - snr;
+	if(snr > 20) return -10000;
+	snr = ((((10000 << 1) * (int32_t)snrMulti[snr])) >> 10) - 10000;
+	return snr;
+}
 int getAuxChannel(uint32_t request){
 	int sw1 = 0;
 	int sw2 = 0;
@@ -457,12 +470,7 @@ int getAuxChannel(uint32_t request){
 		}
 	}
 	else if(request == 10){ // SNR
-		sw1 = getSensorValue(IBUS_MEAS_TYPE_SNR, 0,0);
-		if(sw1 == 0x8000) sw1 = -10000;
-		if(sw1 >= 40) sw1 = 10000;
-		else if(sw1 <= 20) sw1 = -500* (20 - sw1);
-		else sw1 = 500 * (sw1 - 20);
-		return sw1;
+		return mapSNR();
 	}
 	else if(request == 8){ // B+C
 		sw1 = SW_C;
