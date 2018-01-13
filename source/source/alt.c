@@ -420,7 +420,7 @@ void createPacketCh1114(){
 		*((int32_t*)(channel7Address + 4*i)) = value;
 	}
 }
-
+/*
 int mapSNR(){
 	int snr = getSensorValue(IBUS_MEAS_TYPE_SNR, 0,0);
 	if(snr == 0x8000) return -10000;
@@ -432,7 +432,20 @@ int mapSNR(){
 	if(snr > 20) return -10000;
 	snr = ((((10000 << 1) * (int32_t)snrMulti[snr])) >> 10) - 10000;
 	return snr;
+}*/
+#define MAX_SNR 40
+#define MIN_SNR 9
+
+
+int mapSNR(){
+	int snr = getSensorValue(IBUS_MEAS_TYPE_SNR, 0,0);
+	if(snr == 0x8000 || snr <= MIN_SNR) return -10000;
+	if(snr >= MAX_SNR) return 10000;
+	snr -=9
+	snr = (snr * 645) - 10000;
+	return snr;
 }
+
 int getAuxChannel(uint32_t request){
 	int sw1 = 0;
 	int sw2 = 0;
@@ -456,9 +469,7 @@ int getAuxChannel(uint32_t request){
 	if(request == 11){ //error
 		sw1 = getSensorValue(IBUS_MEAS_TYPE_ERR, 0,0);
 		if(sw1 == 0x8000) sw1 = -10000;
-		else if(sw1 > 50) sw1 = -200* (sw1 - 50);
-		else sw1 = 200 * (50 - sw1);
-		return sw1;
+		return ((100 - sw1) * 200) - 10000;
 	}
 	else if(request == 7){ // A+B
 		if(swB_3pos != 0){
