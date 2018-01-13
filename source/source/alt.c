@@ -441,7 +441,7 @@ int mapSNR(){
 	int snr = getSensorValue(IBUS_MEAS_TYPE_SNR, 0,0);
 	if(snr == 0x8000 || snr <= MIN_SNR) return -10000;
 	if(snr >= MAX_SNR) return 10000;
-	snr -=9
+	snr -=9;
 	snr = (snr * 645) - 10000;
 	return snr;
 }
