@@ -78,9 +78,6 @@ void acData(uint8_t* rxBuffer){
 				tmp+=2;
 			}
 		}
-		else if(rxBuffer[index]==IBUS_MEAS_TYPE_PRES){
-			offset = SENSORS_ARRAY_LENGTH - 1;
-		}
 		else if(rxBuffer[index] >= IBUS_MEAS_TYPE_GPS_LAT && rxBuffer[index] <= IBUS_MEAS_TYPE_S8a){
 			offset = rxBuffer[index] - IBUS_MEAS_TYPE_GPS_LAT;
 		}
@@ -653,7 +650,7 @@ void CheckCustomAlarms(){
 			sensorID = configPtr->varioSensorID;
 
 			if (sensorID != IBUS_MEAS_TYPE_UNKNOWN
-				&& timer - varioPrevTime >= 2000
+				&& timer - varioPrevTime >= 1000
 				&& !wasAlarm) {
 
 #if VARIO_TEST_CH6_INSTEAD_OF_SENSOR
@@ -661,7 +658,8 @@ void CheckCustomAlarms(){
 #else
 
 				int32_t sensorValue = (int16_t)getSensorValue(sensorID, 0, 0);
-				if (sensorID >= IBUS_MEAS_TYPE_GPS_LAT && sensorID <= IBUS_MEAS_TYPE_S8a && sensorValue < SENSORS_ARRAY_LENGTH && sensorValue >= 0)
+
+				if ((sensorID == IBUS_MEAS_TYPE_PRES || (sensorID >= IBUS_MEAS_TYPE_GPS_LAT && sensorID <= IBUS_MEAS_TYPE_S8a)) && sensorValue < SENSORS_ARRAY_LENGTH && sensorValue >= 0)
 					sensorValue = longSensors[sensorValue];
 #endif
 
@@ -757,9 +755,14 @@ void SwBConfig() {
 uint8_t nextSensorID(uint8_t sensorID)
 {
 	sensorID++;
-
 	if (sensorID == IBUS_MEAS_TYPE_FLIGHT_MODE + 1)
-		sensorID = IBUS_MEAS_TYPE_GPS_LAT;
+        sensorID = IBUS_MEAS_TYPE_PRES;
+
+    if (sensorID == IBUS_MEAS_TYPE_PRES + 1)
+		sensorID = IBUS_MEAS_TYPE_ODO1;
+
+    if (sensorID == IBUS_MEAS_TYPE_TX_V + 1)
+    	sensorID = IBUS_MEAS_TYPE_GPS_LAT;
 
 	if (sensorID == IBUS_MEAS_TYPE_S8a + 1)
 		sensorID = IBUS_MEAS_TYPE_SNR;
@@ -775,7 +778,13 @@ uint8_t prevSensorID(uint8_t sensorID)
 		sensorID = IBUS_MEAS_TYPE_S8a;
 
 	if (sensorID == IBUS_MEAS_TYPE_GPS_LAT -1)
-		sensorID = IBUS_MEAS_TYPE_FLIGHT_MODE;
+		sensorID = IBUS_MEAS_TYPE_TX_V;
+
+    if (sensorID == IBUS_MEAS_TYPE_ODO1 -1)
+    	sensorID = IBUS_MEAS_TYPE_PRES;
+
+    if (sensorID == IBUS_MEAS_TYPE_PRES -1)
+        sensorID = IBUS_MEAS_TYPE_FLIGHT_MODE;
 
 	return sensorID;
 }

@@ -289,6 +289,7 @@ SECTIONS
   .mod_code_AC34 0xAC34 : {
   *(.mod_log2fix);
   *(.mod_getALT);
+  *(.mod_prevSensorID);
   }
   .reserved_after_code_AC34  0xAE44 : {
   *(.reserved_after_code_AC34);
@@ -364,7 +365,6 @@ ROM:0000D2B8                 manuEntry <0xEDA2, 0x98AD>
 	*(.mod_modelConfig);
 	*(.mod_customAlarmsPlay);
 	*(.mod_nextSensorID);
-	*(.mod_prevSensorID);
 	*(.mod_asm_aeabi_lmul);
   }
 
