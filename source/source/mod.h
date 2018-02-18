@@ -101,9 +101,9 @@ const uint8_t __attribute__((section (".mod_auxChannelsText"))) auxSW[] = {
 	"SwC+D\0"
 	"SNR  \0"
 	"Error\0"
-	"PPM 6\0"
-	"PPM 5\0"
-	"PPM 4\0"
+	"PPM 1\0"
+	"PPM 2\0"
+	"PPM 3\0"
 	"SwE  "
 };
 

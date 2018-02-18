@@ -17,7 +17,7 @@
 #define SENSOR_ARRAY 0x200001A4
 #define CHANNEL_VALUE 0x1FFFFDE0 // signed int -10k ... +10k
 #define CHANNEL_VALUE_RADIO 0x1FFFFD54
-#define PPM_IN_BUFFER 0x1FFFFCC0 //6 * 32bit signed
+#define PPM_IN_BUFFER 0x1FFFFE18 //6 * 32bit signed
 #define PPM_IN_BUFFER_CH6 0x1FFFFCD4
 #define GFX_ARRAY 0x1FFFF8C0
 #define INPUT_STATES 0x1FFFF89C  //uint bits

@@ -461,7 +461,7 @@ int getAuxChannel(uint32_t request){
 		//17 1				20
 		request -= 12;
 		request *=4;
-		return  *(int32_t *)(PPM_IN_BUFFER_CH6 - request);
+		return  *(int32_t *)(PPM_IN_BUFFER + request);
 	}
 	if(request == 11){ //error
 		sw1 = getSensorValue(IBUS_MEAS_TYPE_ERR, 0,0);
