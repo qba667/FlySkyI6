@@ -290,6 +290,7 @@ SECTIONS
   *(.mod_log2fix);
   *(.mod_getALT);
   *(.mod_prevSensorID);
+  *(.mod_dead);
   }
   .reserved_after_code_AC34  0xAE44 : {
   *(.reserved_after_code_AC34);
