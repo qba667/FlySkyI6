@@ -82,7 +82,8 @@ typedef struct modelConfStruct
 	mixConfStruct mix[8];										// 8*3 = 24
 	uint16_t intVoltAdj;
 	uint16_t extVoltAdj;
-	uint8_t reserved[4];										// 8
+    uint8_t varioDeadBand;
+    uint8_t reserved[3];										// 8
 } modelConfStruct;												// 58
 //7 + 12 + 4 +2 +24 +8 =
 

@@ -228,11 +228,13 @@ const uint8_t __attribute__((section (".mod_timerNull"))) timerNull[] =
 
 
 #define GAIN_OFFSET 6
+
 const uint8_t __attribute__((section (".mod_varioStrings"))) varioSensor[] = {
 		"Vario\0"
 		"Gain"
 };
-
+const uint8_t __attribute__((section (".mod_dead"))) deadBand[] =
+	"Dead";
 
 #define EXTRA_MENU_TXBAT 6
 #define EXTRA_MENU_ALARM 13
