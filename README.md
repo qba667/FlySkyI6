@@ -48,12 +48,12 @@ All donations are greatly appreciated!
 
 Extra menu
 ===
-[https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra.jpg|alt=Extra]
+![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra.jpg)
 
 Timer
 ---
 Menu "system->Extra->Timer"
-[https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/timer.jpg|alt=Timer]
+![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/timer.jpg)
 
 Configuration:
 Arrow should be pointing at Channel. Press UP or DOWN to pick a channel to use to trigger the timer. Usually you should chose Channel 3, the throttle channel (which displays on the screen with no space, so don't confuse it for Channel 13!) Press OK.
@@ -86,7 +86,7 @@ Once the alarm time is reached, the radio will beep once approximately every two
 Alarm
 ---
 Menu "system->Extra->alarm"
-[https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/alarm.jpg|alt=Alarm]
+![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/alarm.jpg)
 
 Select measurement, greater or less than and finally the value to check.
 
@@ -97,12 +97,12 @@ SWB+C
 ASL
 ---
 Menu "system->Extra->ASL"
-[https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/asl.jpg|alt=ASL]
+![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/asl.jpg)
 
 TX battery monitoring
 ---
 Menu "system->Extra->Tx Bat"
-[https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/tx-bat.jpg|alt=Tx Bat]
+![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/tx-bat.jpg)
 
 Current firmware has no longer a battery gauge in the upper right corner, instead a voltage reading is being used.
 It is possible to change voltage alarm threshold to any number, by going into Extra>TX Bat. 
@@ -112,7 +112,7 @@ If you use NiCds or NiMH, you can lower the voltage threshold to whatever you fe
 Vario
 ---
 Menu "system->Extra->Vario"
-[https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/vario.jpg|alt=Vario]
+![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/vario.jpg)
 Vario monitors a selected sensor (the first item in the menu),
 and provides an accoustic feedback representing the change of the sensor value.
 When the value changes, the firmware beeps accordingly: there
@@ -145,7 +145,7 @@ altitude, temperature, and battery voltage sensor.
 Endpoints
 ---
 Menu "system->Extra->Endpoints"
-[https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/endpoints.jpg|alt=Endpoints]
+![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/endpoints.jpg)
 
 Three columns with subtrim and Endpoint settings for channel 7-14
 
