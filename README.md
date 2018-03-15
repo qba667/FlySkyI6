@@ -44,7 +44,7 @@ The project is Free Software and is made available free of charge. Your donation
 If you like the software, you can also consider a donation.
 All donations are greatly appreciated!
 
-[<img src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif">](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VSM36U6F7EN68)
+[![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VSM36U6F7EN68)
 
 Extra menu
 ===
