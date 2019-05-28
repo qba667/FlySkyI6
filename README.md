@@ -28,7 +28,7 @@ https://github.com/povlhp/FlySkyRxFirmware
 
 New FW can be copied to update directory - updater will detect it automatically.
 
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/update.png)
+![alt text](update.png)
 
 Steps to update:
 1. Download, extract latest revision of the mod
@@ -48,12 +48,12 @@ All donations are greatly appreciated!
 
 Extra menu
 ===
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra.jpg)
+![alt text](doc/img/menu/system/extra.jpg)
 
 Timer
 ---
 Menu "system->Extra->Timer"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/timer.jpg)
+![alt text](doc/img/menu/system/extra/timer.jpg)
 
 Configuration:
 Arrow should be pointing at Channel. Press UP or DOWN to pick a channel to use to trigger the timer. Usually you should chose Channel 3, the throttle channel (which displays on the screen with no space, so don't confuse it for Channel 13!) Press OK.
@@ -86,7 +86,7 @@ Once the alarm time is reached, the radio will beep once approximately every two
 Alarm
 ---
 Menu "system->Extra->alarm"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/alarm.jpg)
+![alt text](doc/img/menu/system/extra/alarm.jpg)
 
 Select measurement, greater or less than and finally the value to check.
 
@@ -97,12 +97,12 @@ SWB+C
 ASL
 ---
 Menu "system->Extra->ASL"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/asl.jpg)
+![alt text](doc/img/menu/system/extra/asl.jpg)
 
 TX battery monitoring
 ---
 Menu "system->Extra->Tx Bat"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/tx-bat.jpg)
+![alt text](doc/img/menu/system/extra/tx-bat.jpg)
 
 Current firmware has no longer a battery gauge in the upper right corner, instead a voltage reading is being used.
 It is possible to change voltage alarm threshold to any number, by going into Extra>TX Bat. 
@@ -112,7 +112,7 @@ If you use NiCds or NiMH, you can lower the voltage threshold to whatever you fe
 Vario
 ---
 Menu "system->Extra->Vario"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/vario.jpg)
+![alt text](doc/img/menu/system/extra/vario.jpg)
 Vario monitors a selected sensor (the first item in the menu),
 and provides an accoustic feedback representing the change of the sensor value.
 When the value changes, the firmware beeps accordingly: there
@@ -145,7 +145,7 @@ altitude, temperature, and battery voltage sensor.
 Endpoints
 ---
 Menu "system->Extra->Endpoints"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/endpoints.jpg)
+![alt text](doc/img/menu/system/extra/endpoints.jpg)
 
 Three columns with subtrim and Endpoint settings for channel 7-14
 
@@ -179,7 +179,7 @@ An external source of channel data can be connected to the trainer port on the b
 <picture of trainer port and pinout>
 
 The channels are then mapped to aux channels PPM4, PPM5, PPM6 which can be configured to real channels in the aux-channel assignment menu.
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/model-setup/aux-channels.jpg)
+![alt text](doc/img/menu/model-setup/aux-channels.jpg)
 
 Configuration is possible for channels from original implementation (channels 5-6) as well as for channels 7-14.
 In case of newer receivers PPM output is also active for channels 7-8. 
