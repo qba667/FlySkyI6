@@ -28,7 +28,7 @@ https://github.com/povlhp/FlySkyRxFirmware
 
 New FW can be copied to update directory - updater will detect it automatically.
 
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/update.png)
+![alt text](update.png)
 
 Steps to update:
 1. Download, extract latest revision of the mod
@@ -48,17 +48,22 @@ All donations are greatly appreciated!
 
 Extra menu
 ===
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra.jpg)
+![alt text](doc/img/menu/system/extra.jpg)
 
 Timer
 ---
 Menu "system->Extra->Timer"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/timer.jpg)
+![alt text](doc/img/menu/system/extra/timer.jpg)
 
 Configuration:
 Arrow should be pointing at Channel. Press UP or DOWN to pick a channel to use to trigger the timer. Usually you should chose Channel 3, the throttle channel (which displays on the screen with no space, so don't confuse it for Channel 13!) Press OK.
 
 Arrow should be pointing at Value. Press UP or DOWN to pick a stick value to trigger the alarm. The timer will start when the channel exceeds the number chosen. 1000 roughly correlates to the stick being all the way down or left, 1500 roughly correlates to center stick, and 2000 roughly correlates to stick fully up or right. Trims and subtrims will affect the exact stick location, and servo reverse will change threshold direction. The value 1250 shall be considered as correct one - the throttle stick which triggers the timer at about 1/4 throttle. 
+
+Alternatively, it is possible to fine-tune the value to start counting as soon
+as the ESC starts spinning the motor. If you often fly with very low throttle,
+the value of 1250 is way too big. Yenya sets the treshhold between 1000 and 1100 for all his ESCs.
+
 NOTE: The first time in FW < 1.7.2 the numbers are set they start at some really high number like 65,535 or something. Long hold OK and the value will be reset to zero. 
 The you can increment up to the desired value. The numbers increment by 10 per up press.
 When you have the desired number set, press OK.
@@ -86,9 +91,19 @@ Once the alarm time is reached, the radio will beep once approximately every two
 Alarm
 ---
 Menu "system->Extra->alarm"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/alarm.jpg)
+![alt text](doc/img/menu/system/extra/alarm.jpg)
 
-Select measurement, greater or less than and finally the value to check.
+Select the sensor or measurement, greater or less than,
+and finally the threshold value to compare against.
+
+A convenient use for custom alarms is for notification about signal
+strength. There are various measurements related to the signal strength
+and quality (Err, RSSI, SNR, etc.). The [recommended way](https://www.rcgroups.com/forums/showpost.php?p=39232193&postcount=3040)
+is to use a SNR measurement with limit of 12 dB. Qba667 writes:
+
+> @Yenya we use SNR - it is already mapped to output channel max value is
+> in most cases 40 dB. Min value when radio link is still established is
+> 9dB but I am using alarm at 12 dB.
 
 
 SWB+C
@@ -97,12 +112,12 @@ SWB+C
 ASL
 ---
 Menu "system->Extra->ASL"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/asl.jpg)
+![alt text](doc/img/menu/system/extra/asl.jpg)
 
 TX battery monitoring
 ---
 Menu "system->Extra->Tx Bat"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/tx-bat.jpg)
+![alt text](doc/img/menu/system/extra/tx-bat.jpg)
 
 Current firmware has no longer a battery gauge in the upper right corner, instead a voltage reading is being used.
 It is possible to change voltage alarm threshold to any number, by going into Extra>TX Bat. 
@@ -112,7 +127,7 @@ If you use NiCds or NiMH, you can lower the voltage threshold to whatever you fe
 Vario
 ---
 Menu "system->Extra->Vario"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/vario.jpg)
+![alt text](doc/img/menu/system/extra/vario.jpg)
 Vario monitors a selected sensor (the first item in the menu),
 and provides an accoustic feedback representing the change of the sensor value.
 When the value changes, the firmware beeps accordingly: there
@@ -139,13 +154,21 @@ value is in centimeters. When the Gain is set to 5 (which is what Yenya
 uses), an altitude difference of +1 m means the second beep at 1600 Hz,
 and an altitude difference of -1 m means the second beep at 1000 Hz.
 
+The deadband value denotes the difference range in which Tx does not beep
+at all. With the altitude or pressure sensor it represents a level flight.
+For example, a deadband of 100 used with altitude sensor (which has its
+raw measurements in centimeters, as we noted above) means that the difference
+in altitude since the last beep smaller than 1 meter (100 centimeters)
+means silence.
+
 See [https://github.com/Yenya/ibus-altitude-sensor](here) for DYI Arduino-based
-altitude, temperature, and battery voltage sensor. 
+altitude, temperature, and battery voltage sensor supporting several
+common pressure sensors.
 
 Endpoints
 ---
 Menu "system->Extra->Endpoints"
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/system/extra/endpoints.jpg)
+![alt text](doc/img/menu/system/extra/endpoints.jpg)
 
 Three columns with subtrim and Endpoint settings for channel 7-14
 
@@ -179,7 +202,7 @@ An external source of channel data can be connected to the trainer port on the b
 <picture of trainer port and pinout>
 
 The channels are then mapped to aux channels PPM4, PPM5, PPM6 which can be configured to real channels in the aux-channel assignment menu.
-![alt text](https://github.com/qba667/FlySkyI6/blob/master/doc/img/menu/model-setup/aux-channels.jpg)
+![alt text](doc/img/menu/model-setup/aux-channels.jpg)
 
 Configuration is possible for channels from original implementation (channels 5-6) as well as for channels 7-14.
 In case of newer receivers PPM output is also active for channels 7-8. 
