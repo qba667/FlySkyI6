@@ -666,8 +666,12 @@ void CheckCustomAlarms(){
 					// the range of negative values
 					// is only half of the positive range,
 					// so decrease the gain for them
-					if (freq < 0)
+					if (freq < 0) {
+						play(VARIO_BASE_FREQ, 30, 0);
 						gain--;
+					} else {
+						play(VARIO_BASE_FREQ, 30, 30);
+					}
 
 					if (gain > VARIO_GAIN_OFFSET) {
 						freq <<= gain - VARIO_GAIN_OFFSET;
@@ -677,7 +681,6 @@ void CheckCustomAlarms(){
 					varioPrevValue = sensorValue;
 					freq += VARIO_BASE_FREQ;
 
-					play(VARIO_BASE_FREQ, 25, 50);
 
 					// keep it inside one octave up/down
 					if (freq < VARIO_BASE_FREQ/2)
@@ -685,7 +688,7 @@ void CheckCustomAlarms(){
 					else if (freq > 2*VARIO_BASE_FREQ)
 						freq = 2*VARIO_BASE_FREQ;
 
-					play(freq, 50, 50);
+					play(freq, 55, 0);
 				}
 			}
 		}
