@@ -920,6 +920,7 @@ void AlarmConfig(){
 }
 
 
+#define TIMER_CHANNEL_DEF_VALUE		1100
 void TimerConfig(){
 	//{ 10, 2200, 0xffff, 1 };
 	uint16_t data[4];
@@ -936,6 +937,10 @@ void TimerConfig(){
 	data[1] = configPtr->timerStart;
 	data[2] = configPtr->timerAlarm;
 	data[3] = (configPtr->timerCH & (1<<7)) != 0;
+
+	if (data[1] == 0)
+	    data[1] = TIMER_CHANNEL_DEF_VALUE;
+
 	do
 	 {
 	    while ( 1 )
