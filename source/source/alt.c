@@ -984,7 +984,7 @@ void TimerConfig(){
 	    	  if(data[navPos] >= timerMaxValues[navPos]) data[navPos] = timerMaxValues[navPos];
 	      }
 	      else if(key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
-	    	  if(data[navPos] > step) data[navPos] -= step;
+	    	  if(data[navPos] >= step) data[navPos] -= step;
 	      }
 	      else  {
 	    	  break;
