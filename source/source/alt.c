@@ -588,6 +588,10 @@ void beepSilent(){
 #define VARIO_GAIN_OFFSET	(1 << (VARIO_MAX_GAIN_BITS - 2))
 // #define VARIO_TEST_CH6_INSTEAD_OF_SENSOR	1
 
+// keep the alarm on for this many seconds only, so that the pilot
+// does not need to reset the timer with holding Cancel
+#define TIMER_ALARM_DURATION	10
+
 void CheckCustomAlarms(){
 	int32_t timer = ((*(int32_t *)(TIMER_SYS_TIM)));
 	int32_t lastAlarm = *((int32_t *)LAST_ALARM_TIMER);
@@ -600,7 +604,9 @@ void CheckCustomAlarms(){
 	struct modelConfStruct *configPtr = getModelModConfig();
 	if(timer < duration ) return;
 	if(timer - lastAlarm >= 500){
-		if((uint32_t)configPtr->timerAlarm != 0 && timerValue > (uint32_t)configPtr->timerAlarm) {
+		if((uint32_t)configPtr->timerAlarm != 0
+			&& timerValue > (uint32_t)configPtr->timerAlarm
+			&& timerValue < (uint32_t)configPtr->timerAlarm + TIMER_ALARM_DURATION) {
 			*((int32_t *)LAST_ALARM_TIMER) = timer;
 			play(BEEP_DEFAULT_FREQ, duration, 50);
 			wasAlarm = 1;
