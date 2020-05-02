@@ -107,11 +107,11 @@ SECTIONS
     *(.screenBuffer);
   } > m_data
 
-  .MOD_CONFIG2 0x20000B32 :
+  .MOD_CONFIGNG 0x20000AAA :
   {
-    *(.mod_modConfigAsModel17);
+    *(.mod_modConfig);
   }  > m_data
-
+  
   /*  20000E0C */
 
   .AUX_MEM 0x20000F4A :
@@ -149,11 +149,11 @@ SECTIONS
 	*(.mod_formatGPS);
 	*(.mod_timerMaxValues);
 	*(.mod_timerLabels);
-  *(.mod_foramtCoord);
-  *(.mod_units);
+	*(.mod_foramtCoord);
+	*(.mod_units);
 	*(.mod_unitsOffsets);
 	*(.mod_varioStrings);
-  *(.mod_timerNull);
+	*(.mod_timerNull);
   }
   .mod_SIGNATURE_2780 0x2780 :
   {
@@ -165,14 +165,14 @@ SECTIONS
   /*85 bytes*/
   .mod_2790_27FF 0x2790 :
   {
-  *(.mod_sensDesc00)
- 	*(.mod_sensDesc80)
- 	*(.mod_sensDescFA)
-  *(.mod_sensorsScreens);
-  *(.mod_timerFormat);
-  *(.mod_armed);
-  *(.mod_defASL);
-  *(.mixPos);
+	*(.mod_sensDesc00)
+	*(.mod_sensDesc80)
+	*(.mod_sensDescFA)
+	*(.mod_sensorsScreens);
+	*(.mod_timerFormat);
+	*(.mod_armed);
+	*(.mod_defASL);
+	*(.mixPos);
   }
   .reserved_main 0x2800:
   {
@@ -188,12 +188,9 @@ SECTIONS
     *(.mod_configurePins_ASM);
   }
 
-  /*
-  FREE SPACE AC34 AC57
-  */
-
   .mod_extraChannels_ASM 0xAB5C : {
     *(.mod_extraChannels_ASM);
+	*(.mod_fixModelCount)
   }
   .reserved_after_code_extraChannels_ASM 0xAB9F : {
     *(.reserved_after_code_extraChannels_ASM);
@@ -239,7 +236,6 @@ SECTIONS
     *(.mod_formatSensorValue2_ASM);
   }
 
-
   .mod_callCreatePacket1_ASM 0xA8D2 : {
     *(.mod_callCreatePacket1_ASM);
   }
@@ -283,9 +279,6 @@ SECTIONS
     *(.mod_rxMenuSpeedDistMethod);
   }
 
-
-
-  /*Free space for code*/
   .mod_code_AC34 0xAC34 : {
   *(.mod_log2fix);
   *(.mod_getALT);
@@ -295,32 +288,33 @@ SECTIONS
   .reserved_after_code_AC34  0xAE44 : {
   *(.reserved_after_code_AC34);
   }
+  
+  /* is this free? - after rotation length*/
   .mod_code_9A60 0x9A60 :
-{
+  {
   *(.mod_asl);
-}
-.reserved_after_code_9A60  0x9BC0 : {
-*(.reserved_after_code_9BC0);
-}
+  }
+  .reserved_after_code_9A60  0x9BC0 : {
+    *(.reserved_after_code_9BC0);
+  }
 
-.mod_code_9830 0x9830 :
-{
+  /* is this free? - after odometer*/
+  .mod_code_9830 0x9830 :
+  {
+    *(.mod_clearModConfig);
+  }
+  .reserved_after_code_9830  0x9928 : {
+  *(.reserved_after_code_9830);
+  }
+  
+  /*
+  
+  ROM:0000D2A0 stru_D2A0       manuEntry <0xEE3D, 0xAC59> ; DATA XREF: SpeedDistancePage
+  ROM:0000D2A8                 manuEntry <0xEE06, 0x9A61>
+  ROM:0000D2B0                 manuEntry <0xED92, 0x9831>
+  ROM:0000D2B8                 manuEntry <0xEDA2, 0x98AD>
+  */
 
-}
-.reserved_after_code_9830  0x9928 : {
-*(.reserved_after_code_9830);
-}
-
-/*
-Seed distnace page menu
-ROM:0000D2A0 stru_D2A0       manuEntry <0xEE3D, 0xAC59> ; DATA XREF: SpeedDistancePage
-ROM:0000D2A8                 manuEntry <0xEE06, 0x9A61>
-ROM:0000D2B0                 manuEntry <0xED92, 0x9831>
-ROM:0000D2B8                 manuEntry <0xEDA2, 0x98AD>
-*/
-
-
-  /*Free space for code 288 bytes*/
   .mod_code_5174_5353 0x5174 : {
     *(.mod_varioSensorSelect);
     *(.mod_configurePins);
@@ -381,7 +375,6 @@ ROM:0000D2B8                 manuEntry <0xEDA2, 0x98AD>
   {
   *(.mod_swEHandling);
   *(.mod_checkTimerActive);
-
   }
 
   .reserved_after_code_D50C_D5EF 0xD5F0 :
@@ -415,7 +408,7 @@ ROM:0000D2B8                 manuEntry <0xEDA2, 0x98AD>
   .mod_code_F4D0_FF8F 0xF4D0:
   {
    *(.mod_channels1114*);
- 	 *(.mod_getAuxChannel);
+   *(.mod_getAuxChannel);
    *(.mod_getSensorName);
    *(.mod_batteryConfig);
    *(.mod_printTimer);

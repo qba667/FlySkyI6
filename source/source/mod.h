@@ -337,8 +337,8 @@ const uint8_t __attribute__((section (".mod_unitsOffsets"))) unitsOffsets[] = {
 
 
 const uint8_t __attribute__((section (".mod_units"))) units[] = {
-	/*1@0*/  'm', 0x00,						//m;
-	/*2@2*/  0x7f, 0x00,					//�
+	/*1@0*/ 'm', 0x00,						//m;
+	/*2@2*/ 0x7f, 0x00,						//�
 	/*3@4*/ 'A', 0x00,						//A
 	/*4@6*/ '%', 0x00,						//%
 	/*5@8*/ 'V', 0x00,						//V
@@ -359,9 +359,9 @@ const uint32_t __attribute__((section (".mod_aslLabels"))) aslLabels[] = { (uint
 const uint8_t  __attribute__((section (".mixPos"))) mixPos[] = { 0, 48, 80 };
 
 
-const uint8_t  __attribute__((section (".mod_version"))) mod_version[] = "1.7.5";
+const uint8_t  __attribute__((section (".mod_version"))) mod_version[] = "1.7.6";
 
-uint32_t  __attribute__((section (".mod_tx_voltage_alarm_address"))) txVoltageAddress = (uint32_t)&modConfig2.batteryVoltage;
+uint32_t  __attribute__((section (".mod_tx_voltage_alarm_address"))) txVoltageAddress = (uint32_t)&config.batteryVoltage;
 uint32_t  __attribute__((section (".mod_mainScreenIndexAddress"))) mainScreenIndexAddress = (uint32_t)&mainScreenIndex;
 uint32_t  __attribute__((section (".mod_timerValueAddress"))) timerValueAddress = (uint32_t)&timerValue;
 uint32_t  __attribute__((section (".mod_timerBufferAddress"))) timerBufferAddress = (uint32_t)timerBuffer;

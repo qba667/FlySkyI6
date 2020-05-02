@@ -19,9 +19,6 @@
 #define R_DIV_G_MUL_10_Q15 UINT64_C(9591506)
 #define INV_LOG2_E_Q1DOT31 UINT64_C(0x58b90bfc) // Inverse log base 2 of e
 
-#define ALARM_OPERATOR_LT 0
-#define ALARM_OPERATOR_GT 0
-
 #define BATTERY_DEFAULT 0
 #define	BATERY_LIPO_1S	1
 #define	BATERY_LIPO_2S	2
@@ -46,13 +43,13 @@ typedef struct sensorAlarm
 #define VARIO_MAX_GAIN_BITS	4	// do not need the whole byte
 //24 + sensorAlarm (3 * 4 bytes) 12 bytes = 36 bytes
 
-#define TOTAL_MODELS 15
+#define TOTAL_MODELS 14
 #define OLD_MODEL_COUNT 20
 #define OLD_CONFIGSIZE 146
 #define NEW_MODEL_MEM MODEL_SETTINGS + TOTAL_MODELS * OLD_CONFIGSIZE
 #define MIX_CONFIG_SIZE_BYTES 24
-
-#define VERSION_MAGIC 0x175
+#define VERSION_MAGIC_175 0x175
+#define VERSION_MAGIC 0x176
 //to use this in linker we need to run linker on ld file
 //https://stackoverflow.com/questions/28837199/can-i-use-preprocessor-directives-in-ld-file
 //for now just calcualte
@@ -82,25 +79,9 @@ typedef struct modelConfStruct
 	mixConfStruct mix[8];										// 8*3 = 24
 	uint16_t intVoltAdj;
 	uint16_t extVoltAdj;
-    uint8_t varioDeadBand;
-    uint8_t reserved[3];										// 8
+	uint8_t varioDeadBand;
+	uint8_t reserved[3];										// 8
 } modelConfStruct;												// 58
-//7 + 12 + 4 +2 +24 +8 =
-
-//Change allocation to 15
-//TOTAL 58 * 15 = 870
-//Version magic 2 bytes, battery 2 bytes, sw config 1 byte
-//Total 875
-//5 *146 = 876
-
-/*total 146*4 = 584 bytes*/
-/*used: 3+ 16* 55 = 803*/
-/*needed 6 -> 876 -803
-/*free: 5*/
-//clear method
-//mem set to 0
-//mix default -100, 100, 0
-
 
 typedef struct globalConfigStruct
 {
@@ -111,7 +92,7 @@ typedef struct globalConfigStruct
 } globalConfigStruct;
 
 
-__attribute__((section (".mod_modConfigAsModel17"))) globalConfigStruct modConfig2;
+__attribute__((section (".mod_modConfig"))) globalConfigStruct config;
 __attribute__((section (".mod_mainScreenIndex"))) uint8_t  mainScreenIndex = 0; //referenced from assembly
 __attribute__((section (".mod_longSensors"))) int32_t  longSensors[SENSORS_ARRAY_LENGTH]; 		//72bytes referenced from assembly
 __attribute__((section (".mod_timerBuffer"))) uint8_t  timerBuffer[10]; 		//10bytes
@@ -134,26 +115,24 @@ __attribute__((section (".mod_getSWState"))) int getSWState(uint32_t swIndex);
 __attribute__((section (".mod_modMenuListFun"))) void displayMenu();
 __attribute__((section (".mod_acHelper")))  void add2ByteSensor(uint8_t sensorID, uint8_t sensorIndex, uint16_t value);
 __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
- __attribute__((section (".mod_printTimer"))) void printTimer();
- __attribute__((section (".mod_checkTimerActive"))) uint32_t isTimerActive();
- __attribute__((section (".mod_timerConfig"))) void TimerConfig();
- __attribute__((section (".mod_batteryConfig"))) void BatteryType();
+__attribute__((section (".mod_printTimer"))) void printTimer();
+__attribute__((section (".mod_checkTimerActive"))) uint32_t isTimerActive();
+__attribute__((section (".mod_timerConfig"))) void TimerConfig();
+__attribute__((section (".mod_batteryConfig"))) void BatteryType();
+__attribute__((section (".mod_fixModelCount"))) void EEpromConvert(); 
 
 
-
-  __attribute__((section (".mod_asl"))) void ASLConfig();
-
+ __attribute__((section (".mod_asl"))) void ASLConfig();
  __attribute__((section (".mod_nextSensorID"))) uint8_t prevSensorID(uint8_t sensorID);
  __attribute__((section (".mod_prevSensorID")))  uint8_t nextSensorID(uint8_t sensorID);
-
  __attribute__((section (".mod_channels1114"))) void auxChannels2();
  __attribute__((section (".mod_voltADJConfig")))void adjustVoltageConfig();
-  __attribute__((section (".mod_extractConfig"))) void extractConfigCh7_14(uint8_t* result);
-	__attribute__((section (".mod_extractConfig"))) void saveAuxCh5_14(uint8_t* current);
+ __attribute__((section (".mod_extractConfig"))) void extractConfigCh7_14(uint8_t* result);
+ __attribute__((section (".mod_extractConfig"))) void saveAuxCh5_14(uint8_t* current);
 
 
  __attribute__((section (".mod_createPacketCh1114"))) void createPacketCh1114();
-  __attribute__((section (".mod_createPacketCh1114"))) void extractConfig(uint8_t val, uint8_t* result);
+ __attribute__((section (".mod_createPacketCh1114"))) void extractConfig(uint8_t val, uint8_t* result);
  __attribute__((section (".mod_SW_B_config"))) void SwBConfig();
  __attribute__((section (".mod_alarmConfig"))) void AlarmConfig();
  __attribute__((section (".mod_customAlarmsCheck"))) void CheckCustomAlarms();
@@ -161,6 +140,8 @@ __attribute__((section (".mod_parseAC"))) void acData(uint8_t* rxBuffer);
  __attribute__((section (".mod_swEHandling"))) void swEHandling();
  __attribute__((section (".mod_swBHandling"))) void swBasADC();
  __attribute__((section (".mod_modelConfig"))) modelConfStruct* getModelModConfig();
+ __attribute__((section (".mod_clearModConfig"))) void clearExtraModelMem();
+ 
  /*
  __attribute__((section (".mod_loadModEeprom"))) void loadModSettings();
  __attribute__((section (".mod_saveModEeprom"))) void saveModSettings();

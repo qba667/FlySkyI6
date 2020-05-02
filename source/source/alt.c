@@ -89,21 +89,10 @@ void acData(uint8_t* rxBuffer){
 	}
 	while (index <= 28 );
 }
-/*
-void loadModSettings(){
-	settingsValidation();
-	readEeprom((uint8_t *)&modConfig, 0xBC0, sizeof(modConfig));
-}
-
-void saveModSettings(){
-	saveEeprom((uint8_t *)&modConfig, 0xBC0, sizeof(modConfig));
-	someSPImethod();
-}
-*/
 
 modelConfStruct* getModelModConfig(){
 	uint8_t modelIndex = ((*(uint8_t *)(CURRENT_MODEL_INDEX)));
-	modelConfStruct* ptr = &modConfig2.modelConfig[modelIndex];
+	modelConfStruct* ptr = &config.modelConfig[modelIndex];
 	return ptr;
 }
 
@@ -446,8 +435,8 @@ int mapSNR(){
 int getAuxChannel(uint32_t request){
 	int sw1 = 0;
 	int sw2 = 0;
-	uint8_t swB_3pos = modConfig2.swConfig & 1;
-	uint8_t varC = modConfig2.swConfig & 2;
+	uint8_t swB_3pos = config.swConfig & 1;
+	uint8_t varC = config.swConfig & 2;
 	if(request == 0) return 0;
 	if(request == 15){
 		return getSWState(SW_E);
@@ -558,7 +547,7 @@ void displayMenu(){
 void BatteryType() {
 	uint32_t key = 0;
 
-	uint16_t batteryVolt = modConfig2.batteryVoltage;
+	uint16_t batteryVolt = config.batteryVoltage;
 	char buffer[32];
 		while (1) {
 			callSetupDMAandSend();
@@ -578,7 +567,7 @@ void BatteryType() {
 		}
 
 	if( key == KEY_LONG_CANCEL) {
-		modConfig2.batteryVoltage = batteryVolt;
+		config.batteryVoltage = batteryVolt;
 	}
 }
 void play(int freq, int duration, int pause){
@@ -706,7 +695,7 @@ void CheckCustomAlarms(){
 
 void SwBConfig() {
 	uint32_t key = 0;
-	uint8_t swConfig = modConfig2.swConfig;
+	uint8_t swConfig = config.swConfig;
 	uint8_t modeSWB = 2;
 
 	char buffer[32];
@@ -749,7 +738,7 @@ void SwBConfig() {
 	}
 
 	if (key == KEY_LONG_CANCEL) {
-		modConfig2.swConfig = swConfig;
+		config.swConfig = swConfig;
 	}
 
 }
@@ -1097,33 +1086,40 @@ void configurePINS2(){
 	PORT_SetPinMux(PORTD, 2u, kPORT_MuxAsGpio);
 	GPIOD->PDDR &= ~(1U << 2); //input
 #endif
-
 }
 
+
+void EEpromConvert() {
+	globalConfigStruct* configOld = (globalConfigStruct*)OLD_CFG_ADDR;
+	if(config.versionMagic != VERSION_MAGIC && configOld->versionMagic == VERSION_MAGIC_175) {
+		configOld->versionMagic = VERSION_MAGIC;
+		memcpy_(&config, configOld, sizeof(config));
+	}
+}
+void clearExtraModelMem(){
+	memsetCall(&config, sizeof(globalConfigStruct), 0);
+	config.batteryVoltage = 480;
+	config.versionMagic = VERSION_MAGIC;
+}
 void loadSettings(){
 	loadSettingsFromEeprom();
-	struct modelConfStruct *config;
-	if(modConfig2.versionMagic != VERSION_MAGIC){
-		modConfig2.batteryVoltage = 480;
-		modConfig2.swConfig = 0;
-		modConfig2.versionMagic = VERSION_MAGIC;
-		for(uint8_t model =0; model < TOTAL_MODELS; model++){
-			//set first 50 bytes
-			config = &modConfig2.modelConfig[model];
-			memsetCall(config, 50, 0);
-			config->varioSensorID = IBUS_MEAS_TYPE_UNKNOWN;
-			config->intVoltAdj = config->extVoltAdj = 10000;
-			for(uint8_t mixIndex = 0; mixIndex < 8; mixIndex++){
-					config->mix[mixIndex].min = -100;
-					config->mix[mixIndex].max = 100;
+	struct modelConfStruct *cfg;
+	EEpromConvert();
+	if(config.versionMagic != VERSION_MAGIC){
+		clearExtraModelMem();
+		for(unsigned model = 0; model < TOTAL_MODELS; model++){
+			cfg = &config.modelConfig[model];
+			cfg->varioSensorID = IBUS_MEAS_TYPE_UNKNOWN;
+			cfg->intVoltAdj = cfg->extVoltAdj = 10000;
+			for(unsigned mixIndex = 0; mixIndex < 8; mixIndex++){
+					cfg->mix[mixIndex].min = -100;
+					cfg->mix[mixIndex].max = 100;
 			}
-			for(uint8_t alarmIndex = 0; alarmIndex < 3; alarmIndex++)
-				config->alarm[alarmIndex].sensorID = IBUS_MEAS_TYPE_UNKNOWN;
+			memsetCall(cfg->alarm, sizeof(cfg->alarm), 0xFF);
 		}
 		saveModelSettingsCall();
 		restartUnit();
 	}
-
 }
 
 //return non 0 when switch MAX value
@@ -1143,7 +1139,6 @@ void swEHandling(){
 void displaySensors(){
 	char buffer[64];
 	uint32_t bufferOffset = 0;
-	uint8_t batteryID = IBUS_MEAS_TYPE_INTV;
 	const uint8_t* settings = (uint8_t*)((*(uint32_t *)(USED_MODEL_PTR)));
 	uint32_t batteryType = (uint32_t)settings[98];
 	int32_t timer = ((*(int32_t *)(TIMER_SYS_TIM)));
@@ -1155,15 +1150,11 @@ void displaySensors(){
 	if(timer - telemetryUpdateTimer > 1000 && mainScreenIndex < 2) {
 		return;
 	}
-
 	settings += 0x60; //AFHDS2
 	if (mainScreenIndex < 2) {
 		batteryType = batteryType << 30;
 		batteryType = batteryType >> 31;
-		if ((batteryType & 1) == 1) { //external
-			batteryID = IBUS_MEAS_TYPE_EXTV; //external bat
-		}
-		formatSensorData(batteryID, 0, buffer);
+		formatSensorData((batteryType & 1) == 1 ? IBUS_MEAS_TYPE_EXTV : IBUS_MEAS_TYPE_INTV, 0, buffer);
 		if (buffer[0] != 0x00) {
 			while (buffer[bufferOffset] != 0)
 				bufferOffset++;
@@ -1187,9 +1178,7 @@ void displaySensors(){
 			xPos = 1;
 		}
 	}
-
-
-	for (int i = 0; i < sensorCount; i++) {
+	for (unsigned i = 0; i < sensorCount; i++) {
 		if (*settings != 0xFF) {
 			strcatCall(buffer, (const char*) getSensorName(*settings));
 			bufferOffset = 0;
@@ -1202,13 +1191,11 @@ void displaySensors(){
 			else{
 				formatSensorData(*settings, 0, buffer + bufferOffset);
 			}
-
 			while (buffer[bufferOffset] != 0) bufferOffset++;
 			displayTextAt(buffer, xPos, (i * 8) + yPos, 0);
 		}
 		settings++;
 	}
-
 }
 
 #define VARIO_MAX_GAIN 	((1 << VARIO_MAX_GAIN_BITS) - 1)

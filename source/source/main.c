@@ -171,6 +171,7 @@ int main(void) {
   swEHandling();
   //uint32_t resutl = dev(100U, 10U);
   loadSettings();
+  EEpromConvert();
   displaySensors();
   auxChannelsPage();
   AlarmConfig();
