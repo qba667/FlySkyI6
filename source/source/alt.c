@@ -1111,7 +1111,7 @@ void loadSettings(){
 			cfg = &config.modelConfig[model];
 			cfg->varioSensorID = IBUS_MEAS_TYPE_UNKNOWN;
 			cfg->intVoltAdj = cfg->extVoltAdj = 10000;
-			for(unsigned mixIndex = 0; mixIndex < 8; mixIndex++){
+			for(unsigned mixIndex = 0; mixIndex < MIX_SIZE; mixIndex++){
 					cfg->mix[mixIndex].min = -100;
 					cfg->mix[mixIndex].max = 100;
 			}

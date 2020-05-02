@@ -50,6 +50,7 @@ typedef struct sensorAlarm
 #define MIX_CONFIG_SIZE_BYTES 24
 #define VERSION_MAGIC_175 0x175
 #define VERSION_MAGIC 0x176
+#define MIX_SIZE 8
 //to use this in linker we need to run linker on ld file
 //https://stackoverflow.com/questions/28837199/can-i-use-preprocessor-directives-in-ld-file
 //for now just calcualte
@@ -76,7 +77,7 @@ typedef struct modelConfStruct
 	uint8_t varioSensorID;										// 1
 	uint8_t varioGain : VARIO_MAX_GAIN_BITS;					// 1
 	uint8_t reserved_bits : (8 - VARIO_MAX_GAIN_BITS);			// 1
-	mixConfStruct mix[8];										// 8*3 = 24
+	mixConfStruct mix[MIX_SIZE];										// 8*3 = 24
 	uint16_t intVoltAdj;
 	uint16_t extVoltAdj;
 	uint8_t varioDeadBand;
