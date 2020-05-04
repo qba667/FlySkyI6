@@ -584,7 +584,7 @@ void beepSilent(){
 #define BEEP_DEFAULT_FREQ (900)
 
 #define VARIO_BASE_FREQ		1200
-// gain can be 0..15, representing gains 1/8 (>> 3) to 2048 (<< 11)
+// gain can be 1..15, representing gains 1/4 (>> 3) to 2048 (<< 11)
 #define VARIO_GAIN_OFFSET	(1 << (VARIO_MAX_GAIN_BITS - 2))
 // #define VARIO_TEST_CH6_INSTEAD_OF_SENSOR	1
 
@@ -672,8 +672,12 @@ void CheckCustomAlarms(){
 					// the range of negative values
 					// is only half of the positive range,
 					// so decrease the gain for them
-					if (freq < 0)
+					if (freq < 0) {
+						play(VARIO_BASE_FREQ, 30, 0);
 						gain--;
+					} else {
+						play(VARIO_BASE_FREQ, 30, 30);
+					}
 
 					if (gain > VARIO_GAIN_OFFSET) {
 						freq <<= gain - VARIO_GAIN_OFFSET;
@@ -683,7 +687,6 @@ void CheckCustomAlarms(){
 					varioPrevValue = sensorValue;
 					freq += VARIO_BASE_FREQ;
 
-					play(VARIO_BASE_FREQ, 25, 50);
 
 					// keep it inside one octave up/down
 					if (freq < VARIO_BASE_FREQ/2)
@@ -691,7 +694,7 @@ void CheckCustomAlarms(){
 					else if (freq > 2*VARIO_BASE_FREQ)
 						freq = 2*VARIO_BASE_FREQ;
 
-					play(freq, 50, 50);
+					play(freq, 55, 0);
 				}
 			}
 		}
@@ -1263,8 +1266,9 @@ void varioSensorSelect(){
 
 		if (key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
             if (row == 0) values[0] = prevSensorID(values[0]);
-            else if (row == 1 && values[1] > 0) values[1]--;
-            else values[2]--;
+            else if (row == 1) {
+			if (values[1] > 1) values[1]--;
+            } else values[2]--;
 		}
 	} while (key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
 }
