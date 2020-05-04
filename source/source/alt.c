@@ -588,6 +588,10 @@ void beepSilent(){
 #define VARIO_GAIN_OFFSET	(1 << (VARIO_MAX_GAIN_BITS - 2))
 // #define VARIO_TEST_CH6_INSTEAD_OF_SENSOR	1
 
+// keep the alarm on for this many seconds only, so that the pilot
+// does not need to reset the timer with holding Cancel
+#define TIMER_ALARM_DURATION	10
+
 void CheckCustomAlarms(){
 	int32_t timer = ((*(int32_t *)(TIMER_SYS_TIM)));
 	int32_t lastAlarm = *((int32_t *)LAST_ALARM_TIMER);
@@ -600,7 +604,9 @@ void CheckCustomAlarms(){
 	struct modelConfStruct *configPtr = getModelModConfig();
 	if(timer < duration ) return;
 	if(timer - lastAlarm >= 500){
-		if((uint32_t)configPtr->timerAlarm != 0 && timerValue > (uint32_t)configPtr->timerAlarm) {
+		if((uint32_t)configPtr->timerAlarm != 0
+			&& timerValue > (uint32_t)configPtr->timerAlarm
+			&& timerValue < (uint32_t)configPtr->timerAlarm + TIMER_ALARM_DURATION) {
 			*((int32_t *)LAST_ALARM_TIMER) = timer;
 			play(BEEP_DEFAULT_FREQ, duration, 50);
 			wasAlarm = 1;
@@ -914,6 +920,7 @@ void AlarmConfig(){
 }
 
 
+#define TIMER_CHANNEL_DEF_VALUE		1100
 void TimerConfig(){
 	//{ 10, 2200, 0xffff, 1 };
 	uint16_t data[4];
@@ -930,6 +937,10 @@ void TimerConfig(){
 	data[1] = configPtr->timerStart;
 	data[2] = configPtr->timerAlarm;
 	data[3] = (configPtr->timerCH & (1<<7)) != 0;
+
+	if (data[1] == 0)
+	    data[1] = TIMER_CHANNEL_DEF_VALUE;
+
 	do
 	 {
 	    while ( 1 )
@@ -973,7 +984,7 @@ void TimerConfig(){
 	    	  if(data[navPos] >= timerMaxValues[navPos]) data[navPos] = timerMaxValues[navPos];
 	      }
 	      else if(key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
-	    	  if(data[navPos] > step) data[navPos] -= step;
+	    	  if(data[navPos] >= step) data[navPos] -= step;
 	      }
 	      else  {
 	    	  break;
