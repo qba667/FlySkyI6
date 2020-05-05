@@ -328,7 +328,7 @@ SECTIONS
       *(.mod_voltADJConfig);
       *(.mod_voltSensors);
       *(.mod_acHelper);
-      *(.mod_mapSNR);
+      *(.mod_getSWState);
       *(.mod_aslLabels);
   }
   .reserved_after_code_595C 0x5B28 : {
@@ -389,7 +389,7 @@ SECTIONS
     *(.mod_customAlarmsCheck);
     *(.mod_timerConfig);
     *(.mod_SW_B_config);
-    *(.mod_getSWState);
+    *(.mod_mapSNR);
     *(.mod_extractConfig);
     *(.mod_createPacketCh1114);
     *(.mod_auxChannelsText);
