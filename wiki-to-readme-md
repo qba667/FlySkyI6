@@ -1,0 +1,38 @@
+#!/usr/bin/perl -w
+#
+# Script
+use strict;
+use utf8;
+
+my $src = '../FlySkyI6.wiki/Home.md';
+my $dst = 'README.md';
+
+my $wiki_prefix = 'https://github.com/qba667/FlySkyI6/wiki';
+
+print STDERR "Converting $src to $dst ...\n";
+
+open my $in, '<:utf8', $src
+	or die "Can't open $src: $!";
+
+open my $out, '>:utf8', "$dst.new"
+	or die "Can't open $dst.new: $!";
+
+while (<$in>) {
+	s/\]\((?!(http|#))/]($wiki_prefix\//g;
+	print $out $_;
+}
+
+close $out;
+rename "$dst.new", "$dst"
+	or die "Can't rename $dst.new to $dst $!";
+
+print STDERR <<EOF;
+Done.  You can commit the result now:
+
+git commit -m '$dst converted from wiki' README.md'
+git push
+
+EOF
+
+exit 0;
+
