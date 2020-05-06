@@ -1,40 +1,27 @@
-# FlySky I6 
-Project description:
+# FlyPlus: 14-Channel Firmware for FlySky i6
 
-Firmware modification for the FlySky i6 based on modified firware developed by dave borthwick.
+This is an alternative firmware for **FlySky i6** transmitters.
+See below for the list of [features](#features) added
+(including the [14 channels](https://github.com/qba667/FlySkyI6/wiki/14-channels) support, of course!)
+and [hardware mods](#hardware-mods-supported) supported.
 
-Latest version available on Release page:
-
-https://github.com/qba667/FlySkyI6/releases
-
-
-Oryginal multiplatform updater by mhils:
-
-https://github.com/mhils/flysky-updater
-
-Improved version:
-* Handling file size correctly
-* Autodetection of serial ports
-* Autodetection of FW files
-
-28 bytes telemetry data only with IA6B after patching - firmware can be found in my other repository.
-There is also version sending IBus channel data and telemetry on same wire (serial port):
-
-https://github.com/qba667/MAVLinkToIbus/tree/master/IA6B
-
-How to update firmware can be found in povlhp repository. 
-https://github.com/povlhp/FlySkyRxFirmware
+![Main Screen](https://github.com/qba667/FlySkyI6/wiki/main-screen-flyplus.jpg)
 
 
-New FW can be copied to update directory - updater will detect it automatically.
+## Credits
 
-![alt text](update.png)
+The firmware is a modification of original FlySky firmware inspired
+and based on work of _@ThomHpl_ and _Dave Borthwick_,
+With use of repository created by
+[@benb0jangles](https://github.com/benb0jangles/FlySky-i6-Mod-)
+and input from _@povlhp_. Currently supported
+and maintained by _@qba667_ with great input and improvements from _@Yenya_.
 
-Steps to update:
-1. Download, extract latest revision of the mod
-2. Enter firmware update mode - from menu or by moving 2 trims to center
-3. Run Updater - select serial port if necessary
+Including input from rcgroups users from the following thread:
 
+[FlySky-FS-i6-8-channels-firmware-patch!](https://www.rcgroups.com/forums/showthread.php?2486545-FlySky-FS-i6-8-channels-firmware-patch!)
+
+The Turnigy TGY-CAT01 support could be implemented by by courtesy of *inode_* - thanks for providing of the sensor and huge amount of measurement and analysis made by cookieqk.
 
 In case if you want to support the project and reward me the time I spent on the FW please click this affiliate link when shopping at Banggood - It is free for you, but I will get reward from Banggood: 
 
@@ -46,169 +33,38 @@ All donations are greatly appreciated!
 
 [![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VSM36U6F7EN68)
 
-Extra menu
-===
-![alt text](doc/img/menu/system/extra.jpg)
 
-Timer
----
-Menu "system->Extra->Timer"
-![alt text](doc/img/menu/system/extra/timer.jpg)
+## Features
 
-Configuration:
-Arrow should be pointing at Channel. Press UP or DOWN to pick a channel to use to trigger the timer. Usually you should chose Channel 3, the throttle channel (which displays on the screen with no space, so don't confuse it for Channel 13!) Press OK.
+* [Refined main screen](https://github.com/qba667/FlySkyI6/wiki/Main-Screen)
+* [14 channels](https://github.com/qba667/FlySkyI6/wiki/14-channels) (channel 5-14 as auxilliary)
+* [Extra Menu](https://github.com/qba667/FlySkyI6/wiki/Extra-Menu)
+* [Configurable Tx battery voltage limit](https://github.com/qba667/FlySkyI6/wiki/Tx-Battery)
+* [Pairs of switches](https://github.com/qba667/FlySkyI6/wiki/Switches-Combined) used together as a single channel
+* [Flight timer](https://github.com/qba667/FlySkyI6/wiki/Timer)
+* [Configurable telemetry alarms](https://github.com/qba667/FlySkyI6/wiki/Alarms)
+* [Vario: accoustic altitude feedback](https://github.com/qba667/FlySkyI6/wiki/Vario)
+	- using either TGY-CAT01 or [Arduino-based altitude sensor](https://github.com/Yenya/ibus-altitude-sensor) by @Yenya
+* [ASL sensor](https://github.com/qba667/FlySkyI6/wiki/ASL), such as TGY-CAT01
+* [PPM input](https://github.com/qba667/FlySkyI6/wiki/PPM-input) for custom channels
+* [Configurable output of RX (PPM/PWM/SBUS/IBUS)](https://github.com/qba667/FlySkyI6/wiki/Rx-Output)
+* [Telemetry](https://github.com/qba667/FlySkyI6/wiki/Telemetry) with more sensors supported and displayed
+* [RSSI value sent to Rx](https://github.com/qba667/FlySkyI6/wiki/Get-RSSI-as-PPM-PWM-SBUS-IBUS) as a channel
+* [Battery voltage adjustment](https://github.com/qba667/FlySkyI6/wiki/Voltage-Adjustment)
 
-Arrow should be pointing at Value. Press UP or DOWN to pick a stick value to trigger the alarm. The timer will start when the channel exceeds the number chosen. 1000 roughly correlates to the stick being all the way down or left, 1500 roughly correlates to center stick, and 2000 roughly correlates to stick fully up or right. Trims and subtrims will affect the exact stick location, and servo reverse will change threshold direction. The value 1250 shall be considered as correct one - the throttle stick which triggers the timer at about 1/4 throttle. 
+## Hardware Mods Supported
 
-Alternatively, it is possible to fine-tune the value to start counting as soon
-as the ESC starts spinning the motor. If you often fly with very low throttle,
-the value of 1250 is way too big. Yenya sets the treshhold between 1000 and 1100 for all his ESCs.
+* [Switch SwB modified for three positions](https://github.com/qba667/FlySkyI6/wiki/HW-Mod-SwB)
+* [New switch SwE](https://github.com/qba667/FlySkyI6/wiki/HW-Mod-SwE)
+* Potentiometer in place of switch SwC
 
-NOTE: The first time in FW < 1.7.2 the numbers are set they start at some really high number like 65,535 or something. Long hold OK and the value will be reset to zero. 
-The you can increment up to the desired value. The numbers increment by 10 per up press.
-When you have the desired number set, press OK.
+## [How to Install this Firmware](https://github.com/qba667/FlySkyI6/wiki/Install)
 
-Arrow should be pointing at Alarm. Use UP or DOWN to choose a desired timer duration. 
-Here again in FW < 1.7.2 the very first time you set the time, it starts at some really high number, and you just have to long hold OK and the value will reset to 00:00:00. The display is in HH:MM:SS, and changes by 10 seconds for each UP or DOWN press. When you have the desired run time entered long hold CANCEL to store. 
+## Tools
 
-Then short press CANCEL several times to back out of all menus and return to the main flight display.
+* GfxEditor
+* Python scripts
 
-Operation: 
-In FW < 1.7.0:
-You only get one timer setting to share among all model memories, so if different models require different times, you'll have to reset the timer for each model.
-In FW >= 1.7.0:
-Timer settings are no more shared between models.
+## For Developers 
 
-When your trigger channel exceeds the trigger threshold, the timer on the flight display will start counting up. When the counter reaches the preset time, the alarm will sound.
-
-If you trigger the timer by accident before you are ready, long press on CANCEL to reset the timer to 00:00:00. If the trigger channel is below the threshold, the timer will stay at 00:00:00 until triggered. If the trigger channel is above the threshold, the timer will reset to 00:00:00 then start counting up again.
-
-When the timer is counting up, a long press on OK will bring up the System/Settings menu and pause the timer. You can continue to fly as normal and the timer will be paused. When you press CANCEL, the flight display will return and the counter will start counting again.
-
-Once the alarm time is reached, the radio will beep once approximately every two seconds. To silence the alarm, long press CANCEL, and the timer will reset to zero and the alarm will be silenced. If the trigger channel is above the threshold, the timer will immediately begin counting again, otherwise it will stay at 00:00:00 until the trigger channel is moved above the threshold.
-
-
-Alarm
----
-Menu "system->Extra->alarm"
-![alt text](doc/img/menu/system/extra/alarm.jpg)
-
-Select the sensor or measurement, greater or less than,
-and finally the threshold value to compare against.
-
-A convenient use for custom alarms is for notification about signal
-strength. There are various measurements related to the signal strength
-and quality (Err, RSSI, SNR, etc.). The [recommended way](https://www.rcgroups.com/forums/showpost.php?p=39232193&postcount=3040)
-is to use a SNR measurement with limit of 12 dB. Qba667 writes:
-
-> @Yenya we use SNR - it is already mapped to output channel max value is
-> in most cases 40 dB. Min value when radio link is still established is
-> 9dB but I am using alarm at 12 dB.
-
-
-SWB+C
----
-
-ASL
----
-Menu "system->Extra->ASL"
-![alt text](doc/img/menu/system/extra/asl.jpg)
-
-TX battery monitoring
----
-Menu "system->Extra->Tx Bat"
-![alt text](doc/img/menu/system/extra/tx-bat.jpg)
-
-Current firmware has no longer a battery gauge in the upper right corner, instead a voltage reading is being used.
-It is possible to change voltage alarm threshold to any number, by going into Extra>TX Bat. 
-The value can be adjusted to use 1S/2S LiPo batteries.
-If you use NiCds or NiMH, you can lower the voltage threshold to whatever you feel is best.
-
-Vario
----
-Menu "system->Extra->Vario"
-![alt text](doc/img/menu/system/extra/vario.jpg)
-Vario monitors a selected sensor (the first item in the menu),
-and provides an accoustic feedback representing the change of the sensor value.
-When the value changes, the firmware beeps accordingly: there
-is a very short beep with 1200 Hz frequency providing a baseline,
-and a longer second beep representing the sensor value difference.
-Sensor value increase since the last beep yield higher frequency
-(up to 2400 Hz), and the value decrease yields lower frequency (down to 600 Hz).
-
-The Gain value in the menu controls how much the sensor value difference
-affects the frequency. The higher gain means higher frequency difference for
-the same sensor value difference. The Gain value in this menu can be set from
-0 to 15. The gain of 3 represents the baseline - sensor difference of +1
-means the sound frequency difference of 1 Hz when the value increases,
-and 0.5 Hz when it decreases (we have 1200 Hz range on the plus side, but only
-600 Hz on the minus side - it is a poor man's way to approximate the
-logarithmic nature of the sound frequency :-) Each step in the Gain value
-means twice as big (or half as big) frequency response. It means, with
-Gain set to 0 the sensor value difference of +8 means frequency of 1201 Hz,
-with Gain of 6 the sensor value difference of +1 means frequency of 1208 Hz,
-and so on.
-
-The raw sensor values are used. So for example, the altitude sensor's raw
-value is in centimeters. When the Gain is set to 5 (which is what Yenya
-uses), an altitude difference of +1 m means the second beep at 1600 Hz,
-and an altitude difference of -1 m means the second beep at 1000 Hz.
-
-The deadband value denotes the difference range in which Tx does not beep
-at all. With the altitude or pressure sensor it represents a level flight.
-For example, a deadband of 100 used with altitude sensor (which has its
-raw measurements in centimeters, as we noted above) means that the difference
-in altitude since the last beep smaller than 1 meter (100 centimeters)
-means silence.
-
-See [https://github.com/Yenya/ibus-altitude-sensor](here) for DYI Arduino-based
-altitude, temperature, and battery voltage sensor supporting several
-common pressure sensors.
-
-Endpoints
----
-Menu "system->Extra->Endpoints"
-![alt text](doc/img/menu/system/extra/endpoints.jpg)
-
-Three columns with subtrim and Endpoint settings for channel 7-14
-
-The structure is the following:
-
-`Channel 07 [Min limit][Subtrim][Max limit]`
-
-`Channel 08 [Min limit][Subtrim][Max limit]`
-
-`Channel 09 [Min limit][Subtrim][Max limit]`
-
-`Channel 10 [Min limit][Subtrim][Max limit]`
-
-`Channel 11 [Min limit][Subtrim][Max limit]`
-
-`Channel 12 [Min limit][Subtrim][Max limit]`
-
-`Channel 13 [Min limit][Subtrim][Max limit]`
-
-`Channel 14 [Min limit][Subtrim][Max limit]`
-
-Default values are set to (min = -100%, subtrim = 0, max = 100%);
-
-Min, max and subtrim can be positive or negative there is no restriction - the only restriction is:
-`Min < subtrim <max`
-
-PPM Input
----
-An external source of channel data can be connected to the trainer port on the back side of the transmitter (the PS/2 port)
-
-<picture of trainer port and pinout>
-
-The channels are then mapped to aux channels PPM4, PPM5, PPM6 which can be configured to real channels in the aux-channel assignment menu.
-![alt text](doc/img/menu/model-setup/aux-channels.jpg)
-
-Configuration is possible for channels from original implementation (channels 5-6) as well as for channels 7-14.
-In case of newer receivers PPM output is also active for channels 7-8. 
-All configured values are also exposed as IBUS/SBUS values.
-
-To configure channels 11-14 on Aux. channels page keep pressing "OK" button. 
-
-Valid PPM input should contain 6 channels if 8 channels variant is being used channels 7-8 will overlap channels 1-2.
-
+TODO
