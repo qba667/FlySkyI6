@@ -1,0 +1,43 @@
+How to make a release
+
+- decide the new version name:
+	VERSION=1.7.6
+
+- increase the release number in source/source/mod.h: mod_version[]
+	git commit -m "Version $VERSION" source/source/mod.h
+
+- tag the version
+	git tag $VERSION
+
+- push the tag and version change to upstream:
+	git push
+
+- build the fw
+	cd source/build
+	make clean
+	rm fs-i6_updater*bin fs-i6-swe_updater*bin
+	make all
+	make all-swe
+	cd ../..
+
+- verify that we have the newest updater from
+	https://github.com/mhils/flysky-updater/releases
+
+- put the firmware files and updater to the release directory
+	(do we want the archive to contain the top-level directory as well?
+
+	mkdir FlyPlus-$VERSION
+	cp source/build/fs-i6_updater_*.bin FlyPlus-$VERSION/
+	cp source/build/fs-i6-swe_updater_*.bin FlyPlus-$VERSION/
+	cp ../flysky-updater-linux64 ../flysky-updater-win64.exe FlyPlus-$VERSION/
+	zip -r FlyPlus-$VERSION.zip FlyPlus-$VERSION/
+
+- make the source code release, as zip and tar
+	(or maybe create the archive via github?)
+
+- describe the release, using
+	git log $PREVIOUS_RELEASE..
+
+- add the possible caveats to wiki/Install.md as well
+
+
