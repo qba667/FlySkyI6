@@ -1216,14 +1216,14 @@ void displaySensors(){
 
 void varioSensorSelect(){
 	uint32_t key = 0;
-    uint8_t row = 0;
-    char buffer[8];
+	uint8_t row = 0;
+	char buffer[8];
 	struct modelConfStruct *model = getModelModConfig();
-    uint8_t values[3];
+	uint8_t values[3];
 
-    values[0] = model->varioSensorID;
-    values[1] = model->varioGain;
-    values[2] = model->varioDeadBand;
+	values[0] = model->varioSensorID;
+	values[1] = model->varioGain;
+	values[2] = model->varioDeadBand;
 
 	do {
 		callSetupDMAandSend();
@@ -1231,13 +1231,13 @@ void varioSensorSelect(){
 
 
 		displayTextAt((char*)SOURCE_STRING, 8, 24, 0);
-        displayTextAt((char*)(varioSensor + GAIN_OFFSET), 8, 36, 0);
-        displayTextAt((char*)(deadBand), 8, 48, 0);
+		displayTextAt((char*)(varioSensor + GAIN_OFFSET), 8, 36, 0);
+		displayTextAt((char*)(deadBand), 8, 48, 0);
 
 		displayTextAt((char*)getSensorName(values[0]), 80, 24, 0);
 		sprintfCall(buffer, (const char*) formatNumber, values[1]);
 		displayTextAt(buffer, 80, 36, 0);
-        sprintfCall(buffer, (const char*) formatNumber, values[2]);
+		sprintfCall(buffer, (const char*) formatNumber, values[2]);
 		displayTextAt(buffer, 80, 48, 0);
 
 		displayGFX((gfxInfo*) GFX_ARROW, 64, (row * 12) + 24);
@@ -1249,26 +1249,35 @@ void varioSensorSelect(){
 		if (key == KEY_LONG_CANCEL) { // Save it
 			model->varioSensorID = values[0];
 			model->varioGain = values[1];
-            model->varioDeadBand = values[2];
+		model->varioDeadBand = values[2];
 		}
 
 		if (key == KEY_SHORT_OK){
-            row += 1;
-            if(row == 3) row = 0;
-        }
+		row += 1;
+		if(row == 3) row = 0;
+		}
 
 
 		if (key == KEY_SHORT_UP || key == KEY_LONG_UP) {
-			if (row == 0) values[0] = nextSensorID(values[0]);
-            else if (row == 1 && values[1] < VARIO_MAX_GAIN) values[1]++;
-			else values[2]++;
+			if (row == 0) {
+				values[0] = nextSensorID(values[0]);
+			} else if (row == 1) {
+				if (values[1] < VARIO_MAX_GAIN)
+					values[1]++;
+			} else {
+				values[2]++;
+			}
 		}
 
 		if (key == KEY_SHORT_DOWN || key == KEY_LONG_DOWN) {
-            if (row == 0) values[0] = prevSensorID(values[0]);
-            else if (row == 1) {
-			if (values[1] > 1) values[1]--;
-            } else values[2]--;
+			if (row == 0) {
+				values[0] = prevSensorID(values[0]);
+			} else if (row == 1) {
+				if (values[1] > 1)
+					values[1]--;
+			} else {
+				values[2]--;
+			}
 		}
 	} while (key != KEY_LONG_CANCEL && key != KEY_SHORT_CANCEL);
 }
