@@ -17,6 +17,7 @@ How to make a release
 	make clean
 	rm fs-i6_updater*bin fs-i6-swe_updater*bin
 	make all
+	make clean
 	make all-swe
 	cd ../..
 
@@ -32,8 +33,8 @@ How to make a release
 	cp ../flysky-updater-linux64 ../flysky-updater-win64.exe FlyPlus-$VERSION/
 	zip -r FlyPlus-$VERSION.zip FlyPlus-$VERSION/
 
-- make the source code release, as zip and tar
-	(or maybe create the archive via github?)
+- the source code release is made automatically by github as soon as you
+	publish the release
 
 - describe the release, using
 	git log $PREVIOUS_RELEASE..
