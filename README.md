@@ -60,6 +60,16 @@ All donations are greatly appreciated!
 
 ## [How to Install this Firmware](https://github.com/qba667/FlySkyI6/wiki/Install)
 
+## Setup Examples
+
+_(not specific to the FlyPlus firmware)_
+
+* [Plank Flying Wing](https://github.com/qba667/FlySkyI6/wiki/Setup-Plank)
+* [Aileron Differential](https://github.com/qba667/FlySkyI6/wiki/Setup-Aileron-Differential)
+* [Paraglide/Paramotor](https://github.com/qba667/FlySkyI6/wiki/Setup-Paraglide)
+* [Snap Flaps](https://github.com/qba667/FlySkyI6/wiki/Setup-Snap-Flaps)
+* [Disable channel using a switch](https://github.com/qba667/FlySkyI6/wiki/Setup-Disable-Channel)
+
 ## Tools
 
 * GfxEditor
