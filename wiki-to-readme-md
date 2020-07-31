@@ -29,7 +29,7 @@ rename "$dst.new", "$dst"
 print STDERR <<EOF;
 Done.  You can commit the result now:
 
-git commit -m '$dst converted from wiki' README.md'
+git commit -m '$dst converted from wiki' README.md
 git push
 
 EOF
