@@ -69,6 +69,7 @@ _(not specific to the FlyPlus firmware)_
 * [Paraglide/Paramotor](https://github.com/qba667/FlySkyI6/wiki/Setup-Paraglide)
 * [Snap Flaps](https://github.com/qba667/FlySkyI6/wiki/Setup-Snap-Flaps)
 * [Disable channel using a switch](https://github.com/qba667/FlySkyI6/wiki/Setup-Disable-Channel)
+* [Throttle kill switch](https://github.com/qba667/FlySkyI6/wiki/Setup-Throttle-Kill-Switch)
 
 ## Tools
 
