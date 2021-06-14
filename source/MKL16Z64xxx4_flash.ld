@@ -392,7 +392,6 @@ SECTIONS
     *(.mod_mapSNR);
     *(.mod_extractConfig);
     *(.mod_createPacketCh1114);
-    *(.mod_auxChannelsText);
   }
   .reserved_after_code_E140_E754 0xE754 :{
    	 *(.reserved_after_code_E140_E754);
@@ -420,6 +419,7 @@ SECTIONS
    *(.mod_mix);
    *(.mod_voltADJ);
    *(.mod_extraMenu);
+   *(.mod_auxChannelsText);
   }
 
   .reserved_checksum 0xFFFD :{
